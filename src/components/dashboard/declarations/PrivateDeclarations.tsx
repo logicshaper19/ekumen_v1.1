@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChevronRight, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface PrivateDeclaration {
   id: number;
@@ -54,50 +54,54 @@ const privateDeclarations: PrivateDeclaration[] = [
 ];
 
 export function PrivateDeclarations() {
+  const navigate = useNavigate();
+
+  const handleDeclarationClick = (declarationId: number) => {
+    navigate(`/declarations/${declarationId}`);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {privateDeclarations.map((declaration) => (
-        <Link
+        <Card 
           key={declaration.id}
-          to={`/declarations/private/${declaration.id}`}
-          className="block"
+          className="p-4 cursor-pointer hover:bg-accent/50 transition-colors"
+          onClick={() => handleDeclarationClick(declaration.id)}
         >
-          <Card className="h-full hover:shadow-lg transition-shadow">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-gray-500" />
-                  <div>
-                    <CardTitle className="text-lg">
-                      {declaration.title}
-                    </CardTitle>
-                    <p className="text-sm text-gray-600">
-                      {declaration.buyer}
-                    </p>
-                  </div>
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Lock className="w-4 h-4 text-gray-500" />
+                <div>
+                  <CardTitle className="text-lg">
+                    {declaration.title}
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    {declaration.buyer}
+                  </p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
               </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 mb-4">
-                {declaration.description}
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-600 mb-4">
+              {declaration.description}
+            </p>
+            <div className="space-y-2">
+              <Progress value={declaration.progress} className="h-2" />
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">{declaration.status}</span>
+                <span className="text-gray-900 font-medium">
+                  {declaration.progress}%
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">
+                Échéance: {declaration.dueDate}
               </p>
-              <div className="space-y-2">
-                <Progress value={declaration.progress} className="h-2" />
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{declaration.status}</span>
-                  <span className="text-gray-900 font-medium">
-                    {declaration.progress}%
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Échéance: {declaration.dueDate}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+            </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

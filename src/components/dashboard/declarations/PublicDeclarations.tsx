@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Declaration {
   id: string;
@@ -20,7 +20,7 @@ interface Category {
   declarations: Declaration[];
 }
 
-const categories: Category[] = [
+export const categories: Category[] = [
   {
     id: 'registration',
     title: 'Formulaires d\'Enregistrement et Administratifs',
@@ -155,7 +155,7 @@ const categories: Category[] = [
 ];
 
 export function PublicDeclarations() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const navigate = useNavigate();
   
   const getCategoryProgress = (category: Category) => {
     const totalDeclarations = category.declarations.length;
@@ -163,59 +163,9 @@ export function PublicDeclarations() {
     return (completedDeclarations / totalDeclarations) * 100;
   };
 
-  const selectedCategoryData = categories.find(c => c.id === selectedCategory);
-
-  if (selectedCategory && selectedCategoryData) {
-    return (
-      <div className="space-y-6">
-        <button
-          onClick={() => setSelectedCategory(null)}
-          className="flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4"
-        >
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Retour aux catégories
-        </button>
-        
-        <h2 className="text-2xl font-bold mb-4">{selectedCategoryData.title}</h2>
-        <p className="text-gray-600 mb-6">{selectedCategoryData.description}</p>
-
-        <div className="grid grid-cols-1 gap-6">
-          {selectedCategoryData.declarations.map((declaration) => (
-            <Link
-              key={declaration.id}
-              to={`/declarations/${declaration.id}`}
-              className="block"
-            >
-              <Card className="h-full hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-2">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">
-                      {declaration.title}
-                    </CardTitle>
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {declaration.description}
-                  </p>
-                  <div className="space-y-2">
-                    <Progress value={declaration.progress} className="h-2" />
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">{declaration.status}</span>
-                      <span className="text-gray-900 font-medium">
-                        {declaration.progress}%
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const handleDeclarationClick = (declarationId: string) => {
+    navigate(`/declarations/${declarationId}`);
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -226,7 +176,7 @@ export function PublicDeclarations() {
           <Card
             key={category.id}
             className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-            onClick={() => setSelectedCategory(category.id)}
+            onClick={() => navigate(`/declarations/categories/${category.id}`)}
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
