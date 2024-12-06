@@ -8,25 +8,6 @@ export const categories: CategoryWithForms[] = [
     description: 'Documents essentiels pour vos opérations agricoles',
     forms: [
       {
-        id: 'label-rouge',
-        title: 'Label Rouge',
-        completion: 65,
-        categoryId: 'general-registration',
-        description: 'Certification Label Rouge',
-        dueDate: '2024-06-30',
-        capturedFields: {
-          'SIRET': '12345678901234',
-          'Date d\'enregistrement': '15/01/2024',
-          'Type d\'activité': 'Culture de céréales',
-          'Adresse d\'exploitation': '123 Route des Champs, 31000 Toulouse'
-        },
-        pendingFields: [
-          'Cahier des charges Label Rouge',
-          'Audit de certification', 
-          'Contrôles qualité'
-        ]
-      },
-      {
         id: 'declaration-activite',
         title: 'Déclaration d\'Activité Agricole',
         completion: 80,
