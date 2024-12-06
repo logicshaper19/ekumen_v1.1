@@ -1,5 +1,4 @@
-import React from 'react';
-import { Upload, FileText, Download, AlertCircle } from 'lucide-react';
+import { Upload, FileText, Download } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 const farmerData = [

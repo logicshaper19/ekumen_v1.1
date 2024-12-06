@@ -3,47 +3,90 @@ import { UpcomingDeclarations } from './UpcomingDeclarations';
 import { PublicDeclarations } from './declarations/PublicDeclarations';
 import { PrivateDeclarations } from './declarations/PrivateDeclarations';
 import { useAuth } from '../../context/AuthContext';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ChevronRight } from 'lucide-react';
+
+const declarations = [
+  {
+    id: 1,
+    title: "Déclarations Générales",
+    description: "Documents essentiels pour vos opérations agricoles",
+    progress: 40,
+    status: "En cours de completion",
+    actionRequired: true
+  },
+  {
+    id: 2,
+    title: "Aides et Subventions PAC",
+    description: "Gestion des aides de la Politique Agricole Commune",
+    progress: 62,
+    status: "En cours de completion"
+  },
+  {
+    id: 3,
+    title: "Déclarations Environnementales",
+    description: "Conformité environnementale et développement durable",
+    progress: 37,
+    status: "En cours de completion",
+    actionRequired: true
+  },
+  {
+    id: 4,
+    title: "Élevage et Bien-être Animal",
+    description: "Gestion et suivi du cheptel",
+    progress: 55,
+    status: "En cours de completion"
+  }
+];
 
 export function Dashboard() {
-  const { email } = useAuth();
+  const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState('public');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <div className="flex justify-between items-start">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Tableau de Bord</h1>
-              <p className="mt-2 text-gray-600">
-                Bienvenue, {email?.split('@')[0]}
-              </p>
-            </div>
-          </div>
+    <div className="p-8">
+      {/* Header Section with Échéances à Venir */}
+      <div className="grid grid-cols-[1fr_400px] gap-8 mb-8">
+        <div>
+          <h1 className="text-[40px] font-bold text-black mb-1">Tableau de Bord</h1>
         </div>
+        <UpcomingDeclarations />
+      </div>
 
-        <div className="mb-8">
-          <UpcomingDeclarations />
-        </div>
+      {/* Tabs Navigation */}
+      <div className="flex space-x-2 mb-8">
+        <button
+          onClick={() => setActiveTab('public')}
+          className={`px-6 py-2 rounded-full text-sm ${
+            activeTab === 'public'
+              ? 'bg-black text-white'
+              : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          Déclarations Publiques
+        </button>
+        <button
+          onClick={() => setActiveTab('private')}
+          className={`px-6 py-2 rounded-full text-sm ${
+            activeTab === 'private'
+              ? 'bg-black text-white'
+              : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          Déclarations Privées
+        </button>
+      </div>
 
-        <Tabs defaultValue="public" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="public">Déclarations Publiques</TabsTrigger>
-            <TabsTrigger value="private">Déclarations Privées</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="public">
-            <PublicDeclarations
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-            />
-          </TabsContent>
-          
-          <TabsContent value="private">
-            <PrivateDeclarations />
-          </TabsContent>
-        </Tabs>
+      {/* Main Content */}
+      <div>
+        {activeTab === 'public' ? (
+          <PublicDeclarations
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+        ) : (
+          <PrivateDeclarations />
+        )}
       </div>
     </div>
   );

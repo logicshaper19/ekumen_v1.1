@@ -1,69 +1,64 @@
 import React from 'react';
 import { SignupStep } from '../../types/farmer';
+import { User, Building2, Wheat, Map } from 'lucide-react';
 
 interface ProgressBarProps {
   currentStep: SignupStep;
 }
 
-export function ProgressBar({ currentStep }: ProgressBarProps) {
-  const steps: { key: SignupStep; label: string }[] = [
-    { key: 'personal', label: 'Informations Personnelles' },
-    { key: 'business', label: 'Informations Professionnelles' },
-    { key: 'farm', label: 'Détails de l\'Exploitation' },
-  ];
+const steps = [
+  {
+    id: 'personal',
+    name: 'Informations Personnelles',
+    icon: User,
+  },
+  {
+    id: 'business',
+    name: 'Informations de l\'Entreprise',
+    icon: Building2,
+  },
+  {
+    id: 'farm',
+    name: 'Détails de l\'Exploitation',
+    icon: Wheat,
+  },
+  {
+    id: 'parcels',
+    name: 'Identification des Parcelles',
+    icon: Map,
+  },
+];
 
-  const getCurrentStepIndex = () => {
-    return steps.findIndex(step => step.key === currentStep);
-  };
+export function ProgressBar({ currentStep }: ProgressBarProps) {
+  const currentStepIndex = steps.findIndex(step => step.id === currentStep);
 
   return (
-    <div>
-      <div className="flex items-center justify-between relative px-12">
-        {steps.map((step, index) => {
-          const isActive = index <= getCurrentStepIndex();
-          const isCompleted = index < getCurrentStepIndex();
-
-          return (
-            <React.Fragment key={step.key}>
-              <div className="flex flex-col items-center relative z-10">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
-                    isActive
-                      ? 'bg-black border-black text-white shadow-md'
-                      : 'border-gray-300 text-gray-500'
-                  }`}
-                >
-                  {isCompleted ? (
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    index + 1
-                  )}
-                </div>
-                <div
-                  className={`mt-3 text-sm font-medium ${
-                    isActive ? 'text-black' : 'text-gray-500'
-                  }`}
-                >
-                  {step.label}
-                </div>
+    <div className="flex justify-between">
+      {steps.map((step, index) => {
+        const Icon = step.icon;
+        const isActive = index <= currentStepIndex;
+        
+        return (
+          <React.Fragment key={step.id}>
+            {index > 0 && (
+              <div className="flex-1 mx-4 mt-4">
+                <div className={`h-1 rounded ${isActive ? 'bg-black' : 'bg-gray-200'}`} />
               </div>
-              {index < steps.length - 1 && (
-                <div
-                  className={`h-0.5 flex-1 ${
-                    index < getCurrentStepIndex() ? 'bg-black' : 'bg-gray-300'
-                  }`}
-                />
-              )}
-            </React.Fragment>
-          );
-        })}
-      </div>
+            )}
+            <div className="flex flex-col items-center">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center
+                  ${isActive ? 'bg-black text-white' : 'bg-gray-200 text-gray-400'}`}
+              >
+                <Icon className="w-4 h-4" />
+              </div>
+              <span className={`mt-2 text-sm ${isActive ? 'text-gray-900' : 'text-gray-500'}`}>
+                {step.name}
+              </span>
+            </div>
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 }

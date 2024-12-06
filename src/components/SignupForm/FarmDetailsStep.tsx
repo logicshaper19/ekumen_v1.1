@@ -9,14 +9,14 @@ interface FarmDetailsStepProps {
     farmSize: number;
   };
   onChange: (field: string, value: string | number) => void;
-  onSubmit: () => void;
+  onNext: () => void;
   onBack: () => void;
 }
 
-export function FarmDetailsStep({ formData, onChange, onSubmit, onBack }: FarmDetailsStepProps) {
+export function FarmDetailsStep({ formData, onChange, onNext, onBack }: FarmDetailsStepProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit();
+    onNext();
   };
 
   return (
@@ -90,7 +90,7 @@ export function FarmDetailsStep({ formData, onChange, onSubmit, onBack }: FarmDe
           type="submit"
           className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
         >
-          Terminer l'Inscription
+          Suivant
         </button>
       </div>
     </form>

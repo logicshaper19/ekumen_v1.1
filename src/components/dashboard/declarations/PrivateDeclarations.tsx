@@ -1,124 +1,104 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Award, CheckCircle2, Clock } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { ChevronRight, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const privateDeclarations = [
+interface PrivateDeclaration {
+  id: number;
+  title: string;
+  buyer: string;
+  description: string;
+  progress: number;
+  status: string;
+  dueDate: string;
+}
+
+const privateDeclarations: PrivateDeclaration[] = [
   {
     id: 1,
-    title: "Label Rouge",
-    organization: "InVivo",
-    status: "En cours",
-    progress: 65,
-    requirements: [
-      "Cahier des charges Label Rouge",
-      "Audit de certification",
-      "Contrôles qualité"
-    ],
-    deadline: "30 Juin 2024"
+    title: "Certification Qualité",
+    buyer: "Carrefour",
+    description: "Déclaration des pratiques agricoles pour la certification qualité Carrefour",
+    progress: 0,
+    status: "À commencer",
+    dueDate: "31 Décembre 2024"
   },
   {
     id: 2,
-    title: "Certification HVE",
-    organization: "Ministère de l'Agriculture",
-    status: "Validé",
-    progress: 100,
-    requirements: [
-      "Biodiversité",
-      "Stratégie phytosanitaire",
-      "Gestion de la fertilisation"
-    ],
-    deadline: "Complété"
+    title: "Certification Agriculture Durable",
+    buyer: "Groupama",
+    description: "Documentation des pratiques durables pour l'assurance agricole",
+    progress: 0,
+    status: "À commencer",
+    dueDate: "31 Décembre 2024"
   },
   {
     id: 3,
-    title: "Filière Carrefour",
-    organization: "Carrefour Quality Line",
-    status: "À commencer",
+    title: "Label Rouge",
+    buyer: "Label Rouge",
+    description: "Certification pour le Label Rouge - qualité supérieure",
     progress: 0,
-    requirements: [
-      "Critères qualité Carrefour",
-      "Traçabilité",
-      "Bien-être animal"
-    ],
-    deadline: "31 Décembre 2024"
+    status: "À commencer",
+    dueDate: "31 Décembre 2024"
+  },
+  {
+    id: 4,
+    title: "Certification Bio",
+    buyer: "Biocoop",
+    description: "Documentation pour la certification agriculture biologique",
+    progress: 0,
+    status: "À commencer",
+    dueDate: "31 Décembre 2024"
   }
 ];
 
 export function PrivateDeclarations() {
   return (
-    <div className="space-y-6">
-      <div className="grid gap-6">
-        {privateDeclarations.map(declaration => (
-          <Card key={declaration.id}>
-            <CardHeader>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {privateDeclarations.map((declaration) => (
+        <Link
+          key={declaration.id}
+          to={`/declarations/private/${declaration.id}`}
+          className="block"
+        >
+          <Card className="h-full hover:shadow-lg transition-shadow">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 rounded-lg bg-black/5">
-                    <Award className="h-6 w-6 text-black" />
-                  </div>
-                  <div>
-                    <CardTitle>{declaration.title}</CardTitle>
-                    <CardDescription>{declaration.organization}</CardDescription>
-                  </div>
-                </div>
                 <div className="flex items-center gap-2">
-                  {declaration.progress === 100 ? (
-                    <CheckCircle2 className="h-5 w-5 text-black" />
-                  ) : (
-                    <Clock className="h-5 w-5 text-yellow-500" />
-                  )}
-                  <span className="text-sm font-medium">
-                    {declaration.status}
-                  </span>
+                  <Lock className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <CardTitle className="text-lg">
+                      {declaration.title}
+                    </CardTitle>
+                    <p className="text-sm text-gray-600">
+                      {declaration.buyer}
+                    </p>
+                  </div>
                 </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">Progression</span>
-                    <span className="text-sm font-medium text-gray-900">{declaration.progress}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className={`h-2 rounded-full transition-all duration-500 ${
-                        declaration.progress === 100
-                          ? 'bg-black'
-                          : declaration.progress >= 50
-                          ? 'bg-black/80'
-                          : 'bg-yellow-500'
-                      }`}
-                      style={{ width: `${declaration.progress}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-medium mb-2">Critères requis:</h4>
-                  <ul className="space-y-2">
-                    {declaration.requirements.map((req, index) => (
-                      <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                        {req}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex items-center justify-between pt-4">
-                  <span className="text-sm text-gray-500">
-                    Échéance: {declaration.deadline}
+              <p className="text-sm text-gray-600 mb-4">
+                {declaration.description}
+              </p>
+              <div className="space-y-2">
+                <Progress value={declaration.progress} className="h-2" />
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">{declaration.status}</span>
+                  <span className="text-gray-900 font-medium">
+                    {declaration.progress}%
                   </span>
-                  <button className="text-sm font-medium text-black hover:text-black/80">
-                    Voir les détails
-                  </button>
                 </div>
+                <p className="text-sm text-gray-600">
+                  Échéance: {declaration.dueDate}
+                </p>
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
+        </Link>
+      ))}
     </div>
   );
 }

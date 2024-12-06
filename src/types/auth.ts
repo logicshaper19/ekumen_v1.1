@@ -3,7 +3,14 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export interface AuthState {
   isAuthenticated: boolean;
-  email: string | null;
+  user: User | null;
 }

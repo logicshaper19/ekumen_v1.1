@@ -1,43 +1,58 @@
 import React from 'react';
-import { Hero } from './components/Hero';
-import { Benefits } from './components/Benefits';
-import { SignupForm } from './components/SignupForm';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Hero } from './components/landing/Hero';
+import { Benefits } from './components/landing/Benefits';
+import { HowItWorks } from './components/landing/HowItWorks';
+import { Signup } from './components/Signup';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { Community } from './components/dashboard/Community';
 import { BusinessPlan } from './components/dashboard/BusinessPlan';
 import { Transformation } from './components/dashboard/Transformation';
-import { MyData } from './components/dashboard/MyData';
+import { MyData } from './components/data/MyData';
 import { Login } from './components/Login';
-import { Routes, Route, useLocation } from 'react-router-dom';
 import { LandingNav } from './components/navigation/LandingNav';
-import { HowItWorks } from './components/HowItWorks';
+import { SignupFlow } from './components/auth/SignupFlow';
+import { useAuth } from './context/AuthContext';
 
 function App() {
   const location = useLocation();
-  const isSignupPage = location.pathname === '/signup';
-  const isDashboard = location.pathname === '/dashboard';
+  const { isAuthenticated } = useAuth();
+  
+  // Only consider landing page as public route
+  const isPublicRoute = location.pathname === '/';
 
+  // If on landing page, show landing layout
+  if (isPublicRoute) {
+    return (
+      <div className="min-h-screen bg-white">
+        <LandingNav />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <HowItWorks />
+              <Benefits />
+            </>
+          } />
+        </Routes>
+      </div>
+    );
+  }
+
+  // Show authenticated app layout with all routes
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Routes>
-        <Route path="/" element={
-          <>
-            <LandingNav />
-            <Hero />
-            <HowItWorks />
-            <Benefits />
-          </>
-        } />
-        <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="declarations" element={<Dashboard />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/auth/signup-flow" element={<SignupFlow />} />
+        <Route path="/*" element={<DashboardLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="community" element={<Community />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="transformation" element={<Transformation />} />
-          <Route path="my-data" element={<MyData />} />
-          <Route index element={<Dashboard />} />
+          <Route path="mes-donnees" element={<MyData />} />
         </Route>
       </Routes>
     </div>

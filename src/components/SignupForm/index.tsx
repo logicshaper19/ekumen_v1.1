@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FarmerSignup, SignupStep } from '../../types/farmer';
 import { PersonalInfoStep } from './PersonalInfoStep';
 import { BusinessInfoStep } from './BusinessInfoStep';
 import { FarmDetailsStep } from './FarmDetailsStep';
+import { ParcelIdentificationStep } from './ParcelIdentificationStep';
 import { ProgressBar } from './ProgressBar';
+import { useAuth } from '../../context/AuthContext';
 
 const initialFormData: FarmerSignup = {
   firstName: '',
@@ -18,6 +21,8 @@ const initialFormData: FarmerSignup = {
 };
 
 export function SignupForm() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
   const [formData, setFormData] = useState<FarmerSignup>(initialFormData);
 
@@ -28,7 +33,20 @@ export function SignupForm() {
   const handleSubmit = () => {
     // Here you would typically send the data to your backend
     console.log('Form submitted:', formData);
-    alert('Signup successful! Welcome to FarmEase.');
+    
+    // Simulate successful signup and login
+    login({
+      id: '1',
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email
+    });
+
+    // Show success message
+    alert('Inscription réussie ! Bienvenue sur Ekumen.');
+    
+    // Navigate to dashboard
+    navigate('/dashboard');
   };
 
   const renderStep = () => {
@@ -55,8 +73,15 @@ export function SignupForm() {
           <FarmDetailsStep
             formData={formData}
             onChange={handleChange}
-            onSubmit={handleSubmit}
+            onNext={() => setCurrentStep('parcels')}
             onBack={() => setCurrentStep('business')}
+          />
+        );
+      case 'parcels':
+        return (
+          <ParcelIdentificationStep
+            onSubmit={handleSubmit}
+            onBack={() => setCurrentStep('farm')}
           />
         );
       default:

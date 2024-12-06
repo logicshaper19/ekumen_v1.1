@@ -12,4 +12,4 @@ export interface FarmerSignup {
   farmSize: number;
 }
 
-export type SignupStep = 'personal' | 'business' | 'farm';
+export type SignupStep = 'personal' | 'business' | 'farm' | 'parcels';

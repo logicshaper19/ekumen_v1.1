@@ -1,87 +1,64 @@
 import React from 'react';
-import { Calendar, AlertCircle } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Calendar } from 'lucide-react';
 
-const upcomingDeclarations = [
+interface Deadline {
+  id: number;
+  title: string;
+  date: string;
+  status: 'pending' | 'completed';
+}
+
+const deadlines: Deadline[] = [
   {
     id: 1,
-    title: "Gestion des Engrais et Sols",
-    dueDate: "31 Décembre 2024",
-    type: "Cultures",
-    priority: "medium",
-    completion: 45
+    title: "Registre parcellaire graphique (RPG)",
+    date: "31 Décembre 2024",
+    status: "pending"
   },
   {
     id: 2,
-    title: "Rapport sur l'Utilisation des Produits Phytosanitaires",
-    dueDate: "31 Décembre 2024",
-    type: "Cultures",
-    priority: "high",
-    completion: 20
+    title: "Déclaration surface agricole",
+    date: "31 Décembre 2024",
+    status: "pending"
   },
   {
     id: 3,
-    title: "Conformité en Santé et Sécurité",
-    dueDate: "31 Décembre 2024",
-    type: "Tous",
-    priority: "high",
-    completion: 65
+    title: "Déclaration effectif animaux",
+    date: "31 Décembre 2024",
+    status: "pending"
+  },
+  {
+    id: 4,
+    title: "Registre d'élevage",
+    date: "31 Décembre 2024",
+    status: "pending"
   }
 ];
 
 export function UpcomingDeclarations() {
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            <CardTitle>Échéances à Venir</CardTitle>
-          </div>
+      <CardHeader className="pb-3">
+        <div className="flex items-center space-x-2">
+          <Calendar className="w-5 h-5 text-primary" />
+          <CardTitle>Échéances à Venir</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {upcomingDeclarations.map(declaration => (
+          {deadlines.map((deadline) => (
             <div
-              key={declaration.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+              key={deadline.id}
+              className="flex items-center justify-between py-2"
             >
-              <div className="flex items-start gap-3">
-                <AlertCircle className={`h-5 w-5 mt-0.5 ${
-                  declaration.priority === 'high' ? 'text-red-500' : 'text-yellow-500'
-                }`} />
-                <div>
-                  <h4 className="font-medium text-gray-900">{declaration.title}</h4>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm text-gray-500">
-                      Échéance: {declaration.dueDate}
-                    </span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">
-                      {declaration.type}
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-500">Progression</span>
-                      <span className="text-xs font-medium text-gray-700">{declaration.completion}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-1.5">
-                      <div
-                        className={`h-1.5 rounded-full transition-all duration-500 ${
-                          declaration.completion >= 80 ? 'bg-black' :
-                          declaration.completion >= 40 ? 'bg-black/80' :
-                          'bg-yellow-500'
-                        }`}
-                        style={{ width: `${declaration.completion}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <h3 className="font-medium">{deadline.title}</h3>
+                <p className="text-sm text-gray-600">{deadline.date}</p>
               </div>
-              <button className="text-sm font-medium text-black hover:text-black/80">
-                Voir
-              </button>
+              <span className="px-3 py-1 text-xs rounded-full bg-orange-100 text-orange-600">
+                À faire
+              </span>
             </div>
           ))}
         </div>

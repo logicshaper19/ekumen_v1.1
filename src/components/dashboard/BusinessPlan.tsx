@@ -1,9 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, TrendingDown, Euro, Sprout, Scale, Droplets } from 'lucide-react';
+import { 
+  TrendingUp, 
+  TrendingDown, 
+  Euro, 
+  Sprout, 
+  Scale, 
+  Droplets,
+  Target,
+  Users,
+  Building2,
+  Landmark,
+  BarChart3,
+  PiggyBank,
+  CircleDollarSign,
+  Percent,
+  AlertTriangle
+} from 'lucide-react';
+import { OverviewTab } from '../business-plan/OverviewTab';
+import { StrategyTab } from '../business-plan/StrategyTab';
+import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
+import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
 
-export function BusinessPlan() {
-  const kpis = [
+type Tab = 'overview' | 'strategy' | 'financial' | 'risks';
+
+const tabs: { id: Tab; label: string }[] = [
+  { id: 'overview', label: 'Aperçu' },
+  { id: 'strategy', label: 'Stratégie' },
+  { id: 'financial', label: 'Plan Financier' },
+  { id: 'risks', label: 'Risques et Opportunités' },
+];
+
+interface KPI {
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  icon: React.ElementType;
+}
+
+const kpisByTab: Record<Tab, KPI[]> = {
+  overview: [
     {
       title: 'Revenu Mensuel',
       value: '12 500 €',
@@ -32,25 +69,117 @@ export function BusinessPlan() {
       trend: 'down',
       icon: Droplets,
     },
-  ];
+  ],
+  strategy: [
+    {
+      title: 'Objectifs Atteints',
+      value: '75%',
+      change: '+15%',
+      trend: 'up',
+      icon: Target,
+    },
+    {
+      title: 'Efficacité Main d\'œuvre',
+      value: '92%',
+      change: '+5%',
+      trend: 'up',
+      icon: Users,
+    },
+    {
+      title: 'Utilisation Équipement',
+      value: '85%',
+      change: '+10%',
+      trend: 'up',
+      icon: Building2,
+    },
+    {
+      title: 'Innovation Score',
+      value: '8.5/10',
+      change: '+1.2',
+      trend: 'up',
+      icon: BarChart3,
+    },
+  ],
+  financial: [
+    {
+      title: 'Marge Brute',
+      value: '120 120 €',
+      change: '+12.5%',
+      trend: 'up',
+      icon: Landmark,
+    },
+    {
+      title: 'Capacité d\'Autofinancement',
+      value: '7 885 €',
+      change: '-2.3%',
+      trend: 'down',
+      icon: PiggyBank,
+    },
+    {
+      title: 'Revenu Disponible',
+      value: '40 115 €',
+      change: '+5.8%',
+      trend: 'up',
+      icon: CircleDollarSign,
+    },
+    {
+      title: 'Taux d\'Endettement',
+      value: '45%',
+      change: '-3%',
+      trend: 'down',
+      icon: Percent,
+    },
+  ],
+  risks: [
+    {
+      title: 'Risque de Perte',
+      value: '10%',
+      change: '+2%',
+      trend: 'up',
+      icon: AlertTriangle,
+    },
+    {
+      title: 'Risque de Défaillance',
+      value: '5%',
+      change: '-1%',
+      trend: 'down',
+      icon: AlertTriangle,
+    },
+    {
+      title: 'Risque de Changement',
+      value: '8%',
+      change: '+3%',
+      trend: 'up',
+      icon: AlertTriangle,
+    },
+    {
+      title: 'Risque de Perte d\'Opportunités',
+      value: '12%',
+      change: '+4%',
+      trend: 'up',
+      icon: AlertTriangle,
+    },
+  ],
+};
 
-  const recommendations = [
-    {
-      title: 'Optimisation des Coûts',
-      description: 'Possibilité de réduire les coûts d\'intrants de 12% en adoptant des pratiques de précision.',
-      impact: 'Économie potentielle: 5 000 €/an',
-    },
-    {
-      title: 'Diversification des Cultures',
-      description: 'L\'ajout de légumineuses pourrait améliorer la fertilité des sols et réduire les coûts d\'engrais.',
-      impact: 'Amélioration du rendement: +15%',
-    },
-    {
-      title: 'Gestion de l\'Eau',
-      description: 'Installation d\'un système d\'irrigation goutte à goutte pour optimiser l\'utilisation de l\'eau.',
-      impact: 'Réduction de la consommation: -30%',
-    },
-  ];
+export function BusinessPlan() {
+  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const currentKPIs = kpisByTab[activeTab];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return <OverviewTab />;
+      case 'strategy':
+        return <StrategyTab />;
+      case 'financial':
+        return <FinancialPlanTab />;
+      case 'risks':
+        return <RisksAndOpportunities />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -61,8 +190,9 @@ export function BusinessPlan() {
         </p>
       </div>
 
+      {/* KPIs Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpis.map((kpi) => (
+        {currentKPIs.map((kpi) => (
           <Card key={kpi.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
@@ -87,22 +217,32 @@ export function BusinessPlan() {
         ))}
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Recommandations d'Optimisation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {recommendations.map((rec) => (
-              <div key={rec.title} className="border-b border-gray-200 last:border-0 pb-6 last:pb-0">
-                <h3 className="font-semibold text-lg mb-2">{rec.title}</h3>
-                <p className="text-gray-600 mb-2">{rec.description}</p>
-                <p className="text-sm font-medium text-black">{rec.impact}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Tabs Navigation */}
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                ${
+                  activeTab === tab.id
+                    ? 'border-black text-black'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }
+              `}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* Tab Content */}
+      <div className="mt-6">
+        {renderTabContent()}
+      </div>
     </div>
   );
 }

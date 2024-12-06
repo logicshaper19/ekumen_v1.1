@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { AuthState, LoginCredentials } from '../types/auth';
+import { AuthState, User } from '../types/auth';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType extends AuthState {
-  login: (credentials: LoginCredentials) => void;
+  login: (user: User) => void;
   logout: () => void;
 }
 
@@ -13,21 +13,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
-    email: null,
+    user: null,
   });
 
-  const login = (credentials: LoginCredentials) => {
+  const login = (user: User) => {
     setAuthState({
       isAuthenticated: true,
-      email: credentials.email,
+      user,
     });
-    navigate('/dashboard/declarations');
+    navigate('/dashboard');
   };
 
   const logout = () => {
     setAuthState({
       isAuthenticated: false,
-      email: null,
+      user: null,
     });
     navigate('/');
   };

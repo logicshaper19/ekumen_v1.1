@@ -1,5 +1,4 @@
-import React from 'react';
-import { MessageSquare, Users, Building2, Briefcase } from 'lucide-react';
+import { MessageSquare, Users } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 export function Community() {
@@ -87,108 +86,105 @@ export function Community() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Communauté</h1>
-          <p className="mt-2 text-gray-600">
-            Échangez avec d'autres agriculteurs et partagez vos expériences
-          </p>
-        </div>
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Communauté</h1>
+        <button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
+          Nouvelle Discussion
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5" />
-              <CardTitle>Discussions Récentes</CardTitle>
-            </div>
-            <CardDescription>Participez aux échanges avec d'autres agriculteurs</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {discussions.map(discussion => (
-                <div key={discussion.id} className="flex items-start justify-between p-4 rounded-lg bg-gray-50">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{discussion.title}</h3>
-                    <p className="text-sm text-gray-500">
-                      Initié par {discussion.author} • {discussion.lastActivity}
-                    </p>
-                  </div>
-                  <span className="text-sm text-gray-500">{discussion.replies} réponses</span>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {discussions.map((discussion) => (
+          <Card key={discussion.id} className="hover:shadow-lg transition-shadow duration-200">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-semibold text-gray-900">
+                  {discussion.title}
+                </CardTitle>
+                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                  {discussion.replies} réponses
+                </span>
+              </div>
+              <CardDescription className="mt-1">
+                <div className="flex items-center text-sm text-gray-500">
+                  <Users className="mr-1 h-4 w-4" />
+                  <span>{discussion.author}</span>
+                  <span className="mx-2">•</span>
+                  <span>{discussion.lastActivity}</span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              <CardTitle>Agriculteurs à Proximité</CardTitle>
-            </div>
-            <CardDescription>Connectez-vous avec les agriculteurs de votre région</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {nearbyFarmers.map(farmer => (
-                <div key={farmer.id} className="flex items-start justify-between p-4 rounded-lg bg-gray-50">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{farmer.name}</h3>
-                    <p className="text-sm text-gray-500">
-                      {farmer.location} • {farmer.farmType}
-                    </p>
-                  </div>
-                  <button className="text-sm text-black hover:text-black/80">
-                    Connecter
-                  </button>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm">
+                <button className="text-primary hover:text-primary/80 transition-colors">
+                  Voir la discussion
+                </button>
+                <div className="flex items-center text-gray-500">
+                  <MessageSquare className="h-4 w-4 mr-1" />
+                  <span>{discussion.replies}</span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-      
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Building2 className="w-5 h-5" />
-            <CardTitle>Partenaires Professionnels</CardTitle>
-          </div>
-          <CardDescription>Découvrez nos partenaires pour vous accompagner</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <div className="grid gap-4">
-              {partners.map(partner => (
-                <div key={partner.id} className="flex items-start justify-between p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-lg bg-black/5">
-                      {partner.category === 'bank' ? (
-                        <Building2 className="h-5 w-5 text-black" />
-                      ) : partner.category === 'insurance' ? (
-                        <Briefcase className="h-5 w-5 text-black" />
-                      ) : (
-                        <Users className="h-5 w-5 text-black" />
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{partner.name}</h3>
-                      <p className="text-sm text-gray-500 mt-1">{partner.type}</p>
-                      <p className="text-sm text-gray-600 mt-2">{partner.description}</p>
-                    </div>
-                  </div>
-                  <button className="text-sm font-medium text-black hover:text-black/80">
-                    Contacter
-                  </button>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {nearbyFarmers.map((farmer) => (
+          <Card key={farmer.id} className="hover:shadow-lg transition-shadow duration-200">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-semibold text-gray-900">
+                  {farmer.name}
+                </CardTitle>
+              </div>
+              <CardDescription className="mt-1">
+                <div className="flex items-center text-sm text-gray-500">
+                  <span>{farmer.location}</span>
+                  <span className="mx-2">•</span>
+                  <span>{farmer.farmType}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm">
+                <button className="text-primary hover:text-primary/80 transition-colors">
+                  Connecter
+                </button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {partners.map((partner) => (
+          <Card key={partner.id} className="hover:shadow-lg transition-shadow duration-200">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-semibold text-gray-900">
+                  {partner.name}
+                </CardTitle>
+              </div>
+              <CardDescription className="mt-1">
+                <div className="flex items-center text-sm text-gray-500">
+                  <span>{partner.type}</span>
+                  <span className="mx-2">•</span>
+                  <span>{partner.description}</span>
+                </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm">
+                <button className="text-primary hover:text-primary/80 transition-colors">
+                  Contacter
+                </button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
