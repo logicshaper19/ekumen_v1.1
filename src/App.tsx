@@ -14,6 +14,7 @@ import { Login } from './components/Login';
 import { LandingNav } from './components/navigation/LandingNav';
 import { SignupFlow } from './components/auth/SignupFlow';
 import { useAuth } from './context/AuthContext';
+import { DeclarationDetails } from './components/dashboard/declarations/DeclarationDetails';
 
 function App() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function App() {
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="transformation" element={<Transformation />} />
           <Route path="mes-donnees" element={<MyData />} />
+          <Route path="declarations/:id" element={<DeclarationDetails />} />
         </Route>
       </Routes>
     </div>

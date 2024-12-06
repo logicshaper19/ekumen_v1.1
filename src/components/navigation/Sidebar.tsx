@@ -13,7 +13,7 @@ import {
 
 const menuItems = [
   {
-    name: 'Tableau de Bord',
+    name: 'Déclarations',
     icon: LayoutDashboard,
     path: '/'
   },
