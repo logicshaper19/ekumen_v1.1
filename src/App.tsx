@@ -17,6 +17,7 @@ import { useAuth } from './context/AuthContext';
 import { DeclarationDetails } from './components/dashboard/declarations/DeclarationDetails';
 import { DeclarationDetailsPage } from './pages/DeclarationDetailsPage';
 import { CategoryDeclarationsPage } from './pages/CategoryDeclarationsPage';
+import { PublicDeclarations } from './components/dashboard/declarations/PublicDeclarations';
 
 function App() {
   const location = useLocation();
@@ -53,13 +54,18 @@ function App() {
         
         {/* Protected Routes */}
         <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard">
+            <Route index element={<Dashboard />} />
+            <Route path="declarations">
+              <Route index element={<PublicDeclarations />} />
+              <Route path=":id" element={<DeclarationDetailsPage />} />
+              <Route path="categories/:categoryId" element={<CategoryDeclarationsPage />} />
+            </Route>
+          </Route>
           <Route path="community" element={<Community />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="transformation" element={<Transformation />} />
           <Route path="mes-donnees" element={<MyData />} />
-          <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
-          <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
         </Route>
         
         {/* Catch all route */}

@@ -20,7 +20,6 @@ interface Category {
   description: string;
   declarations: Declaration[];
   hasChanges?: boolean;
-  changeCount?: number;
 }
 
 export const categories: Category[] = [
@@ -29,7 +28,6 @@ export const categories: Category[] = [
     title: 'Formulaires d\'Enregistrement et Administratifs',
     description: 'Documents administratifs et enregistrements obligatoires',
     hasChanges: true,
-    changeCount: 1,
     declarations: [
       {
         id: 'declaration-activite',
@@ -140,7 +138,6 @@ export const categories: Category[] = [
     title: 'Gestion des Animaux et des Cultures',
     description: 'Déclarations liées aux animaux et aux cultures',
     hasChanges: true,
-    changeCount: 2,
     declarations: [
       {
         id: 'identification-animaux',
@@ -195,7 +192,7 @@ export function PublicDeclarations() {
   };
 
   const handleDeclarationClick = (declarationId: string) => {
-    navigate(`/declarations/${declarationId}`);
+    navigate(`/dashboard/declarations/${declarationId}`);
   };
 
   return (
@@ -209,7 +206,7 @@ export function PublicDeclarations() {
             <Card
               key={category.id}
               className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/declarations/categories/${category.id}`)}
+              onClick={() => navigate(`/dashboard/declarations/categories/${category.id}`)}
             >
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -219,7 +216,7 @@ export function PublicDeclarations() {
                     </CardTitle>
                     {category.hasChanges && (
                       <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
-                        {category.changeCount} réglementation{category.changeCount > 1 ? 's' : ''} évolutive{category.changeCount > 1 ? 's' : ''}
+                        Réglementation évolutive
                       </div>
                     )}
                   </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
@@ -18,12 +18,12 @@ export function CategoryDeclarationsPage() {
       <div className="p-8">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Catégorie non trouvée</h2>
-          <Link 
-            to="/dashboard" 
+          <button 
+            onClick={() => navigate('/dashboard/declarations')}
             className="text-primary hover:underline"
           >
             Retour aux déclarations
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -33,9 +33,12 @@ export function CategoryDeclarationsPage() {
     <div className="p-8 space-y-6">
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <Link to="/dashboard" className="hover:text-primary">
+        <button 
+          onClick={() => navigate('/dashboard/declarations')}
+          className="hover:text-primary"
+        >
           Déclarations
-        </Link>
+        </button>
         <ChevronRight className="h-4 w-4" />
         <span className="text-foreground">{category.title}</span>
       </div>
@@ -51,7 +54,7 @@ export function CategoryDeclarationsPage() {
             <Card
               key={declaration.id}
               className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/declarations/${declaration.id}`)}
+              onClick={() => navigate(`/dashboard/declarations/${declaration.id}`)}
             >
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -61,7 +64,7 @@ export function CategoryDeclarationsPage() {
                     </CardTitle>
                     {declaration.hasChanges && (
                       <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
-                        1 réglementation évolutive
+                        Réglementation évolutive
                       </div>
                     )}
                   </div>

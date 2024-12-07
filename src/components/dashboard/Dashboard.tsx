@@ -82,10 +82,7 @@ export function Dashboard() {
       {/* Main Content */}
       <div>
         {activeTab === 'public' ? (
-          <PublicDeclarations
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
+          <PublicDeclarations />
         ) : (
           <PrivateDeclarations />
         )}

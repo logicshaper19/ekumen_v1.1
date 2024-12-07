@@ -75,29 +75,56 @@ const declarations: Record<string, DeclarationData> = {
     id: 'foncier-rural',
     title: 'Foncier Rural',
     description: 'Déclaration des terres agricoles et leur statut',
-    progress: 60,
+    progress: 0,
+    status: 'À commencer',
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Réglementation sur le Foncier Rural',
+        description: 'Dispositions actuelles concernant la déclaration et la gestion des terres agricoles',
+        effectiveDate: '2024-01-01',
+        source: 'Ministère de l\'Agriculture'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles mesures sur le Foncier Rural',
+        description: 'Évolution des dispositions concernant la déclaration et la gestion des terres agricoles',
+        effectiveDate: '2024-07-01',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Modification des critères de classification des terres',
+          'Nouvelles exigences de documentation',
+          'Introduction de mesures de protection environnementale'
+        ]
+      }
+    },
     capturedInfo: [
-      { label: 'Surface totale', value: '150 hectares' },
-      { label: 'Statut principal', value: 'Propriétaire exploitant' },
-      { label: 'Commune principale', value: 'Saint-Martin-du-Touch' }
+      { label: 'Surface totale', value: '120 hectares' },
+      { label: 'Type de sol', value: 'Mixte' },
+      { label: 'Usage principal', value: 'Culture céréalière' }
     ],
     pendingInfo: [
-      { label: 'Bail rural (parcelles en fermage)' },
-      { label: 'Relevé parcellaire MSA' },
-      { label: 'Plan cadastral mis à jour' }
+      { label: 'Plan cadastral' },
+      { label: 'Attestation de propriété' },
+      { label: 'Étude de sol' }
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour cadastrale',
-        description: 'Obtenir le plan cadastral actualisé auprès de la mairie',
+        title: 'Documentation cadastrale',
+        description: 'Rassembler les documents cadastraux',
         dueDate: '2024-03-15',
+        priority: 'Normal'
+      },
+      {
+        title: 'Analyse du sol',
+        description: 'Effectuer les analyses de sol requises',
+        dueDate: '2024-03-30',
         priority: 'Important'
       },
       {
-        title: 'Régularisation des baux',
-        description: 'Finaliser les contrats de fermage en cours',
-        dueDate: '2024-03-30',
-        priority: 'Urgent'
+        title: 'Plan d\'exploitation',
+        description: 'Établir le plan d\'exploitation détaillé',
+        dueDate: '2024-04-15',
+        priority: 'Normal'
       }
     ]
   },
@@ -859,7 +886,7 @@ export function DeclarationDetails() {
     <div className="container mx-auto py-6 space-y-6">
       {/* Back Button */}
       <Link
-        to="/declarations"
+        to="/dashboard/declarations"
         className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
       >
         <ArrowLeft className="w-4 h-4 mr-1" />
