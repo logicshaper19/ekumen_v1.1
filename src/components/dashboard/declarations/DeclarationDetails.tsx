@@ -238,23 +238,84 @@ const declarations: Record<string, DeclarationData> = {
     id: 'phytosanitaires',
     title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
     description: 'Utilisation des produits de protection des cultures',
-    progress: 55,
+    progress: 98,
     capturedInfo: [
-      { label: 'Surface traitée', value: '80 hectares' },
-      { label: 'Nombre de traitements', value: '12 interventions' },
-      { label: 'IFT moyen', value: '1.8' }
+      { label: 'Certiphyto N°', value: 'CP123456' },
+      { label: 'Surface traitée', value: '85 hectares' },
+      { label: 'Produits utilisés', value: '12 références' },
+      { label: 'Local phytosanitaire', value: 'Conforme aux normes' }
     ],
     pendingInfo: [
-      { label: 'Registre phytosanitaire' },
-      { label: 'Justificatifs d\'achat' },
-      { label: 'Certificat Certiphyto' }
+      { label: 'Registre des traitements' },
+      { label: 'Factures des produits' }
     ],
     resolutionSteps: [
       {
         title: 'Mise à jour registre',
-        description: 'Compléter le registre phytosanitaire',
-        dueDate: '2024-02-20',
+        description: 'Finaliser le registre des traitements phytosanitaires',
+        dueDate: '2024-02-28',
+        priority: 'Important'
+      }
+    ]
+  },
+  'conformite-sante-securite': {
+    id: 'conformite-sante-securite',
+    title: 'Conformité en Santé et Sécurité',
+    description: 'Rapport de conformité aux normes de santé et sécurité',
+    progress: 98,
+    capturedInfo: [
+      { label: 'Document unique', value: 'Mis à jour le 10/01/2024' },
+      { label: 'Nombre d\'employés', value: '5' },
+      { label: 'Formation sécurité', value: 'Réalisée le 05/01/2024' },
+      { label: 'Médecine du travail', value: 'Visites à jour' }
+    ],
+    pendingInfo: [
+      { label: 'Attestations formations' },
+      { label: 'Registre des accidents' },
+      { label: 'Fiches de postes mises à jour' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Mise à jour du Document Unique',
+        description: 'Révision annuelle du document unique d\'évaluation des risques',
+        dueDate: '2024-02-28',
+        priority: 'Important'
+      },
+      {
+        title: 'Formation des nouveaux employés',
+        description: 'Organiser la formation sécurité pour les nouveaux arrivants',
+        dueDate: '2024-03-15',
         priority: 'Urgent'
+      }
+    ]
+  },
+  'engrais-sols': {
+    id: 'engrais-sols',
+    title: 'Gestion des Engrais et Sols',
+    description: 'Déclaration sur la gestion des engrais et la qualité des sols',
+    progress: 98,
+    capturedInfo: [
+      { label: 'Surface traitée', value: '120 hectares' },
+      { label: 'Type d\'engrais principal', value: 'NPK organique' },
+      { label: 'Dernière analyse de sol', value: '15/01/2024' },
+      { label: 'pH moyen du sol', value: '6.8' }
+    ],
+    pendingInfo: [
+      { label: 'Plan de fertilisation 2024' },
+      { label: 'Registre d\'épandage mis à jour' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Finalisation du plan de fertilisation',
+        description: 'Compléter le plan de fertilisation pour l\'année 2024',
+        dueDate: '2024-02-29',
+        priority: 'Important'
+      },
+      {
+        title: 'Mise à jour du registre',
+        description: 'Mettre à jour le registre d\'épandage avec les dernières applications',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
       }
     ]
   },
@@ -363,9 +424,9 @@ export function DeclarationDetails() {
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">{declaration.title}</h1>
           {declaration.hasChanges && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
-              1 changement
-            </span>
+            <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
+              1 réglementation évolutive
+            </div>
           )}
           <InfoIcon className="w-5 h-5 text-gray-400" />
         </div>

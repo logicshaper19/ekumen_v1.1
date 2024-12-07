@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Hero } from './components/landing/Hero';
 import { Benefits } from './components/landing/Benefits';
 import { HowItWorks } from './components/landing/HowItWorks';
@@ -47,10 +47,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/auth/signup-flow" element={<SignupFlow />} />
-        <Route path="/*" element={<DashboardLayout />}>
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
+        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/dashboard" />} />
+        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/dashboard" />} />
+        
+        {/* Protected Routes */}
+        <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="community" element={<Community />} />
           <Route path="business-plan" element={<BusinessPlan />} />
@@ -59,6 +61,9 @@ function App() {
           <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
           <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
         </Route>
+        
+        {/* Catch all route */}
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
       </Routes>
     </div>
   );

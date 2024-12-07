@@ -33,6 +33,7 @@ const tabs: { id: Tab; label: string }[] = [
 
 interface KPI {
   title: string;
+  titleClassName?: string;
   value: string;
   change: string;
   trend: 'up' | 'down';
@@ -132,7 +133,8 @@ const kpisByTab: Record<Tab, KPI[]> = {
   ],
   risks: [
     {
-      title: 'Risque de Perte',
+      title: 'Réglementation Évolutive',
+      titleClassName: 'text-orange-600',
       value: '10%',
       change: '+2%',
       trend: 'up',
@@ -219,7 +221,7 @@ export function BusinessPlan() {
         {currentKPIs.map((kpi) => (
           <Card key={kpi.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
+              <CardTitle className={`text-sm font-medium ${kpi.titleClassName || ''}`}>{kpi.title}</CardTitle>
               <kpi.icon className="h-4 w-4 text-gray-500" />
             </CardHeader>
             <CardContent>

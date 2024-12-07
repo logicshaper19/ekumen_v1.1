@@ -23,7 +23,7 @@ export function RisksAndOpportunities() {
                 <dd className="text-base font-medium">Fluctuations des prix du marché affectant la rentabilité</dd>
               </div>
               <div>
-                <dt className="text-sm text-gray-500">Réglementation</dt>
+                <dt className="text-sm font-medium text-orange-600">Réglementation Évolutive</dt>
                 <dd className="text-base font-medium">Nouvelles normes environnementales nécessitant des adaptations</dd>
               </div>
             </dl>

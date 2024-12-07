@@ -51,33 +51,26 @@ export const categories: Category[] = [
     ]
   },
   {
-    id: 'subsidy',
-    title: 'Aides et Subventions',
-    description: 'Demandes de subventions et aides financières',
-    declarations: [
-      {
-        id: 'pac',
-        title: 'PAC - Politique Agricole Commune',
-        description: 'Demande de paiement unique de la PAC',
-        progress: 0,
-        status: 'À commencer',
-        category: 'subsidy'
-      },
-      {
-        id: 'aides',
-        title: 'Demandes d\'Aides et Subventions',
-        description: 'Autres demandes de subventions agricoles',
-        progress: 0,
-        status: 'À commencer',
-        category: 'subsidy'
-      }
-    ]
-  },
-  {
     id: 'environmental',
     title: 'Rapports Environnementaux et Conformité',
     description: 'Déclarations environnementales et rapports de conformité',
     declarations: [
+      {
+        id: 'engrais-sols',
+        title: 'Gestion des Engrais et Sols',
+        description: 'Déclaration sur la gestion des engrais et la qualité des sols',
+        progress: 98,
+        status: 'En cours',
+        category: 'environmental'
+      },
+      {
+        id: 'phytosanitaires',
+        title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
+        description: 'Utilisation des produits de protection des cultures',
+        progress: 98,
+        status: 'En cours',
+        category: 'environmental'
+      },
       {
         id: 'efa',
         title: 'Zones de Focus Écologiques (EFA)',
@@ -105,6 +98,44 @@ export const categories: Category[] = [
     ]
   },
   {
+    id: 'health-safety',
+    title: 'Santé et Sécurité',
+    description: 'Rapports de conformité en matière de santé et sécurité',
+    declarations: [
+      {
+        id: 'conformite-sante-securite',
+        title: 'Conformité en Santé et Sécurité',
+        description: 'Rapport de conformité aux normes de santé et sécurité',
+        progress: 98,
+        status: 'En cours',
+        category: 'health-safety'
+      }
+    ]
+  },
+  {
+    id: 'subsidy',
+    title: 'Aides et Subventions',
+    description: 'Demandes de subventions et aides financières',
+    declarations: [
+      {
+        id: 'pac',
+        title: 'PAC - Politique Agricole Commune',
+        description: 'Demande de paiement unique de la PAC',
+        progress: 0,
+        status: 'À commencer',
+        category: 'subsidy'
+      },
+      {
+        id: 'aides',
+        title: 'Demandes d\'Aides et Subventions',
+        description: 'Autres demandes de subventions agricoles',
+        progress: 0,
+        status: 'À commencer',
+        category: 'subsidy'
+      }
+    ]
+  },
+  {
     id: 'livestock',
     title: 'Gestion des Animaux et des Cultures',
     description: 'Déclarations liées aux animaux et aux cultures',
@@ -115,14 +146,6 @@ export const categories: Category[] = [
         id: 'identification-animaux',
         title: 'Identification et Enregistrement des Animaux',
         description: 'Suivi et identification du bétail',
-        progress: 0,
-        status: 'À commencer',
-        category: 'livestock'
-      },
-      {
-        id: 'phytosanitaires',
-        title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
-        description: 'Utilisation des produits de protection des cultures',
         progress: 0,
         status: 'À commencer',
         category: 'livestock'
@@ -193,9 +216,9 @@ export function PublicDeclarations() {
                     {category.title}
                   </CardTitle>
                   {category.hasChanges && (
-                    <span className="px-2 py-1 bg-[#005E5D] text-white text-xs rounded-full">
-                      {category.changeCount} changement{category.changeCount > 1 ? 's' : ''}
-                    </span>
+                    <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
+                      {category.changeCount} réglementation{category.changeCount > 1 ? 's' : ''} évolutive{category.changeCount > 1 ? 's' : ''}
+                    </div>
                   )}
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
