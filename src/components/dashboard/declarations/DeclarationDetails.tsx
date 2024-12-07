@@ -251,10 +251,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour registre',
-        description: 'Finaliser le registre des traitements phytosanitaires',
+        title: 'Inventaire des produits',
+        description: 'Dresser la liste complète des produits avec leurs numéros AMM',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour du registre phytosanitaire',
+        description: 'Documenter chaque traitement avec dates, doses et conditions météo',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des ZNT',
+        description: 'Confirmer le respect des Zones Non Traitées pour chaque parcelle',
         dueDate: '2024-02-28',
-        priority: 'Important'
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle du local',
+        description: 'Vérifier la conformité du stockage et l\'affichage réglementaire',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Bilan des pratiques alternatives',
+        description: 'Documenter les méthodes de lutte alternatives utilisées',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -277,15 +301,33 @@ const declarations: Record<string, DeclarationData> = {
     resolutionSteps: [
       {
         title: 'Mise à jour du Document Unique',
-        description: 'Révision annuelle du document unique d\'évaluation des risques',
-        dueDate: '2024-02-28',
-        priority: 'Important'
+        description: 'Évaluer les risques pour chaque poste de travail',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
       },
       {
-        title: 'Formation des nouveaux employés',
-        description: 'Organiser la formation sécurité pour les nouveaux arrivants',
-        dueDate: '2024-03-15',
-        priority: 'Urgent'
+        title: 'Vérification des équipements',
+        description: 'Contrôler tous les équipements de protection individuelle',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Formation des employés',
+        description: 'Organiser les formations sécurité et premiers secours',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour des protocoles',
+        description: 'Réviser les procédures d\'urgence et affichages obligatoires',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Audit interne',
+        description: 'Réaliser un audit complet des installations et pratiques',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -306,15 +348,33 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Finalisation du plan de fertilisation',
-        description: 'Compléter le plan de fertilisation pour l\'année 2024',
-        dueDate: '2024-02-29',
-        priority: 'Important'
+        title: 'Analyse complète des sols',
+        description: 'Réaliser des prélèvements et analyses de sol pour chaque parcelle',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
       },
       {
-        title: 'Mise à jour du registre',
-        description: 'Mettre à jour le registre d\'épandage avec les dernières applications',
+        title: 'Établir le plan de fertilisation',
+        description: 'Calculer les besoins en nutriments pour chaque culture',
         dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour du registre d\'épandage',
+        description: 'Documenter toutes les applications d\'engrais avec dates et quantités',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des zones sensibles',
+        description: 'Identifier et cartographier les zones à proximité des cours d\'eau',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Validation du plan',
+        description: 'Faire valider le plan par un conseiller agronomique',
+        dueDate: '2024-03-10',
         priority: 'Normal'
       }
     ]
@@ -404,10 +464,8 @@ export function DeclarationDetails() {
     switch (priority) {
       case 'Urgent':
         return 'text-red-500';
-      case 'Important':
-        return 'text-orange-500';
       default:
-        return 'text-blue-500';
+        return 'text-gray-500';
     }
   };
 
@@ -491,14 +549,25 @@ export function DeclarationDetails() {
                   <div className="space-y-1">
                     <h3 className="font-medium">{step.title}</h3>
                     <p className="text-sm text-gray-600">{step.description}</p>
+                    <div className="flex items-center gap-2 text-sm text-gray-500 mt-2">
+                      <Clock className="w-4 h-4" />
+                      <span>Échéance: {step.dueDate}</span>
+                    </div>
                   </div>
-                  <span className={`text-sm font-medium ${getPriorityColor(step.priority)}`}>
-                    {step.priority}
-                  </span>
-                </div>
-                <div className="mt-2 flex items-center gap-2 text-sm text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  <span>Échéance: {step.dueDate}</span>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => {/* TODO: Implement help request */}}
+                      className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    >
+                      Demander de l'aide
+                    </button>
+                    <button
+                      onClick={() => {/* TODO: Implement add to tasks */}}
+                      className="px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 border border-teal-300 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    >
+                      Ajouter à mes tâches
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
