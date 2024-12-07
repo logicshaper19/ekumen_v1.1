@@ -353,7 +353,7 @@ export function DeclarationDetails() {
   return (
     <div className="space-y-6 p-6">
       <div className="flex items-center space-x-4">
-        <Link to="/declarations" className="flex items-center text-sm text-gray-600 hover:text-gray-900">
+        <Link to="/dashboard" className="flex items-center text-sm text-gray-600 hover:text-gray-900">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Retour aux déclarations
         </Link>
