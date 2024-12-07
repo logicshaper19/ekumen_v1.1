@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon } from 'lucide-react';
+import { FormLayout } from '@/components/ui/form-layout';
 
 interface CapturedInfo {
   label: string;
@@ -21,12 +22,26 @@ interface ResolutionStep {
   priority: 'Urgent' | 'Important' | 'Normal';
 }
 
+interface RegulationInfo {
+  currentRegulation: Regulation;
+  upcomingRegulation?: Regulation;
+}
+
+interface Regulation {
+  title: string;
+  description: string;
+  effectiveDate: string;
+  source?: string;
+  changes?: string[];
+}
+
 interface DeclarationData {
   id: string;
   title: string;
   description: string;
   progress: number;
-  hasChanges?: boolean;
+  isRegulated?: boolean;
+  regulationInfo?: RegulationInfo;
   capturedInfo: CapturedInfo[];
   pendingInfo: PendingInfo[];
   resolutionSteps: ResolutionStep[];
@@ -61,7 +76,6 @@ const declarations: Record<string, DeclarationData> = {
     title: 'Foncier Rural',
     description: 'Déclaration des terres agricoles et leur statut',
     progress: 60,
-    hasChanges: true,
     capturedInfo: [
       { label: 'Surface totale', value: '150 hectares' },
       { label: 'Statut principal', value: 'Propriétaire exploitant' },
@@ -139,6 +153,27 @@ const declarations: Record<string, DeclarationData> = {
     title: 'PAC - Politique Agricole Commune',
     description: 'Demande de paiement unique de la PAC',
     progress: 30,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'PAC 2023-2027',
+        description: 'Cadre actuel de la Politique Agricole Commune',
+        effectiveDate: '1er janvier 2023',
+        source: 'Commission Européenne - DG AGRI'
+      },
+      upcomingRegulation: {
+        title: 'Modifications PAC 2024',
+        description: 'Ajustements et nouvelles mesures pour la PAC 2024',
+        effectiveDate: '1er janvier 2024',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Renforcement des eco-schemes',
+          'Nouvelles conditions pour les aides couplées',
+          'Modification du calcul des surfaces d\'intérêt écologique',
+          'Introduction de nouvelles mesures agro-environnementales'
+        ]
+      }
+    },
     capturedInfo: [
       { label: 'Numéro Pacage', value: '031234567' },
       { label: 'Surface déclarée', value: '85 hectares' },
@@ -281,6 +316,27 @@ const declarations: Record<string, DeclarationData> = {
     title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
     description: 'Utilisation des produits de protection des cultures',
     progress: 98,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Réglementation sur l\'utilisation des produits phytosanitaires 2023',
+        description: 'Cadre réglementaire actuel concernant l\'utilisation, le stockage et la traçabilité des produits phytosanitaires',
+        effectiveDate: '1er janvier 2023',
+        source: 'Ministère de l\'Agriculture et de la Souveraineté alimentaire'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles mesures de réduction des produits phytosanitaires 2024',
+        description: 'Renforcement des mesures de contrôle et nouvelles restrictions sur certains produits',
+        effectiveDate: '1er janvier 2024',
+        source: 'Plan Ecophyto 2024',
+        changes: [
+          'Introduction de nouvelles restrictions pour les produits contenant du glyphosate',
+          'Élargissement des zones non traitées (ZNT) autour des points d\'eau',
+          'Nouvelles exigences de formation pour les applicateurs',
+          'Renforcement du suivi digital des applications de produits'
+        ]
+      }
+    },
     capturedInfo: [
       { label: 'Certiphyto N°', value: 'CP123456' },
       { label: 'Surface traitée', value: '85 hectares' },
@@ -426,6 +482,27 @@ const declarations: Record<string, DeclarationData> = {
     title: 'Déclaration de Bien-être Animal',
     description: 'Conditions d\'élevage et bien-être animal',
     progress: 70,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Directives bien-être animal 2023',
+        description: 'Réglementation actuelle sur les conditions d\'élevage et le bien-être animal',
+        effectiveDate: '1er juillet 2023',
+        source: 'Direction Générale de l\'Alimentation (DGAL)'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles normes bien-être animal 2024',
+        description: 'Renforcement des exigences en matière de bien-être animal',
+        effectiveDate: '1er juillet 2024',
+        source: 'Loi EGalim 2',
+        changes: [
+          'Nouvelles normes sur l\'espace minimal par animal',
+          'Exigences renforcées sur l\'accès au plein air',
+          'Obligation de vidéosurveillance dans les grands élevages',
+          'Nouvelles normes sur l\'enrichissement du milieu de vie'
+        ]
+      }
+    },
     capturedInfo: [
       { label: 'Type d\'élevage', value: 'Bovin laitier' },
       { label: 'Surface par animal', value: '10 m² / animal' },
@@ -563,7 +640,211 @@ const declarations: Record<string, DeclarationData> = {
         priority: 'Normal'
       }
     ]
-  }
+  },
+  'produits-phytosanitaires': {
+    id: 'produits-phytosanitaires',
+    title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
+    description: 'Déclaration des pratiques phytosanitaires et respect des normes',
+    progress: 60,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Réglementation sur l\'utilisation des produits phytosanitaires 2023',
+        description: 'Cadre réglementaire actuel concernant l\'utilisation, le stockage et la traçabilité des produits phytosanitaires',
+        effectiveDate: '1er janvier 2023',
+        source: 'Ministère de l\'Agriculture et de la Souveraineté alimentaire'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles mesures de réduction des produits phytosanitaires 2024',
+        description: 'Renforcement des mesures de contrôle et nouvelles restrictions sur certains produits',
+        effectiveDate: '1er janvier 2024',
+        source: 'Plan Ecophyto 2024',
+        changes: [
+          'Introduction de nouvelles restrictions pour les produits contenant du glyphosate',
+          'Élargissement des zones non traitées (ZNT) autour des points d\'eau',
+          'Nouvelles exigences de formation pour les applicateurs',
+          'Renforcement du suivi digital des applications de produits'
+        ]
+      }
+    },
+    capturedInfo: [
+      { label: 'Certiphyto N°', value: 'CP123456' },
+      { label: 'Surface traitée', value: '85 hectares' },
+      { label: 'Produits utilisés', value: '12 références' }
+    ],
+    pendingInfo: [
+      { label: 'Registre phytosanitaire à jour' },
+      { label: 'Bordereau de suivi des déchets' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Inventaire des produits',
+        description: 'Faire l\'inventaire complet des produits phytosanitaires en stock',
+        dueDate: '2024-02-15',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour du registre',
+        description: 'Mettre à jour le registre des traitements phytosanitaires',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des ZNT',
+        description: 'Contrôler le respect des zones non traitées',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle du local',
+        description: 'Vérifier la conformité du local de stockage',
+        dueDate: '2024-03-01',
+        priority: 'Normal'
+      },
+      {
+        title: 'Documentation des alternatives',
+        description: 'Noter les méthodes alternatives utilisées',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      }
+    ]
+  },
+  'bien-etre-animal': {
+    id: 'bien-etre-animal',
+    title: 'Déclaration de Bien-être Animal',
+    description: 'Suivi et déclaration des conditions d\'élevage',
+    progress: 40,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Directives bien-être animal 2023',
+        description: 'Réglementation actuelle sur les conditions d\'élevage et le bien-être animal',
+        effectiveDate: '1er juillet 2023',
+        source: 'Direction Générale de l\'Alimentation (DGAL)'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles normes bien-être animal 2024',
+        description: 'Renforcement des exigences en matière de bien-être animal',
+        effectiveDate: '1er juillet 2024',
+        source: 'Loi EGalim 2',
+        changes: [
+          'Nouvelles normes sur l\'espace minimal par animal',
+          'Exigences renforcées sur l\'accès au plein air',
+          'Obligation de vidéosurveillance dans les grands élevages',
+          'Nouvelles normes sur l\'enrichissement du milieu de vie'
+        ]
+      }
+    },
+    capturedInfo: [
+      { label: 'Type d\'élevage', value: 'Bovin laitier' },
+      { label: 'Surface par animal', value: '10 m² / animal' },
+      { label: 'Accès extérieur', value: 'Oui - Pâturage' }
+    ],
+    pendingInfo: [
+      { label: 'Rapport vétérinaire annuel' },
+      { label: 'Plan de prévention' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Évaluation des conditions',
+        description: 'Vérifier les conditions de logement des animaux',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle des points d\'eau',
+        description: 'Vérifier l\'accès à l\'eau pour tous les animaux',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Évaluation alimentation',
+        description: 'Contrôler les pratiques d\'alimentation',
+        dueDate: '2024-03-01',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle ventilation',
+        description: 'Vérifier le système de ventilation',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Documentation des soins',
+        description: 'Mettre à jour le registre des soins',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
+      }
+    ]
+  },
+  'pac': {
+    id: 'pac',
+    title: 'PAC - Politique Agricole Commune',
+    description: 'Déclaration annuelle PAC',
+    progress: 30,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'PAC 2023-2027',
+        description: 'Cadre actuel de la Politique Agricole Commune',
+        effectiveDate: '1er janvier 2023',
+        source: 'Commission Européenne - DG AGRI'
+      },
+      upcomingRegulation: {
+        title: 'Modifications PAC 2024',
+        description: 'Ajustements et nouvelles mesures pour la PAC 2024',
+        effectiveDate: '1er janvier 2024',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Renforcement des eco-schemes',
+          'Nouvelles conditions pour les aides couplées',
+          'Modification du calcul des surfaces d\'intérêt écologique',
+          'Introduction de nouvelles mesures agro-environnementales'
+        ]
+      }
+    },
+    capturedInfo: [
+      { label: 'Numéro Pacage', value: '031234567' },
+      { label: 'Surface déclarée', value: '85 hectares' },
+      { label: 'DPB', value: '70 droits activés' }
+    ],
+    pendingInfo: [
+      { label: 'Photos géolocalisées' },
+      { label: 'Justificatifs SIE' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Mise à jour parcellaire',
+        description: 'Vérifier et mettre à jour les limites des parcelles',
+        dueDate: '2024-03-15',
+        priority: 'Normal'
+      },
+      {
+        title: 'Déclaration cultures',
+        description: 'Déclarer les cultures pour chaque parcelle',
+        dueDate: '2024-03-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Calcul SIE',
+        description: 'Calculer les Surfaces d\'Intérêt Écologique',
+        dueDate: '2024-03-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification conformité',
+        description: 'Contrôler la conformité avec les exigences PAC',
+        dueDate: '2024-03-30',
+        priority: 'Normal'
+      },
+      {
+        title: 'Finalisation dossier',
+        description: 'Rassembler tous les justificatifs nécessaires',
+        dueDate: '2024-04-05',
+        priority: 'Normal'
+      }
+    ]
+  },
 };
 
 export function DeclarationDetails() {
@@ -574,83 +855,100 @@ export function DeclarationDetails() {
     return <div>Déclaration non trouvée</div>;
   }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'Urgent':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
-    }
-  };
-
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center space-x-4">
-        <Link to="/dashboard" className="flex items-center text-sm text-gray-600 hover:text-gray-900">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Retour aux déclarations
-        </Link>
-      </div>
+    <div className="container mx-auto py-6 space-y-6">
+      {/* Back Button */}
+      <Link
+        to="/declarations"
+        className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
+      >
+        <ArrowLeft className="w-4 h-4 mr-1" />
+        Retour aux déclarations
+      </Link>
 
+      {/* Title Section */}
       <div>
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">{declaration.title}</h1>
-          {declaration.hasChanges && (
-            <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
-              1 réglementation évolutive
+          {declaration.isRegulated && (
+            <div className="inline-flex px-3 py-1 rounded-full text-blue-600 bg-blue-100/80 text-center items-center justify-center text-sm">
+              Réglementation évolutive
             </div>
           )}
-          <InfoIcon className="w-5 h-5 text-gray-400" />
         </div>
-        <div className="mt-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Progression Globale</span>
-            <span className="text-sm font-medium">{declaration.progress}%</span>
-          </div>
-          <Progress value={declaration.progress} className="h-2" />
-        </div>
+        <p className="mt-2 text-gray-600">{declaration.description}</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Form Layout */}
+      <FormLayout
+        progress={declaration.progress}
+        capturedInfo={declaration.capturedInfo}
+        pendingInfo={declaration.pendingInfo}
+      />
+
+      {/* Regulation Information */}
+      {declaration.isRegulated && declaration.regulationInfo && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-green-500" />
-              Informations Capturées
+              <InfoIcon className="h-5 w-5 text-blue-500" />
+              Réglementation
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <dl className="space-y-4">
-              {declaration.capturedInfo.map((info, index) => (
-                <div key={index}>
-                  <dt className="text-sm text-gray-600">{info.label}:</dt>
-                  <dd className="text-sm font-medium mt-1">{info.value}</dd>
+          <CardContent className="space-y-6">
+            {/* Current Regulation */}
+            <div className="space-y-3">
+              <h3 className="font-semibold">Réglementation Actuelle</h3>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-medium text-gray-900">{declaration.regulationInfo.currentRegulation.title}</h4>
+                <p className="text-gray-600 mt-1">{declaration.regulationInfo.currentRegulation.description}</p>
+                <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                  <Clock className="h-4 w-4" />
+                  <span>En vigueur depuis le {declaration.regulationInfo.currentRegulation.effectiveDate}</span>
                 </div>
-              ))}
-            </dl>
+                {declaration.regulationInfo.currentRegulation.source && (
+                  <p className="text-sm text-gray-500 mt-2">
+                    Source: {declaration.regulationInfo.currentRegulation.source}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Upcoming Regulation */}
+            {declaration.regulationInfo.upcomingRegulation && (
+              <div className="space-y-3">
+                <h3 className="font-semibold flex items-center gap-2">
+                  Évolution de la Réglementation
+                  <span className="text-sm font-normal text-blue-600">
+                    (À partir du {declaration.regulationInfo.upcomingRegulation.effectiveDate})
+                  </span>
+                </h3>
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                  <h4 className="font-medium text-gray-900">{declaration.regulationInfo.upcomingRegulation.title}</h4>
+                  <p className="text-gray-600 mt-1">{declaration.regulationInfo.upcomingRegulation.description}</p>
+                  {declaration.regulationInfo.upcomingRegulation.source && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      Source: {declaration.regulationInfo.upcomingRegulation.source}
+                    </p>
+                  )}
+                  {declaration.regulationInfo.upcomingRegulation.changes && declaration.regulationInfo.upcomingRegulation.changes.length > 0 && (
+                    <div className="mt-4">
+                      <h5 className="font-medium text-sm text-gray-900 mb-2">Principaux changements:</h5>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
+                        {declaration.regulationInfo.upcomingRegulation.changes.map((change, index) => (
+                          <li key={index}>{change}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+      )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-orange-500" />
-              Informations en Attente
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {declaration.pendingInfo.map((info, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <Clock className="w-4 h-4 text-orange-500 mt-0.5" />
-                  <span className="text-sm">{info.label}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
+      {/* Resolution Steps */}
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -674,15 +972,24 @@ export function DeclarationDetails() {
         <CardContent>
           <div className="space-y-4">
             {declaration.resolutionSteps.map((step, index) => (
-              <div key={index} className="border rounded-lg p-4">
-                <div className="space-y-1">
-                  <h3 className="font-medium">{step.title}</h3>
-                  <p className="text-sm text-gray-600">{step.description}</p>
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mt-2">
-                    <Clock className="w-4 h-4" />
-                    <span>Échéance: {step.dueDate}</span>
+              <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="flex-1">
+                  <h4 className="font-medium text-gray-900">{step.title}</h4>
+                  <p className="mt-1 text-sm text-gray-600">{step.description}</p>
+                  <div className="flex items-center gap-4 mt-2">
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <Clock className="w-4 h-4" />
+                      <span>Échéance: {step.dueDate}</span>
+                    </div>
+                    {step.priority === 'Urgent' && (
+                      <div className="flex items-center gap-1 text-sm text-red-600">
+                        <AlertTriangle className="w-4 h-4" />
+                        <span>Urgent</span>
+                      </div>
+                    )}
                   </div>
                 </div>
+                <CheckCircle2 className="w-5 h-5 text-gray-400" />
               </div>
             ))}
           </div>
