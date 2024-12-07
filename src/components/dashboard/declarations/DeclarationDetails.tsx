@@ -973,7 +973,7 @@ export function DeclarationDetails() {
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">{declaration.title}</h1>
           {declaration.isRegulated && (
-            <div className="inline-flex px-3 py-1 rounded-full text-blue-600 bg-blue-100/80 text-center items-center justify-center text-sm">
+            <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
               Réglementation évolutive
             </div>
           )}
