@@ -103,10 +103,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour registre',
-        description: 'Actualiser le registre d\'élevage',
-        dueDate: '2024-02-15',
-        priority: 'Urgent'
+        title: 'Inventaire du cheptel',
+        description: 'Vérifier les numéros d\'identification de tous les animaux',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour du registre d\'élevage',
+        description: 'Enregistrer tous les mouvements d\'animaux (naissances, décès, ventes)',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle sanitaire',
+        description: 'Vérifier les dates de vaccination et traitements vétérinaires',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des boucles',
+        description: 'Contrôler l\'état des boucles d\'identification et remplacer si nécessaire',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Notification des mouvements',
+        description: 'Déclarer tous les mouvements sur le portail de l\'EDE',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -127,16 +151,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour RPG',
-        description: 'Actualiser le registre parcellaire graphique',
-        dueDate: '2024-03-20',
-        priority: 'Important'
+        title: 'Mise à jour du RPG',
+        description: 'Vérifier et actualiser les limites de parcelles sur TelePAC',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
       },
       {
-        title: 'Vérification éligibilité',
-        description: 'Contrôler les critères d\'éligibilité aux aides',
-        dueDate: '2024-03-25',
-        priority: 'Urgent'
+        title: 'Déclaration des cultures',
+        description: 'Renseigner les cultures prévues pour chaque îlot',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Calcul des SIE',
+        description: 'Identifier et mesurer les Surfaces d\'Intérêt Écologique',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des critères',
+        description: 'Contrôler le respect des critères de verdissement',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Finalisation du dossier',
+        description: 'Rassembler les justificatifs et signer la déclaration',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -395,10 +437,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Audit bien-être',
-        description: 'Réaliser l\'audit bien-être animal',
+        title: 'Évaluation des conditions de logement',
+        description: 'Mesurer les surfaces et vérifier la conformité des installations',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle des points d\'eau',
+        description: 'Vérifier l\'accès et le fonctionnement des abreuvoirs',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Évaluation de l\'alimentation',
+        description: 'Contrôler les rations et l\'accès aux mangeoires',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification de la ventilation',
+        description: 'Mesurer la qualité de l\'air et le fonctionnement du système',
         dueDate: '2024-03-05',
-        priority: 'Important'
+        priority: 'Normal'
+      },
+      {
+        title: 'Documentation des soins',
+        description: 'Mettre à jour le registre des soins et interventions',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -419,10 +485,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'DSN mensuelle',
-        description: 'Préparer la déclaration sociale nominative',
-        dueDate: '2024-02-15',
-        priority: 'Urgent'
+        title: 'Préparation des bulletins',
+        description: 'Rassembler tous les bulletins de salaire du trimestre',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Calcul des cotisations',
+        description: 'Détailler les bases de calcul pour chaque type de cotisation',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des exonérations',
+        description: 'Identifier les dispositifs d\'allègement applicables',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Préparation de la DSN',
+        description: 'Remplir la Déclaration Sociale Nominative',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Validation des paiements',
+        description: 'Programmer les virements pour les cotisations',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   },
@@ -443,10 +533,34 @@ const declarations: Record<string, DeclarationData> = {
     ],
     resolutionSteps: [
       {
-        title: 'Préparation déclaration',
-        description: 'Rassembler les pièces comptables',
-        dueDate: '2024-04-20',
-        priority: 'Important'
+        title: 'Classement des factures',
+        description: 'Trier les factures par taux de TVA et par type',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Calcul de la TVA collectée',
+        description: 'Totaliser la TVA sur les ventes par taux',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Calcul de la TVA déductible',
+        description: 'Vérifier l\'éligibilité des dépenses à déduction',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Régularisations',
+        description: 'Identifier les opérations nécessitant régularisation',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Transmission déclaration',
+        description: 'Remplir et envoyer la déclaration sur impots.gouv.fr',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
       }
     ]
   }
@@ -539,34 +653,34 @@ export function DeclarationDetails() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Plan de Résolution</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Plan de Résolution</CardTitle>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {/* TODO: Implement help request */}}
+                className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              >
+                Demander de l'aide
+              </button>
+              <button
+                onClick={() => {/* TODO: Implement add to tasks */}}
+                className="px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 border border-teal-300 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              >
+                Ajouter à mes tâches
+              </button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {declaration.resolutionSteps.map((step, index) => (
               <div key={index} className="border rounded-lg p-4">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <h3 className="font-medium">{step.title}</h3>
-                    <p className="text-sm text-gray-600">{step.description}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mt-2">
-                      <Clock className="w-4 h-4" />
-                      <span>Échéance: {step.dueDate}</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() => {/* TODO: Implement help request */}}
-                      className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Demander de l'aide
-                    </button>
-                    <button
-                      onClick={() => {/* TODO: Implement add to tasks */}}
-                      className="px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 border border-teal-300 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Ajouter à mes tâches
-                    </button>
+                <div className="space-y-1">
+                  <h3 className="font-medium">{step.title}</h3>
+                  <p className="text-sm text-gray-600">{step.description}</p>
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mt-2">
+                    <Clock className="w-4 h-4" />
+                    <span>Échéance: {step.dueDate}</span>
                   </div>
                 </div>
               </div>
