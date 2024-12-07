@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 const navigation = [
-  { name: 'Conformité', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Déclarations', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
   { name: 'Communauté', href: '/community', icon: Users },
   { name: 'Transformation', href: '/transformation', icon: Factory },

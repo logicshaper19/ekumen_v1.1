@@ -49,7 +49,7 @@ export function Dashboard() {
       {/* Header Section with Échéances à Venir */}
       <div className="grid grid-cols-[1fr_400px] gap-8 mb-8">
         <div className="space-y-4">
-          <h1 className="text-[40px] font-bold text-black mb-1">Conformité</h1>
+          <h1 className="text-[40px] font-bold text-black mb-1">Déclarations</h1>
           <FilingRequirementsChart />
         </div>
         <UpcomingDeclarations />
