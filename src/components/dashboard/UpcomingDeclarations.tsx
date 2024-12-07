@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 const upcomingDeclarations = [
   {
-    id: 1,
+    id: 'engrais-sols',
     title: "Gestion des Engrais et Sols",
     dueDate: "31 Décembre 2024",
     progress: 98,
   },
   {
-    id: 2,
+    id: 'phytosanitaires',
     title: "Rapport sur l'Utilisation des Produits Phytosanitaires",
     dueDate: "31 Décembre 2024",
     progress: 98,
   },
   {
-    id: 3,
+    id: 'conformite-sante-securite',
     title: "Conformité en Santé et Sécurité",
     dueDate: "31 Décembre 2024",
     progress: 98,
@@ -28,7 +28,7 @@ const upcomingDeclarations = [
 export function UpcomingDeclarations() {
   const navigate = useNavigate();
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: string) => {
     navigate(`/declarations/${id}`);
   };
 
