@@ -49,7 +49,7 @@ export function Dashboard() {
       {/* Header Section with Échéances à Venir */}
       <div className="grid grid-cols-[1fr_400px] gap-8 mb-8">
         <div className="space-y-4">
-          <h1 className="text-[40px] font-bold text-black mb-1">Déclarations</h1>
+          <h1 className="text-[40px] font-bold text-black mb-1">Conformité</h1>
           <FilingRequirementsChart />
         </div>
         <UpcomingDeclarations />
@@ -61,8 +61,8 @@ export function Dashboard() {
           onClick={() => setActiveTab('public')}
           className={`px-6 py-2 rounded-full text-sm ${
             activeTab === 'public'
-              ? 'bg-black text-white'
-              : 'bg-gray-100 text-gray-600'
+              ? 'bg-[#005E5D] text-white'
+              : 'bg-white text-gray-900'
           }`}
         >
           Déclarations Publiques
@@ -71,8 +71,8 @@ export function Dashboard() {
           onClick={() => setActiveTab('private')}
           className={`px-6 py-2 rounded-full text-sm ${
             activeTab === 'private'
-              ? 'bg-black text-white'
-              : 'bg-gray-100 text-gray-600'
+              ? 'bg-[#005E5D] text-white'
+              : 'bg-white text-gray-900'
           }`}
         >
           Déclarations Privées
