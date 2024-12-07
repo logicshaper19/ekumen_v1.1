@@ -199,50 +199,53 @@ export function PublicDeclarations() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {categories.map((category) => {
-        const progress = getCategoryProgress(category);
-        
-        return (
-          <Card
-            key={category.id}
-            className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-            onClick={() => navigate(`/declarations/categories/${category.id}`)}
-          >
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <CardTitle className="text-lg">
-                    {category.title}
-                  </CardTitle>
-                  {category.hasChanges && (
-                    <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
-                      {category.changeCount} réglementation{category.changeCount > 1 ? 's' : ''} évolutive{category.changeCount > 1 ? 's' : ''}
-                    </div>
-                  )}
+    <div>
+      <h2 className="text-2xl font-semibold mb-6">Déclarations Publiques</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {categories.map((category) => {
+          const progress = getCategoryProgress(category);
+          
+          return (
+            <Card
+              key={category.id}
+              className="h-full hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => navigate(`/declarations/categories/${category.id}`)}
+            >
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-lg">
+                      {category.title}
+                    </CardTitle>
+                    {category.hasChanges && (
+                      <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
+                        {category.changeCount} réglementation{category.changeCount > 1 ? 's' : ''} évolutive{category.changeCount > 1 ? 's' : ''}
+                      </div>
+                    )}
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 mb-4">
-                {category.description}
-              </p>
-              <div className="space-y-2">
-                <Progress value={progress} className="h-2" />
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">
-                    {progress === 100 ? 'Complété' : 'En cours'}
-                  </span>
-                  <span className="text-gray-900 font-medium">
-                    {Math.round(progress)}%
-                  </span>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600 mb-4">
+                  {category.description}
+                </p>
+                <div className="space-y-2">
+                  <Progress value={progress} className="h-2" />
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">
+                      {progress === 100 ? 'Complété' : 'En cours'}
+                    </span>
+                    <span className="text-gray-900 font-medium">
+                      {Math.round(progress)}%
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }
