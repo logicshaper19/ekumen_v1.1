@@ -11,6 +11,7 @@ interface Declaration {
   progress: number;
   status: string;
   category: string;
+  hasChanges?: boolean;
 }
 
 interface Category {
@@ -18,6 +19,8 @@ interface Category {
   title: string;
   description: string;
   declarations: Declaration[];
+  hasChanges?: boolean;
+  changeCount?: number;
 }
 
 export const categories: Category[] = [
@@ -25,6 +28,8 @@ export const categories: Category[] = [
     id: 'registration',
     title: 'Formulaires d\'Enregistrement et Administratifs',
     description: 'Documents administratifs et enregistrements obligatoires',
+    hasChanges: true,
+    changeCount: 1,
     declarations: [
       {
         id: 'declaration-activite',
@@ -40,7 +45,8 @@ export const categories: Category[] = [
         description: 'Déclaration des terres agricoles et leur statut',
         progress: 0,
         status: 'À commencer',
-        category: 'registration'
+        category: 'registration',
+        hasChanges: true
       }
     ]
   },
@@ -102,6 +108,8 @@ export const categories: Category[] = [
     id: 'livestock',
     title: 'Gestion des Animaux et des Cultures',
     description: 'Déclarations liées aux animaux et aux cultures',
+    hasChanges: true,
+    changeCount: 2,
     declarations: [
       {
         id: 'identification-animaux',
@@ -180,9 +188,16 @@ export function PublicDeclarations() {
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">
-                  {category.title}
-                </CardTitle>
+                <div className="flex items-center gap-2">
+                  <CardTitle className="text-lg">
+                    {category.title}
+                  </CardTitle>
+                  {category.hasChanges && (
+                    <span className="px-2 py-1 bg-[#005E5D] text-white text-xs rounded-full">
+                      {category.changeCount} changement{category.changeCount > 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </div>
             </CardHeader>
