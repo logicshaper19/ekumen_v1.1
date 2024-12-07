@@ -950,44 +950,6 @@ export function DeclarationDetails() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-green-500" />
-            Informations Capturées
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <dl className="space-y-4">
-            {declaration.capturedInfo.map((info, index) => (
-              <div key={index}>
-                <dt className="text-sm text-gray-600">{info.label}:</dt>
-                <dd className="text-sm font-medium mt-1">{info.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-orange-500" />
-            Informations en Attente
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2">
-            {declaration.pendingInfo.map((info, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <Clock className="w-4 h-4 text-orange-500 mt-0.5" />
-                <span className="text-sm">{info.label}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Plan de Résolution</CardTitle>
             <div className="flex gap-2">
