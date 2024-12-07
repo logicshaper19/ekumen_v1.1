@@ -56,11 +56,8 @@ function App() {
         <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
           <Route path="dashboard">
             <Route index element={<Dashboard />} />
-            <Route path="declarations">
-              <Route index element={<PublicDeclarations />} />
-              <Route path=":id" element={<DeclarationDetailsPage />} />
-              <Route path="categories/:categoryId" element={<CategoryDeclarationsPage />} />
-            </Route>
+            <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
+            <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
           </Route>
           <Route path="community" element={<Community />} />
           <Route path="business-plan" element={<BusinessPlan />} />

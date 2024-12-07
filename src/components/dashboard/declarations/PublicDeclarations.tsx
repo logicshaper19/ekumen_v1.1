@@ -114,7 +114,6 @@ export const categories: Category[] = [
     id: 'subsidy',
     title: 'Aides et Subventions',
     description: 'Demandes de subventions et aides financières',
-    hasChanges: true,
     declarations: [
       {
         id: 'pac',
@@ -122,8 +121,7 @@ export const categories: Category[] = [
         description: 'Demande de paiement unique de la PAC',
         progress: 0,
         status: 'À commencer',
-        category: 'subsidy',
-        hasChanges: true
+        category: 'subsidy'
       },
       {
         id: 'aides',
@@ -131,8 +129,7 @@ export const categories: Category[] = [
         description: 'Autres demandes de subventions agricoles',
         progress: 0,
         status: 'À commencer',
-        category: 'subsidy',
-        hasChanges: true
+        category: 'subsidy'
       }
     ]
   },
@@ -146,10 +143,9 @@ export const categories: Category[] = [
         id: 'identification-animaux',
         title: 'Identification et Enregistrement des Animaux',
         description: 'Suivi et identification du bétail',
-        progress: 40,
-        status: 'En cours',
-        category: 'livestock',
-        hasChanges: true
+        progress: 0,
+        status: 'À commencer',
+        category: 'livestock'
       },
       {
         id: 'bien-etre',
@@ -219,9 +215,9 @@ export function PublicDeclarations() {
                       {category.title}
                     </CardTitle>
                     {category.hasChanges && (
-                      <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
+                      <span className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-sm">
                         Réglementation évolutive
-                      </div>
+                      </span>
                     )}
                   </div>
                   <ChevronRight className="w-5 h-5 text-gray-400" />

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon } from 'lucide-react';
 import { FormLayout } from '@/components/ui/form-layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface CapturedInfo {
   label: string;
@@ -131,48 +132,46 @@ const declarations: Record<string, DeclarationData> = {
   'identification-animaux': {
     id: 'identification-animaux',
     title: 'Identification et Enregistrement des Animaux',
-    description: 'Suivi et identification du bétail',
-    progress: 40,
-    status: 'En cours',
-    isRegulated: true,
-    regulationInfo: {
-      currentRegulation: {
-        title: 'Règlement actuel d\'identification',
-        description: 'Dispositions actuelles pour l\'identification des animaux',
-        effectiveDate: '2023-01-01',
-        source: 'Ministère de l\'Agriculture'
-      },
-      upcomingRegulation: {
-        title: 'Nouvelles normes d\'identification 2024',
-        description: 'Évolution des normes d\'identification et de traçabilité',
-        effectiveDate: '2024-01-01',
-        source: 'Ministère de l\'Agriculture',
-        changes: [
-          'Nouveaux critères d\'identification électronique',
-          'Renforcement des exigences de traçabilité',
-          'Mise à jour des délais de notification'
-        ]
-      }
-    },
+    description: 'Déclaration du cheptel',
+    progress: 60,
     capturedInfo: [
-      { label: 'Nombre d\'animaux', value: '150' },
-      { label: 'Type d\'élevage', value: 'Bovin laitier' }
+      { label: 'Numéro EDE', value: 'FR31123456' },
+      { label: 'Type d\'élevage', value: 'Bovin laitier' },
+      { label: 'Nombre d\'animaux', value: '45 têtes' }
     ],
     pendingInfo: [
-      { label: 'Registre des mouvements' },
-      { label: 'Documents d\'identification' }
+      { label: 'Registre d\'élevage à jour' },
+      { label: 'Certificats sanitaires' }
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour du registre',
-        description: 'Actualiser le registre des animaux',
-        dueDate: '2024-02-28',
-        priority: 'Important'
+        title: 'Inventaire du cheptel',
+        description: 'Vérifier les numéros d\'identification de tous les animaux',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
       },
       {
-        title: 'Vérification équipements',
-        description: 'Contrôler la conformité des équipements d\'identification',
-        dueDate: '2024-03-15',
+        title: 'Mise à jour du registre d\'élevage',
+        description: 'Enregistrer tous les mouvements d\'animaux (naissances, décès, ventes)',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Contrôle sanitaire',
+        description: 'Vérifier les dates de vaccination et traitements vétérinaires',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des boucles',
+        description: 'Contrôler l\'état des boucles d\'identification et remplacer si nécessaire',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Notification des mouvements',
+        description: 'Déclarer tous les mouvements sur le portail de l\'EDE',
+        dueDate: '2024-03-10',
         priority: 'Normal'
       }
     ]
@@ -248,98 +247,25 @@ const declarations: Record<string, DeclarationData> = {
   },
   'aides': {
     id: 'aides',
-    title: 'Autres Aides',
+    title: 'Demandes d\'Aides et Subventions',
     description: 'Autres demandes de subventions agricoles',
     progress: 20,
-    isRegulated: true,
-    regulationInfo: {
-      currentRegulation: {
-        title: 'Dispositifs d\'aide actuels',
-        description: 'Régimes d\'aides agricoles en vigueur',
-        effectiveDate: '2023-01-01',
-        source: 'Ministère de l\'Agriculture'
-      },
-      upcomingRegulation: {
-        title: 'Nouveaux dispositifs d\'aide 2024',
-        description: 'Évolution des dispositifs de soutien agricole',
-        effectiveDate: '2024-01-01',
-        source: 'Ministère de l\'Agriculture',
-        changes: [
-          'Introduction de nouvelles aides à l\'investissement',
-          'Modification des taux de soutien',
-          'Nouveaux critères environnementaux'
-        ]
-      }
-    },
     capturedInfo: [
-      { label: 'Type d\'exploitation', value: 'Polyculture-élevage' },
-      { label: 'Régime fiscal', value: 'Réel' }
+      { label: 'Type d\'aide', value: 'Aide à l\'installation' },
+      { label: 'Montant demandé', value: '40 000 €' },
+      { label: 'Date d\'installation', value: '01/01/2024' }
     ],
     pendingInfo: [
-      { label: 'Bilans financiers' },
-      { label: 'Plan d\'investissement' }
+      { label: 'Plan d\'entreprise' },
+      { label: 'Diplômes et certificats' },
+      { label: 'Étude économique prévisionnelle' }
     ],
     resolutionSteps: [
       {
-        title: 'Analyse d\'éligibilité',
-        description: 'Identifier les aides accessibles selon le nouveau régime',
-        dueDate: '2024-02-28',
+        title: 'Finalisation dossier',
+        description: 'Compléter les pièces manquantes du dossier',
+        dueDate: '2024-04-15',
         priority: 'Important'
-      },
-      {
-        title: 'Préparation dossiers',
-        description: 'Constituer les dossiers de demande',
-        dueDate: '2024-03-15',
-        priority: 'Normal'
-      }
-    ]
-  },
-  'paiement-unique': {
-    id: 'paiement-unique',
-    title: 'Paiement Unique',
-    description: 'Demande de paiement unique de la PAC',
-    progress: 0,
-    status: 'À commencer',
-    isRegulated: true,
-    regulationInfo: {
-      currentRegulation: {
-        title: 'Régime actuel des paiements directs',
-        description: 'Dispositions actuelles pour les paiements directs de la PAC',
-        effectiveDate: '2023-01-01',
-        source: 'Ministère de l\'Agriculture'
-      },
-      upcomingRegulation: {
-        title: 'Nouveau régime de paiements 2024',
-        description: 'Évolution des modalités de paiements directs',
-        effectiveDate: '2024-01-01',
-        source: 'Ministère de l\'Agriculture',
-        changes: [
-          'Modification des critères d\'éligibilité',
-          'Nouveaux plafonds de paiement',
-          'Évolution des conditions environnementales'
-        ]
-      }
-    },
-    capturedInfo: [
-      { label: 'Numéro Pacage', value: '012345678' },
-      { label: 'Surface éligible', value: '95 hectares' }
-    ],
-    pendingInfo: [
-      { label: 'Relevé parcellaire' },
-      { label: 'Justificatifs de propriété' }
-    ],
-    resolutionSteps: [
-      {
-        title: 'Vérification éligibilité',
-        description: 'Contrôler les critères d\'éligibilité selon les nouvelles règles',
-        dueDate: '2024-03-01',
-        priority: 'Important'
-      },
-      {
-        title: 'Constitution dossier',
-        description: 'Rassembler les pièces justificatives requises',
-        dueDate: '2024-03-15',
-        priority: 'Normal'
       }
     ]
   },
@@ -957,6 +883,71 @@ export function DeclarationDetails() {
     return <div>Déclaration non trouvée</div>;
   }
 
+  const renderRegulationInfo = () => {
+    if (!declaration.regulationInfo) return null;
+
+    return (
+      <div className="space-y-8">
+        <div className="flex items-center gap-2 text-orange-600">
+          <InfoIcon className="h-5 w-5" />
+          <h2 className="text-lg font-medium">Réglementation</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8">
+          {/* Current Regulation */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">Réglementation Actuelle</h3>
+            <h4 className="text-base font-medium">{declaration.regulationInfo.currentRegulation.title}</h4>
+            <p className="text-gray-600">{declaration.regulationInfo.currentRegulation.description}</p>
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Clock className="h-4 w-4" />
+              <span>En vigueur depuis le {declaration.regulationInfo.currentRegulation.effectiveDate}</span>
+            </div>
+            {declaration.regulationInfo.currentRegulation.source && (
+              <p className="text-sm text-gray-500">
+                Source: {declaration.regulationInfo.currentRegulation.source}
+              </p>
+            )}
+          </div>
+
+          {/* Upcoming Regulation */}
+          {declaration.regulationInfo.upcomingRegulation && (
+            <div className="space-y-2 bg-orange-50/50 p-6 rounded-lg">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Évolution de la Réglementation</h3>
+                <span className="text-sm text-orange-600">
+                  (À partir du {declaration.regulationInfo.upcomingRegulation.effectiveDate})
+                </span>
+              </div>
+              <h4 className="text-base font-medium">{declaration.regulationInfo.upcomingRegulation.title}</h4>
+              <p className="text-gray-600">{declaration.regulationInfo.upcomingRegulation.description}</p>
+
+              {declaration.regulationInfo.upcomingRegulation.changes && (
+                <div className="mt-4">
+                  <h4 className="font-medium mb-2">Principaux changements:</h4>
+                  <ul className="space-y-2 text-gray-600">
+                    {declaration.regulationInfo.upcomingRegulation.changes.map((change, index) => (
+                      <li key={index} className="flex gap-2">
+                        <span>•</span>
+                        <span>{change}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {declaration.regulationInfo.upcomingRegulation.source && (
+                <p className="text-sm text-gray-500">
+                  Source: {declaration.regulationInfo.upcomingRegulation.source}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="container mx-auto py-6 space-y-6">
       {/* Back Button */}
@@ -973,129 +964,102 @@ export function DeclarationDetails() {
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">{declaration.title}</h1>
           {declaration.isRegulated && (
-            <div className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-center items-center justify-center text-sm">
+            <span className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-sm">
               Réglementation évolutive
-            </div>
+            </span>
           )}
         </div>
         <p className="mt-2 text-gray-600">{declaration.description}</p>
       </div>
 
-      {/* Form Layout */}
-      <FormLayout
-        progress={declaration.progress}
-        capturedInfo={declaration.capturedInfo}
-        pendingInfo={declaration.pendingInfo}
-      />
-
-      {/* Regulation Information */}
-      {declaration.isRegulated && declaration.regulationInfo && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <InfoIcon className="h-5 w-5 text-blue-500" />
-              Réglementation
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Current Regulation */}
-            <div className="space-y-3">
-              <h3 className="font-semibold">Réglementation Actuelle</h3>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-medium text-gray-900">{declaration.regulationInfo.currentRegulation.title}</h4>
-                <p className="text-gray-600 mt-1">{declaration.regulationInfo.currentRegulation.description}</p>
-                <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                  <Clock className="h-4 w-4" />
-                  <span>En vigueur depuis le {declaration.regulationInfo.currentRegulation.effectiveDate}</span>
-                </div>
-                {declaration.regulationInfo.currentRegulation.source && (
-                  <p className="text-sm text-gray-500 mt-2">
-                    Source: {declaration.regulationInfo.currentRegulation.source}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Upcoming Regulation */}
-            {declaration.regulationInfo.upcomingRegulation && (
-              <div className="space-y-3">
-                <h3 className="font-semibold flex items-center gap-2">
-                  Évolution de la Réglementation
-                  <span className="text-sm font-normal text-blue-600">
-                    (À partir du {declaration.regulationInfo.upcomingRegulation.effectiveDate})
-                  </span>
-                </h3>
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                  <h4 className="font-medium text-gray-900">{declaration.regulationInfo.upcomingRegulation.title}</h4>
-                  <p className="text-gray-600 mt-1">{declaration.regulationInfo.upcomingRegulation.description}</p>
-                  {declaration.regulationInfo.upcomingRegulation.source && (
-                    <p className="text-sm text-gray-500 mt-2">
-                      Source: {declaration.regulationInfo.upcomingRegulation.source}
-                    </p>
-                  )}
-                  {declaration.regulationInfo.upcomingRegulation.changes && declaration.regulationInfo.upcomingRegulation.changes.length > 0 && (
-                    <div className="mt-4">
-                      <h5 className="font-medium text-sm text-gray-900 mb-2">Principaux changements:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
-                        {declaration.regulationInfo.upcomingRegulation.changes.map((change, index) => (
-                          <li key={index}>{change}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Plan de Résolution</CardTitle>
-            <div className="flex gap-2">
-              <button
-                onClick={() => {/* TODO: Implement help request */}}
-                className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-              >
-                Demander de l'aide
-              </button>
-              <button
-                onClick={() => {/* TODO: Implement add to tasks */}}
-                className="px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 border border-teal-300 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-              >
-                Ajouter à mes tâches
-              </button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {declaration.resolutionSteps.map((step, index) => (
-              <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-900">{step.title}</h4>
-                  <p className="mt-1 text-sm text-gray-600">{step.description}</p>
-                  <div className="flex items-center gap-4 mt-2">
-                    <div className="flex items-center gap-1 text-sm text-gray-500">
-                      <Clock className="w-4 h-4" />
-                      <span>Échéance: {step.dueDate}</span>
-                    </div>
-                    {step.priority === 'Urgent' && (
-                      <div className="flex items-center gap-1 text-sm text-red-600">
-                        <AlertTriangle className="w-4 h-4" />
-                        <span>Urgent</span>
+      {declaration.isRegulated ? (
+        <Tabs defaultValue="apercu" className="w-full">
+          <TabsList className="w-full border-b">
+            <TabsTrigger value="apercu" className="px-8">Aperçu</TabsTrigger>
+            <TabsTrigger value="evolutions" className="px-8">Évolutions</TabsTrigger>
+          </TabsList>
+          <TabsContent value="apercu" className="mt-6">
+            <div className="space-y-6">
+              <FormLayout
+                progress={declaration.progress}
+                capturedInfo={declaration.capturedInfo}
+                pendingInfo={declaration.pendingInfo}
+              />
+              <Card>
+                <CardHeader>
+                  <CardTitle>Plan de Résolution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {declaration.resolutionSteps.map((step, index) => (
+                      <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900">{step.title}</h4>
+                          <p className="mt-1 text-sm text-gray-600">{step.description}</p>
+                          <div className="flex items-center gap-4 mt-2">
+                            <div className="flex items-center gap-1 text-sm text-gray-500">
+                              <Clock className="w-4 h-4" />
+                              <span>Échéance: {step.dueDate}</span>
+                            </div>
+                            {step.priority === 'Urgent' && (
+                              <div className="flex items-center gap-1 text-sm text-red-600">
+                                <AlertTriangle className="w-4 h-4" />
+                                <span>Urgent</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
                       </div>
-                    )}
+                    ))}
                   </div>
-                </div>
-                <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+          <TabsContent value="evolutions" className="mt-6">
+            {renderRegulationInfo()}
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <div className="space-y-6">
+          <FormLayout
+            progress={declaration.progress}
+            capturedInfo={declaration.capturedInfo}
+            pendingInfo={declaration.pendingInfo}
+          />
+          <Card>
+            <CardHeader>
+              <CardTitle>Plan de Résolution</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {declaration.resolutionSteps.map((step, index) => (
+                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900">{step.title}</h4>
+                      <p className="mt-1 text-sm text-gray-600">{step.description}</p>
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                          <Clock className="w-4 h-4" />
+                          <span>Échéance: {step.dueDate}</span>
+                        </div>
+                        {step.priority === 'Urgent' && (
+                          <div className="flex items-center gap-1 text-sm text-red-600">
+                            <AlertTriangle className="w-4 h-4" />
+                            <span>Urgent</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

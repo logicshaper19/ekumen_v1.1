@@ -19,7 +19,7 @@ export function CategoryDeclarationsPage() {
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Catégorie non trouvée</h2>
           <button 
-            onClick={() => navigate('/dashboard/declarations')}
+            onClick={() => navigate('/dashboard')}
             className="text-primary hover:underline"
           >
             Retour aux déclarations
@@ -34,7 +34,7 @@ export function CategoryDeclarationsPage() {
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <button 
-          onClick={() => navigate('/dashboard/declarations')}
+          onClick={() => navigate('/dashboard')}
           className="hover:text-primary"
         >
           Déclarations
