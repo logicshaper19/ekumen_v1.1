@@ -15,22 +15,7 @@ const menuItems = [
   {
     name: 'Déclarations',
     icon: LayoutDashboard,
-    path: '/'
-  },
-  {
-    name: 'Déclarations',
-    icon: FileText,
-    path: '/declarations'
-  },
-  {
-    name: 'Mes Données',
-    icon: FolderOpen,
-    path: '/mes-donnees'
-  },
-  {
-    name: 'Communauté',
-    icon: Users,
-    path: '/communaute'
+    path: '/dashboard'
   },
   {
     name: 'Business Plan',
@@ -38,9 +23,19 @@ const menuItems = [
     path: '/business-plan'
   },
   {
+    name: 'Communauté',
+    icon: Users,
+    path: '/communaute'
+  },
+  {
     name: 'Transformation',
     icon: Factory,
     path: '/transformation'
+  },
+  {
+    name: 'Mes Données',
+    icon: FolderOpen,
+    path: '/mes-donnees'
   }
 ];
 
