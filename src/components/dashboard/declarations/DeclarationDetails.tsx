@@ -131,46 +131,48 @@ const declarations: Record<string, DeclarationData> = {
   'identification-animaux': {
     id: 'identification-animaux',
     title: 'Identification et Enregistrement des Animaux',
-    description: 'Déclaration du cheptel',
-    progress: 60,
+    description: 'Suivi et identification du bétail',
+    progress: 40,
+    status: 'En cours',
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Règlement actuel d\'identification',
+        description: 'Dispositions actuelles pour l\'identification des animaux',
+        effectiveDate: '2023-01-01',
+        source: 'Ministère de l\'Agriculture'
+      },
+      upcomingRegulation: {
+        title: 'Nouvelles normes d\'identification 2024',
+        description: 'Évolution des normes d\'identification et de traçabilité',
+        effectiveDate: '2024-01-01',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Nouveaux critères d\'identification électronique',
+          'Renforcement des exigences de traçabilité',
+          'Mise à jour des délais de notification'
+        ]
+      }
+    },
     capturedInfo: [
-      { label: 'Numéro EDE', value: 'FR31123456' },
-      { label: 'Type d\'élevage', value: 'Bovin laitier' },
-      { label: 'Nombre d\'animaux', value: '45 têtes' }
+      { label: 'Nombre d\'animaux', value: '150' },
+      { label: 'Type d\'élevage', value: 'Bovin laitier' }
     ],
     pendingInfo: [
-      { label: 'Registre d\'élevage à jour' },
-      { label: 'Certificats sanitaires' }
+      { label: 'Registre des mouvements' },
+      { label: 'Documents d\'identification' }
     ],
     resolutionSteps: [
       {
-        title: 'Inventaire du cheptel',
-        description: 'Vérifier les numéros d\'identification de tous les animaux',
-        dueDate: '2024-02-20',
-        priority: 'Normal'
-      },
-      {
-        title: 'Mise à jour du registre d\'élevage',
-        description: 'Enregistrer tous les mouvements d\'animaux (naissances, décès, ventes)',
-        dueDate: '2024-02-25',
-        priority: 'Normal'
-      },
-      {
-        title: 'Contrôle sanitaire',
-        description: 'Vérifier les dates de vaccination et traitements vétérinaires',
+        title: 'Mise à jour du registre',
+        description: 'Actualiser le registre des animaux',
         dueDate: '2024-02-28',
-        priority: 'Normal'
+        priority: 'Important'
       },
       {
-        title: 'Vérification des boucles',
-        description: 'Contrôler l\'état des boucles d\'identification et remplacer si nécessaire',
-        dueDate: '2024-03-05',
-        priority: 'Normal'
-      },
-      {
-        title: 'Notification des mouvements',
-        description: 'Déclarer tous les mouvements sur le portail de l\'EDE',
-        dueDate: '2024-03-10',
+        title: 'Vérification équipements',
+        description: 'Contrôler la conformité des équipements d\'identification',
+        dueDate: '2024-03-15',
         priority: 'Normal'
       }
     ]
@@ -246,25 +248,98 @@ const declarations: Record<string, DeclarationData> = {
   },
   'aides': {
     id: 'aides',
-    title: 'Demandes d\'Aides et Subventions',
+    title: 'Autres Aides',
     description: 'Autres demandes de subventions agricoles',
     progress: 20,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Dispositifs d\'aide actuels',
+        description: 'Régimes d\'aides agricoles en vigueur',
+        effectiveDate: '2023-01-01',
+        source: 'Ministère de l\'Agriculture'
+      },
+      upcomingRegulation: {
+        title: 'Nouveaux dispositifs d\'aide 2024',
+        description: 'Évolution des dispositifs de soutien agricole',
+        effectiveDate: '2024-01-01',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Introduction de nouvelles aides à l\'investissement',
+          'Modification des taux de soutien',
+          'Nouveaux critères environnementaux'
+        ]
+      }
+    },
     capturedInfo: [
-      { label: 'Type d\'aide', value: 'Aide à l\'installation' },
-      { label: 'Montant demandé', value: '40 000 €' },
-      { label: 'Date d\'installation', value: '01/01/2024' }
+      { label: 'Type d\'exploitation', value: 'Polyculture-élevage' },
+      { label: 'Régime fiscal', value: 'Réel' }
     ],
     pendingInfo: [
-      { label: 'Plan d\'entreprise' },
-      { label: 'Diplômes et certificats' },
-      { label: 'Étude économique prévisionnelle' }
+      { label: 'Bilans financiers' },
+      { label: 'Plan d\'investissement' }
     ],
     resolutionSteps: [
       {
-        title: 'Finalisation dossier',
-        description: 'Compléter les pièces manquantes du dossier',
-        dueDate: '2024-04-15',
+        title: 'Analyse d\'éligibilité',
+        description: 'Identifier les aides accessibles selon le nouveau régime',
+        dueDate: '2024-02-28',
         priority: 'Important'
+      },
+      {
+        title: 'Préparation dossiers',
+        description: 'Constituer les dossiers de demande',
+        dueDate: '2024-03-15',
+        priority: 'Normal'
+      }
+    ]
+  },
+  'paiement-unique': {
+    id: 'paiement-unique',
+    title: 'Paiement Unique',
+    description: 'Demande de paiement unique de la PAC',
+    progress: 0,
+    status: 'À commencer',
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Régime actuel des paiements directs',
+        description: 'Dispositions actuelles pour les paiements directs de la PAC',
+        effectiveDate: '2023-01-01',
+        source: 'Ministère de l\'Agriculture'
+      },
+      upcomingRegulation: {
+        title: 'Nouveau régime de paiements 2024',
+        description: 'Évolution des modalités de paiements directs',
+        effectiveDate: '2024-01-01',
+        source: 'Ministère de l\'Agriculture',
+        changes: [
+          'Modification des critères d\'éligibilité',
+          'Nouveaux plafonds de paiement',
+          'Évolution des conditions environnementales'
+        ]
+      }
+    },
+    capturedInfo: [
+      { label: 'Numéro Pacage', value: '012345678' },
+      { label: 'Surface éligible', value: '95 hectares' }
+    ],
+    pendingInfo: [
+      { label: 'Relevé parcellaire' },
+      { label: 'Justificatifs de propriété' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Vérification éligibilité',
+        description: 'Contrôler les critères d\'éligibilité selon les nouvelles règles',
+        dueDate: '2024-03-01',
+        priority: 'Important'
+      },
+      {
+        title: 'Constitution dossier',
+        description: 'Rassembler les pièces justificatives requises',
+        dueDate: '2024-03-15',
+        priority: 'Normal'
       }
     ]
   },
@@ -886,7 +961,7 @@ export function DeclarationDetails() {
     <div className="container mx-auto py-6 space-y-6">
       {/* Back Button */}
       <Link
-        to="/dashboard/declarations"
+        to="/dashboard"
         className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
       >
         <ArrowLeft className="w-4 h-4 mr-1" />

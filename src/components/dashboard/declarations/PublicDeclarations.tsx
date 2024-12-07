@@ -114,6 +114,7 @@ export const categories: Category[] = [
     id: 'subsidy',
     title: 'Aides et Subventions',
     description: 'Demandes de subventions et aides financières',
+    hasChanges: true,
     declarations: [
       {
         id: 'pac',
@@ -121,7 +122,8 @@ export const categories: Category[] = [
         description: 'Demande de paiement unique de la PAC',
         progress: 0,
         status: 'À commencer',
-        category: 'subsidy'
+        category: 'subsidy',
+        hasChanges: true
       },
       {
         id: 'aides',
@@ -129,7 +131,8 @@ export const categories: Category[] = [
         description: 'Autres demandes de subventions agricoles',
         progress: 0,
         status: 'À commencer',
-        category: 'subsidy'
+        category: 'subsidy',
+        hasChanges: true
       }
     ]
   },
@@ -143,9 +146,10 @@ export const categories: Category[] = [
         id: 'identification-animaux',
         title: 'Identification et Enregistrement des Animaux',
         description: 'Suivi et identification du bétail',
-        progress: 0,
-        status: 'À commencer',
-        category: 'livestock'
+        progress: 40,
+        status: 'En cours',
+        category: 'livestock',
+        hasChanges: true
       },
       {
         id: 'bien-etre',
