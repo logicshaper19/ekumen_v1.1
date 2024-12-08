@@ -1,8 +1,24 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 
 export function StrategyTab() {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
+      {/* Add Objective Button */}
+      <div className="flex justify-end">
+        <Button 
+          onClick={() => navigate('/business-plan/add-objective')}
+          className="bg-teal-700 text-white hover:bg-teal-800"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Ajouter vos objectifs
+        </Button>
+      </div>
+
       <div className="bg-white p-6 rounded-lg shadow-sm">
         <h2 className="text-2xl font-semibold mb-4">Stratégie d'Exploitation</h2>
 
