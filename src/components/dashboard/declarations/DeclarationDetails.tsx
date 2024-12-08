@@ -5,6 +5,8 @@ import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon } from 'lucide-react';
 import { FormLayout } from '@/components/ui/form-layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { HelpCircle, ListTodo } from 'lucide-react';
 
 interface CapturedInfo {
   label: string;
@@ -1001,15 +1003,40 @@ export function DeclarationDetails() {
                               <Clock className="w-4 h-4" />
                               <span>Échéance: {step.dueDate}</span>
                             </div>
-                            {step.priority === 'Urgent' && (
-                              <div className="flex items-center gap-1 text-sm text-red-600">
-                                <AlertTriangle className="w-4 h-4" />
-                                <span>Urgent</span>
-                              </div>
-                            )}
+                            <div className="flex items-center gap-1">
+                              {step.priority === 'Urgent' && (
+                                <AlertTriangle className="w-4 h-4 text-red-500" />
+                              )}
+                              {step.priority === 'Important' && (
+                                <AlertTriangle className="w-4 h-4 text-orange-500" />
+                              )}
+                              {step.priority === 'Normal' && (
+                                <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                              )}
+                              <span className="text-sm text-gray-500">{step.priority}</span>
+                            </div>
                           </div>
                         </div>
-                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                        <div className="flex gap-2">
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="bg-teal-700 text-white hover:bg-teal-800"
+                            onClick={() => {}}
+                          >
+                            <HelpCircle className="w-4 h-4 mr-2" />
+                            Obtenir de l'aide
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
+                            onClick={() => {}}
+                          >
+                            <ListTodo className="w-4 h-4 mr-2" />
+                            Ajouter à mes tâches
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1044,15 +1071,40 @@ export function DeclarationDetails() {
                           <Clock className="w-4 h-4" />
                           <span>Échéance: {step.dueDate}</span>
                         </div>
-                        {step.priority === 'Urgent' && (
-                          <div className="flex items-center gap-1 text-sm text-red-600">
-                            <AlertTriangle className="w-4 h-4" />
-                            <span>Urgent</span>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-1">
+                          {step.priority === 'Urgent' && (
+                            <AlertTriangle className="w-4 h-4 text-red-500" />
+                          )}
+                          {step.priority === 'Important' && (
+                            <AlertTriangle className="w-4 h-4 text-orange-500" />
+                          )}
+                          {step.priority === 'Normal' && (
+                            <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                          )}
+                          <span className="text-sm text-gray-500">{step.priority}</span>
+                        </div>
                       </div>
                     </div>
-                    <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                    <div className="flex gap-2">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="bg-teal-700 text-white hover:bg-teal-800"
+                        onClick={() => {}}
+                      >
+                        <HelpCircle className="w-4 h-4 mr-2" />
+                        Obtenir de l'aide
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
+                        onClick={() => {}}
+                      >
+                        <ListTodo className="w-4 h-4 mr-2" />
+                        Ajouter à mes tâches
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -21,6 +21,7 @@ import { OverviewTab } from '../business-plan/OverviewTab';
 import { StrategyTab } from '../business-plan/StrategyTab';
 import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
 import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
+import { useNavigate } from 'react-router-dom';
 
 type Tab = 'overview' | 'strategy' | 'financial' | 'risks';
 
@@ -167,6 +168,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
 export function BusinessPlan() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const currentKPIs = kpisByTab[activeTab];
+  const navigate = useNavigate();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -244,9 +246,33 @@ export function BusinessPlan() {
       </div>
 
       {/* Tab Content */}
+      {activeTab === 'strategy' && (
+        <div className="flex justify-end mb-6">
+          <button
+            className="bg-teal-700 hover:bg-teal-800 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-2"
+            onClick={() => navigate('/business-plan/add-objective')}
+          >
+            <Target className="h-4 w-4" />
+            Ajouter vos objectifs
+          </button>
+        </div>
+      )}
+      
       <div className="mt-6">
         {renderTabContent()}
       </div>
+
+      {activeTab === 'strategy' && (
+        <div className="flex justify-center mt-8">
+          <button
+            className="bg-teal-700 hover:bg-teal-800 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+            onClick={() => navigate('/business-plan/add-objective')}
+          >
+            <Target className="h-5 w-5" />
+            Ajouter vos objectifs
+          </button>
+        </div>
+      )}
     </div>
   );
 }

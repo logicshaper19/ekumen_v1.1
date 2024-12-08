@@ -16,7 +16,7 @@ const monthlyData = [
   { month: 'Déc', count: 3 }
 ].map((item, index) => ({
   ...item,
-  fill: index % 2 === 0 ? '#005E5D' : '#FFA69E'
+  fill: index % 2 === 0 ? '#005E5D' : '#FF8B7E'
 }));
 
 const CustomTooltip = ({ active, payload }: any) => {
