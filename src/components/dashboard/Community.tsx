@@ -106,13 +106,11 @@ export function Community() {
                   {discussion.replies} réponses
                 </span>
               </div>
-              <CardDescription className="mt-1">
-                <div className="flex items-center text-sm text-gray-500">
-                  <Users className="mr-1 h-4 w-4" />
-                  <span>{discussion.author}</span>
-                  <span className="mx-2">•</span>
-                  <span>{discussion.lastActivity}</span>
-                </div>
+              <CardDescription className="mt-1 flex items-center text-sm text-gray-500">
+                <Users className="mr-1 h-4 w-4" />
+                <span>{discussion.author}</span>
+                <span className="mx-2">•</span>
+                <span>{discussion.lastActivity}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -139,12 +137,10 @@ export function Community() {
                   {farmer.name}
                 </CardTitle>
               </div>
-              <CardDescription className="mt-1">
-                <div className="flex items-center text-sm text-gray-500">
-                  <span>{farmer.location}</span>
-                  <span className="mx-2">•</span>
-                  <span>{farmer.farmType}</span>
-                </div>
+              <CardDescription className="mt-1 flex items-center text-sm text-gray-500">
+                <span>{farmer.location}</span>
+                <span className="mx-2">•</span>
+                <span>{farmer.farmType}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -167,12 +163,10 @@ export function Community() {
                   {partner.name}
                 </CardTitle>
               </div>
-              <CardDescription className="mt-1">
-                <div className="flex items-center text-sm text-gray-500">
-                  <span>{partner.type}</span>
-                  <span className="mx-2">•</span>
-                  <span>{partner.description}</span>
-                </div>
+              <CardDescription className="mt-1 flex items-center text-sm text-gray-500">
+                <span>{partner.type}</span>
+                <span className="mx-2">•</span>
+                <span>{partner.description}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>

@@ -19,6 +19,7 @@ import { DeclarationDetailsPage } from './pages/DeclarationDetailsPage';
 import { CategoryDeclarationsPage } from './pages/CategoryDeclarationsPage';
 import { PublicDeclarations } from './components/dashboard/declarations/PublicDeclarations';
 import { AddObjective } from './components/business-plan/AddObjective';
+import { FinancialPlanDetailsPage } from './pages/FinancialPlanDetailsPage';
 
 function App() {
   const location = useLocation();
@@ -63,6 +64,7 @@ function App() {
           <Route path="community" element={<Community />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="business-plan/add-objective" element={<AddObjective />} />
+          <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
           <Route path="transformation" element={<Transformation />} />
           <Route path="mes-donnees" element={<MyData />} />
         </Route>
