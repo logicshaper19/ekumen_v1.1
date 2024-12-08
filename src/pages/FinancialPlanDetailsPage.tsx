@@ -102,15 +102,19 @@ export function FinancialPlanDetailsPage() {
   const navigate = useNavigate();
   const totalSurface = crops.reduce((sum, crop) => sum + crop.surface, 0);
 
+  const handleBack = () => {
+    navigate('/business-plan', { state: { activeTab: 'financial' } });
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Plan Financier Détaillé</h1>
         <Button
           variant="outline"
-          onClick={() => navigate('/business-plan')}
+          onClick={handleBack}
         >
-          Retour au Plan d'Affaires
+          Retour au Plan Financier
         </Button>
       </div>
 
@@ -137,7 +141,11 @@ export function FinancialPlanDetailsPage() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {crops.map((crop, index) => (
-                <tr key={crop.name} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <tr 
+                  key={crop.name} 
+                  className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} cursor-pointer hover:bg-gray-100 transition-colors`}
+                  onClick={() => navigate(`/business-plan/financial-plan-details/crop/${encodeURIComponent(crop.name)}`)}
+                >
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">{crop.name}</td>
                   <td className="px-4 py-3 text-sm text-right text-gray-900">{crop.surface}</td>
                   <td className="px-4 py-3 text-sm text-right text-gray-900">{crop.yield}</td>

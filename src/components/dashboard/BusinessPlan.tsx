@@ -21,7 +21,7 @@ import { OverviewTab } from '../business-plan/OverviewTab';
 import { StrategyTab } from '../business-plan/StrategyTab';
 import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
 import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type Tab = 'overview' | 'strategy' | 'financial' | 'risks';
 
@@ -166,7 +166,9 @@ const kpisByTab: Record<Tab, KPI[]> = {
 };
 
 export function BusinessPlan() {
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const location = useLocation();
+  const initialTab = location.state?.activeTab || 'overview';
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const currentKPIs = kpisByTab[activeTab];
   const navigate = useNavigate();
 
