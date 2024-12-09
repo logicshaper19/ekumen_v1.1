@@ -425,9 +425,7 @@ export function RiskOpportunityEvolution() {
   const currentProbability = item.evolution[0].probability;
   
   const handleBack = () => {
-    navigate('/business-plan', { 
-      state: { activeTab: item.type === 'risk' ? 'risks' : 'opportunities' }
-    });
+    navigate('/business-plan');
   };
 
   return (
