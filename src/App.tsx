@@ -21,6 +21,7 @@ import { PublicDeclarations } from './components/dashboard/declarations/PublicDe
 import { AddObjective } from './components/business-plan/AddObjective';
 import { FinancialPlanDetailsPage } from './pages/FinancialPlanDetailsPage';
 import { CropDetailsPage } from './pages/CropDetailsPage';
+import { RiskOpportunityEvolution } from './components/business-plan/RiskOpportunityEvolution';
 
 function App() {
   const location = useLocation();
@@ -67,6 +68,7 @@ function App() {
           <Route path="business-plan/add-objective" element={<AddObjective />} />
           <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
           <Route path="business-plan/financial-plan-details/crop/:cropName" element={<CropDetailsPage />} />
+          <Route path="business-plan/risks-opportunities/:id" element={<RiskOpportunityEvolution />} />
           <Route path="transformation" element={<Transformation />} />
           <Route path="mes-donnees" element={<MyData />} />
         </Route>
