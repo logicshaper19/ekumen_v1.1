@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertTriangle, TrendingUp } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface RiskOpportunityItem {
   id: string;
@@ -101,10 +101,6 @@ const opportunities: RiskOpportunityItem[] = [
 
 export function RisksAndOpportunities() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [activeTab, setActiveTab] = React.useState(
-    (location.state as any)?.activeTab || 'risks'
-  );
 
   const handleItemClick = (id: string) => {
     navigate(`/business-plan/risks-opportunities/${id}`);
@@ -113,65 +109,56 @@ export function RisksAndOpportunities() {
   return (
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold mb-4">Analyse des Risques et Opportunités</h2>
+        <h2 className="text-2xl font-semibold mb-6">Analyse des Risques et Opportunités</h2>
         
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setActiveTab('risks')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
-              activeTab === 'risks' 
-                ? 'bg-red-50 text-red-700' 
-                : 'text-gray-500 hover:bg-gray-50'
-            }`}
-          >
-            <AlertTriangle className="w-5 h-5" />
-            Risques Principaux
-          </button>
-          <button
-            onClick={() => setActiveTab('opportunities')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
-              activeTab === 'opportunities' 
-                ? 'bg-green-50 text-green-700' 
-                : 'text-gray-500 hover:bg-gray-50'
-            }`}
-          >
-            <TrendingUp className="w-5 h-5" />
-            Opportunités Clés
-          </button>
-        </div>
+        <p className="text-gray-600 mb-6">
+          {risks.length} risques et {opportunities.length} opportunités identifiés par vos parties prenantes
+        </p>
         
-        <div className="grid grid-cols-1 gap-6">
-          {activeTab === 'risks' ? (
-            <div>
-              <dl className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Risks Section */}
+          <div>
+            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+              Risques Principaux
+            </h3>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <dl className="space-y-4">
                 {risks.map((risk) => (
                   <div 
                     key={risk.id}
                     onClick={() => handleItemClick(risk.id)}
-                    className="cursor-pointer hover:bg-gray-50 p-2 -mx-2 rounded-md transition-colors"
+                    className="cursor-pointer hover:bg-white p-3 -mx-2 rounded-md transition-colors"
                   >
-                    <dt className="text-sm text-gray-500">{risk.title} ({risk.stakeholder})</dt>
-                    <dd className="text-base font-medium">{risk.description}</dd>
+                    <dt className="text-sm text-gray-500 mb-1">{risk.title} ({risk.stakeholder})</dt>
+                    <dd className="text-sm font-medium text-gray-900">{risk.description}</dd>
                   </div>
                 ))}
               </dl>
             </div>
-          ) : (
-            <div>
-              <dl className="space-y-2">
+          </div>
+          
+          {/* Opportunities Section */}
+          <div>
+            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-green-500" />
+              Opportunités Clés
+            </h3>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <dl className="space-y-4">
                 {opportunities.map((opportunity) => (
                   <div 
                     key={opportunity.id}
                     onClick={() => handleItemClick(opportunity.id)}
-                    className="cursor-pointer hover:bg-gray-50 p-2 -mx-2 rounded-md transition-colors"
+                    className="cursor-pointer hover:bg-white p-3 -mx-2 rounded-md transition-colors"
                   >
-                    <dt className="text-sm text-gray-500">{opportunity.title} ({opportunity.stakeholder})</dt>
-                    <dd className="text-base font-medium">{opportunity.description}</dd>
+                    <dt className="text-sm text-gray-500 mb-1">{opportunity.title} ({opportunity.stakeholder})</dt>
+                    <dd className="text-sm font-medium text-gray-900">{opportunity.description}</dd>
                   </div>
                 ))}
               </dl>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
