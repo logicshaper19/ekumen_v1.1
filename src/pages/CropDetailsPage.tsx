@@ -330,84 +330,87 @@ export function CropDetailsPage() {
         </Card>
       </div>
 
-      {/* Detailed Costs */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Détail des Charges</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {crop.costs.map((category) => (
-              <div key={category.category}>
-                <h3 className="text-lg font-medium mb-4">{category.category}</h3>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Description</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Montant/ha</TableHead>
-                      <TableHead>Montant Total</TableHead>
-                      <TableHead>Notes</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {category.items.map((item) => (
-                      <TableRow key={item.name}>
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell>{item.date || '-'}</TableCell>
-                        <TableCell>{Math.round(item.amount)} €</TableCell>
-                        <TableCell>{Math.round(item.amount * crop.surface)} €</TableCell>
-                        <TableCell>{item.notes || '-'}</TableCell>
+      {/* Costs and Timeline Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        {/* Detailed Costs */}
+        <Card className="md:col-span-4">
+          <CardHeader>
+            <CardTitle>Détail des Charges</CardTitle>
+          </CardHeader>
+          <CardContent className="overflow-auto">
+            <div className="space-y-6">
+              {crop.costs.map((category) => (
+                <div key={category.category}>
+                  <h3 className="text-lg font-medium mb-4">{category.category}</h3>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Montant/ha</TableHead>
+                        <TableHead>Montant Total</TableHead>
+                        <TableHead>Notes</TableHead>
                       </TableRow>
-                    ))}
-                    <TableRow className="font-medium">
-                      <TableCell>Total {category.category}</TableCell>
-                      <TableCell></TableCell>
-                      <TableCell>
-                        {Math.round(
-                          category.items.reduce((sum, item) => sum + item.amount, 0)
-                        )} €
-                      </TableCell>
-                      <TableCell>
-                        {Math.round(
-                          category.items.reduce((sum, item) => sum + item.amount, 0) * crop.surface
-                        )} €
-                      </TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Timeline */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Calendrier des Interventions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative">
-            <div className="absolute left-0 top-0 w-1 h-full bg-gray-200"></div>
-            <div className="space-y-4 ml-6">
-              {crop.timeline.map((event, index) => (
-                <div key={index} className="relative">
-                  <div className={`absolute -left-[1.625rem] w-4 h-4 rounded-full mt-1.5 
-                    ${event.type === 'work' ? 'bg-blue-500' : 
-                      event.type === 'input' ? 'bg-green-500' : 'bg-orange-500'}`}>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg border">
-                    <div className="text-sm text-gray-500">{event.date}</div>
-                    <div className="font-medium">{event.event}</div>
-                  </div>
+                    </TableHeader>
+                    <TableBody>
+                      {category.items.map((item) => (
+                        <TableRow key={item.name}>
+                          <TableCell>{item.name}</TableCell>
+                          <TableCell>{item.date || '-'}</TableCell>
+                          <TableCell>{Math.round(item.amount)} €</TableCell>
+                          <TableCell>{Math.round(item.amount * crop.surface)} €</TableCell>
+                          <TableCell>{item.notes || '-'}</TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow className="font-medium">
+                        <TableCell>Total {category.category}</TableCell>
+                        <TableCell></TableCell>
+                        <TableCell>
+                          {Math.round(
+                            category.items.reduce((sum, item) => sum + item.amount, 0)
+                          )} €
+                        </TableCell>
+                        <TableCell>
+                          {Math.round(
+                            category.items.reduce((sum, item) => sum + item.amount, 0) * crop.surface
+                          )} €
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
               ))}
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        {/* Timeline */}
+        <Card className="md:col-span-1">
+          <CardHeader>
+            <CardTitle>Calendrier des Interventions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="relative">
+              <div className="absolute left-0 top-0 w-1 h-full bg-gray-200"></div>
+              <div className="space-y-4 ml-6">
+                {crop.timeline.map((event, index) => (
+                  <div key={index} className="relative">
+                    <div className={`absolute -left-[1.625rem] w-4 h-4 rounded-full mt-1.5 
+                      ${event.type === 'work' ? 'bg-blue-500' : 
+                        event.type === 'input' ? 'bg-green-500' : 'bg-orange-500'}`}>
+                    </div>
+                    <div className="bg-white p-3 rounded-lg border text-sm">
+                      <div className="text-gray-500 text-xs">{event.date}</div>
+                      <div className="font-medium">{event.event}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
