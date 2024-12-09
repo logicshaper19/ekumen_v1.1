@@ -9,6 +9,8 @@ import { Dashboard } from './components/dashboard/Dashboard';
 import { Community } from './components/dashboard/Community';
 import { BusinessPlan } from './components/dashboard/BusinessPlan';
 import { Transformation } from './components/dashboard/Transformation';
+import { TransformationDetails } from './components/dashboard/TransformationDetails';
+import { TransformationExploration } from './components/dashboard/TransformationExploration';
 import { MyData } from './components/data/MyData';
 import { Login } from './components/Login';
 import { LandingNav } from './components/navigation/LandingNav';
@@ -22,6 +24,7 @@ import { AddObjective } from './components/business-plan/AddObjective';
 import { FinancialPlanDetailsPage } from './pages/FinancialPlanDetailsPage';
 import { CropDetailsPage } from './pages/CropDetailsPage';
 import { RiskOpportunityEvolution } from './components/business-plan/RiskOpportunityEvolution';
+import { DiscussionDetails } from './components/dashboard/DiscussionDetails';
 
 function App() {
   const location = useLocation();
@@ -64,12 +67,15 @@ function App() {
             <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
           </Route>
           <Route path="community" element={<Community />} />
+          <Route path="community/discussion/:id" element={<DiscussionDetails />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="business-plan/add-objective" element={<AddObjective />} />
           <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
           <Route path="business-plan/financial-plan-details/crop/:cropName" element={<CropDetailsPage />} />
           <Route path="business-plan/risks-opportunities/:id" element={<RiskOpportunityEvolution />} />
           <Route path="transformation" element={<Transformation />} />
+          <Route path="transformation/:id/details" element={<TransformationDetails />} />
+          <Route path="transformation/:id/explore" element={<TransformationExploration />} />
           <Route path="mes-donnees" element={<MyData />} />
         </Route>
         

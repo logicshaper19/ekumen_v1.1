@@ -178,95 +178,98 @@ export const transformations: TransformationData[] = [
   }
 ];
 
+// Farm-wide KPIs
+const farmKPIs = [
+  {
+    title: "Temps de mise en œuvre",
+    value: "2-3 ans",
+    icon: Clock,
+    description: "Durée moyenne pour une transformation complète"
+  },
+  {
+    title: "Impact sur le rendement",
+    value: "+12%",
+    icon: TrendingUp,
+    description: "Augmentation moyenne des rendements après 3 ans"
+  },
+  {
+    title: "Impact sur les revenus",
+    value: "+15%",
+    icon: Coins,
+    description: "Amélioration du revenu net après transformation"
+  },
+  {
+    title: "Score environnemental",
+    value: "A+",
+    icon: Leaf,
+    description: "Impact positif sur la biodiversité et les sols"
+  }
+];
+
 export function Transformation() {
   const navigate = useNavigate()
 
-  const farmKPIs = [
-    {
-      title: "Temps de mise en œuvre",
-      value: "2-3 ans",
-      icon: Clock,
-      description: "Durée moyenne pour une transformation complète"
-    },
-    {
-      title: "Impact sur le rendement",
-      value: "+12%",
-      icon: TrendingUp,
-      description: "Augmentation moyenne des rendements après 3 ans"
-    },
-    {
-      title: "Impact sur les revenus",
-      value: "+15%",
-      icon: Coins,
-      description: "Amélioration du revenu net après transformation"
-    },
-    {
-      title: "Score environnemental",
-      value: "A+",
-      icon: Leaf,
-      description: "Impact positif sur la biodiversité et les sols"
-    }
-  ]
-
   return (
-    <div className="space-y-8">
-      <div className="space-y-4">
-        <h1 className="text-3xl font-semibold">Transformations pour votre exploitation</h1>
-        <p className="text-gray-600">
-          Voici une sélection de transformations adaptées à votre exploitation. Chaque transformation 
-          a été choisie pour maximiser votre impact tout en respectant vos objectifs.
+    <div className="p-8 space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold">Transformations pour votre exploitation</h1>
+        <p className="text-muted-foreground mt-2">
+          Voici une sélection de transformations adaptées à votre exploitation. Chaque transformation a été choisie pour maximiser votre impact tout en respectant vos objectifs.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {farmKPIs.map((kpi, index) => (
-          <Card key={index}>
+      {/* KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {farmKPIs.map((kpi, i) => (
+          <Card key={i} className="bg-card/50">
             <CardContent className="pt-6">
-              <div className="flex items-center gap-4">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <kpi.icon className="h-6 w-6 text-primary" />
+              <div className="flex gap-4">
+                <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                  <kpi.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-500">{kpi.title}</p>
-                  <h3 className="text-2xl font-bold">{kpi.value}</h3>
+                  <p className="text-sm text-muted-foreground">{kpi.title}</p>
+                  <p className="text-2xl font-bold">{kpi.value}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{kpi.description}</p>
                 </div>
               </div>
-              <p className="mt-2 text-sm text-gray-500">{kpi.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Transformations disponibles</h2>
+      {/* Transformations List */}
+      <div>
+        <h2 className="text-xl font-semibold mb-4">Transformations disponibles</h2>
         <div className="grid gap-4">
           {transformations.map((transform) => (
             <Card 
               key={transform.id}
-              className="cursor-pointer hover:bg-gray-50 transition-colors"
+              className="cursor-pointer hover:bg-accent/50 transition-colors"
               onClick={() => navigate(`/transformation/${transform.id}/details`)}
             >
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-black/5">
-                      <transform.icon className="h-5 w-5 text-black" />
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <transform.icon className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <CardTitle>{transform.title}</CardTitle>
-                      <p className="text-sm text-gray-600">{transform.shortDesc}</p>
+                      <p className="text-sm text-muted-foreground">{transform.shortDesc}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-teal-700">
+                      <p className="text-2xl font-bold text-primary">
                         {transform.kpis[0].value}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         {transform.kpis[0].title}
                       </p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400" />
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </div>
               </CardHeader>

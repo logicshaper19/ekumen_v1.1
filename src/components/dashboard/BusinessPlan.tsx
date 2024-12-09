@@ -21,7 +21,9 @@ import { OverviewTab } from '../business-plan/OverviewTab';
 import { StrategyTab } from '../business-plan/StrategyTab';
 import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
 import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
+import { AnalyticsCard } from '../business-plan/AnalyticsCard';
 import { useNavigate, useLocation } from 'react-router-dom';
+import cn from 'classnames';
 
 type Tab = 'overview' | 'strategy' | 'financial' | 'risks';
 
@@ -34,11 +36,11 @@ const tabs: { id: Tab; label: string }[] = [
 
 interface KPI {
   title: string;
-  titleClassName?: string;
   value: string;
-  change: string;
-  trend: 'up' | 'down';
+  change?: string;
+  trend?: 'up' | 'down';
   icon: React.ElementType;
+  description?: string;
 }
 
 const kpisByTab: Record<Tab, KPI[]> = {
@@ -49,6 +51,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '+8.2%',
       trend: 'up',
       icon: Euro,
+      description: 'par rapport au mois dernier'
     },
     {
       title: 'Rendement Moyen',
@@ -56,6 +59,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '+2.1%',
       trend: 'up',
       icon: Sprout,
+      description: 'toutes cultures confondues'
     },
     {
       title: 'Coûts Opérationnels',
@@ -63,6 +67,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '-3.1%',
       trend: 'down',
       icon: Scale,
+      description: 'réduction des dépenses'
     },
     {
       title: 'Consommation d\'Eau',
@@ -70,6 +75,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '-5.2%',
       trend: 'down',
       icon: Droplets,
+      description: 'économies réalisées'
     },
   ],
   strategy: [
@@ -79,6 +85,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '+15%',
       trend: 'up',
       icon: Target,
+      description: 'progression constante'
     },
     {
       title: 'Efficacité Main d\'œuvre',
@@ -86,6 +93,7 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '+5%',
       trend: 'up',
       icon: Users,
+      description: 'amélioration continue'
     },
     {
       title: 'Utilisation Équipement',
@@ -93,74 +101,83 @@ const kpisByTab: Record<Tab, KPI[]> = {
       change: '+10%',
       trend: 'up',
       icon: Building2,
+      description: 'optimisation en cours'
     },
     {
       title: 'Innovation Score',
       value: '8.5/10',
       change: '+1.2',
       trend: 'up',
-      icon: BarChart3,
+      icon: Landmark,
+      description: 'adoption des nouvelles tech.'
     },
   ],
   financial: [
     {
       title: 'Marge Brute',
-      value: '120 120 €',
-      change: '+12.5%',
+      value: '45 000 €',
+      change: '+12%',
       trend: 'up',
-      icon: Landmark,
+      icon: BarChart3,
+      description: 'trimestre en cours'
     },
     {
-      title: 'Capacité d\'Autofinancement',
-      value: '7 885 €',
-      change: '-2.3%',
-      trend: 'down',
+      title: 'Trésorerie',
+      value: '28 500 €',
+      change: '+15%',
+      trend: 'up',
       icon: PiggyBank,
+      description: 'disponible'
     },
     {
-      title: 'Revenu Disponible',
-      value: '40 115 €',
-      change: '+5.8%',
+      title: 'ROI Moyen',
+      value: '18.5%',
+      change: '+2.5%',
       trend: 'up',
       icon: CircleDollarSign,
+      description: 'retour sur investissement'
     },
     {
       title: 'Taux d\'Endettement',
-      value: '45%',
-      change: '-3%',
+      value: '32%',
+      change: '-5%',
       trend: 'down',
       icon: Percent,
+      description: 'en amélioration'
     },
   ],
   risks: [
     {
-      title: 'Réglementation Évolutive',
-      titleClassName: 'text-orange-600',
-      value: '10%',
-      change: '+2%',
-      trend: 'up',
-      icon: AlertTriangle,
-    },
-    {
-      title: 'Risque de Défaillance',
-      value: '5%',
-      change: '-1%',
+      title: 'Niveau de Risque',
+      value: 'Modéré',
+      change: '-10%',
       trend: 'down',
       icon: AlertTriangle,
+      description: 'exposition globale'
     },
     {
-      title: 'Risque de Changement',
-      value: '8%',
-      change: '+3%',
+      title: 'Opportunités',
+      value: '12',
+      change: '+3',
       trend: 'up',
-      icon: AlertTriangle,
+      icon: Target,
+      description: 'identifiées ce trimestre'
     },
     {
-      title: 'Risque de Perte d\'Opportunités',
-      value: '12%',
-      change: '+4%',
+      title: 'Couverture',
+      value: '85%',
+      change: '+5%',
       trend: 'up',
-      icon: AlertTriangle,
+      icon: Scale,
+      description: 'des risques majeurs'
+    },
+    {
+      title: 'Impact Financier',
+      value: '15k €',
+      change: '-8%',
+      trend: 'down',
+      icon: Euro,
+      description: 'estimation des pertes'
     },
   ],
 };
@@ -172,84 +189,44 @@ export function BusinessPlan() {
   const currentKPIs = kpisByTab[activeTab];
   const navigate = useNavigate();
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'overview':
-        return <OverviewTab />;
-      case 'strategy':
-        return <StrategyTab />;
-      case 'financial':
-        return <FinancialPlanTab />;
-      case 'risks':
-        return <RisksAndOpportunities />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="space-y-8">
-      {/* Header with Tabs */}
-      <div className="flex justify-between items-start pb-4">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold text-gray-900">Plan d'Exploitation</h1>
-          <p className="text-muted-foreground">
-            Suivez vos indicateurs clés de performance et découvrez des opportunités d'amélioration
-          </p>
-        </div>
-
-        {/* Tabs Navigation */}
-        <nav className="flex items-center gap-2 bg-muted/50 p-1 rounded-lg" aria-label="Tabs">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`
-                px-4 py-2 rounded-md text-sm font-medium
-                transition-colors duration-200
-                ${
-                  activeTab === tab.id
-                    ? 'bg-background text-foreground shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
-                }
-              `}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {/* KPIs Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {currentKPIs.map((kpi) => (
-          <Card key={kpi.title}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className={`text-sm font-medium ${kpi.titleClassName || ''}`}>{kpi.title}</CardTitle>
-              <kpi.icon className="h-4 w-4 text-gray-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{kpi.value}</div>
-              <div className="flex items-center space-x-2">
-                {kpi.trend === 'up' ? (
-                  <TrendingUp className="h-4 w-4 text-green-500" />
-                ) : (
-                  <TrendingDown className="h-4 w-4 text-red-500" />
-                )}
-                <p className={`text-sm ${
-                  kpi.trend === 'up' ? 'text-green-500' : 'text-red-500'
-                }`}>
-                  {kpi.change}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+    <div className="space-y-6">
+      <div className="flex justify-end space-x-4 border-b">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              'pb-2 text-sm font-medium transition-colors hover:text-primary',
+              tab.id === activeTab
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-muted-foreground'
+            )}
+          >
+            {tab.label}
+          </button>
         ))}
       </div>
 
-      {/* Tab Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {currentKPIs.map((kpi, index) => (
+          <AnalyticsCard
+            key={index}
+            title={kpi.title}
+            value={kpi.value}
+            change={kpi.change}
+            trend={kpi.trend}
+            icon={kpi.icon}
+            description={kpi.description}
+          />
+        ))}
+      </div>
+
       <div className="mt-6">
-        {renderTabContent()}
+        {activeTab === 'overview' && <OverviewTab />}
+        {activeTab === 'strategy' && <StrategyTab />}
+        {activeTab === 'financial' && <FinancialPlanTab />}
+        {activeTab === 'risks' && <RisksAndOpportunities />}
       </div>
     </div>
   );
