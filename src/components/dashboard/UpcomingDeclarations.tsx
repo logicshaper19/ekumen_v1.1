@@ -5,21 +5,24 @@ import { useNavigate } from 'react-router-dom';
 
 const upcomingDeclarations = [
   {
-    id: 'engrais-sols',
-    title: "Gestion des Engrais et Sols",
-    dueDate: "31 Décembre 2024",
-    progress: 98,
-  },
-  {
     id: 'phytosanitaires',
     title: "Rapport sur l'Utilisation des Produits Phytosanitaires",
     dueDate: "31 Décembre 2024",
+    frequency: "Annuel",
     progress: 98,
   },
   {
     id: 'conformite-sante-securite',
     title: "Conformité en Santé et Sécurité",
     dueDate: "31 Décembre 2024",
+    frequency: "Annuel",
+    progress: 98,
+  },
+  {
+    id: 'engrais-sols',
+    title: "Gestion des Engrais et Sols",
+    dueDate: "31 Décembre 2024",
+    frequency: "Annuel",
     progress: 98,
   }
 ];
@@ -28,7 +31,7 @@ export function UpcomingDeclarations() {
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {
-    navigate(`/declarations/${id}`);
+    navigate(`/dashboard/declarations/${id}`);
   };
 
   return (
@@ -46,7 +49,10 @@ export function UpcomingDeclarations() {
                 <div className="space-y-2 flex-1 pr-4">
                   <h3 className="font-medium">{declaration.title}</h3>
                   <div className="flex items-center justify-between text-sm text-gray-500">
-                    <span>Échéance: {declaration.dueDate}</span>
+                    <div className="space-x-4">
+                      <span>Échéance: {declaration.dueDate}</span>
+                      <span>Fréquence: {declaration.frequency}</span>
+                    </div>
                     <span className="font-medium text-[#005E5D]">{declaration.progress}%</span>
                   </div>
                   <Progress 
