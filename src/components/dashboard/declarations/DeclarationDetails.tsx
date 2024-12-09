@@ -2,11 +2,26 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon } from 'lucide-react';
+import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon, Users, Building2, Mail, Phone, Loader2, Send } from 'lucide-react';
 import { FormLayout } from '@/components/ui/form-layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { HelpCircle, ListTodo } from 'lucide-react';
+import { ListTodo, HelpCircle } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 interface CapturedInfo {
   label: string;
@@ -127,37 +142,6 @@ const declarations: Record<string, DeclarationData> = {
         title: 'Plan d\'exploitation',
         description: 'Établir le plan d\'exploitation détaillé',
         dueDate: '2024-04-15',
-        priority: 'Normal'
-      }
-    ]
-  },
-  'conformite-sante-securite': {
-    id: 'conformite-sante-securite',
-    title: 'Conformité en Santé et Sécurité',
-    description: 'Déclaration des mesures de santé et sécurité au travail',
-    progress: 98,
-    isRegulated: true,
-    regulationInfo: {
-      currentRegulation: {
-        title: 'Réglementation sur la Santé et Sécurité au Travail',
-        description: 'Dispositions actuelles concernant la sécurité et la santé des travailleurs agricoles',
-        effectiveDate: '2024-01-01',
-        source: 'Ministère du Travail'
-      }
-    },
-    capturedInfo: [
-      { label: 'Document unique', value: 'Mis à jour le 15/01/2024' },
-      { label: 'Formation sécurité', value: 'Complétée pour tous les employés' },
-      { label: 'Équipements de protection', value: 'Conformes aux normes' }
-    ],
-    pendingInfo: [
-      { label: 'Rapport annuel de médecine du travail' }
-    ],
-    resolutionSteps: [
-      {
-        title: 'Mise à jour documentation',
-        description: 'Obtenir le rapport annuel de médecine du travail',
-        dueDate: '2024-03-01',
         priority: 'Normal'
       }
     ]
@@ -441,6 +425,103 @@ const declarations: Record<string, DeclarationData> = {
       }
     ]
   },
+  'conformite-sante-securite': {
+    id: 'conformite-sante-securite',
+    title: 'Conformité en Santé et Sécurité',
+    description: 'Rapport de conformité aux normes de santé et sécurité',
+    progress: 98,
+    capturedInfo: [
+      { label: 'Document unique', value: 'Mis à jour le 10/01/2024' },
+      { label: 'Nombre d\'employés', value: '5' },
+      { label: 'Formation sécurité', value: 'Réalisée le 05/01/2024' },
+      { label: 'Médecine du travail', value: 'Visites à jour' }
+    ],
+    pendingInfo: [
+      { label: 'Attestations formations' },
+      { label: 'Registre des accidents' },
+      { label: 'Fiches de postes mises à jour' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Mise à jour du Document Unique',
+        description: 'Évaluer les risques pour chaque poste de travail',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des équipements',
+        description: 'Contrôler tous les équipements de protection individuelle',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Formation des employés',
+        description: 'Organiser les formations sécurité et premiers secours',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour des protocoles',
+        description: 'Réviser les procédures d\'urgence et affichages obligatoires',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Audit interne',
+        description: 'Réaliser un audit complet des installations et pratiques',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
+      }
+    ]
+  },
+  'engrais-sols': {
+    id: 'engrais-sols',
+    title: 'Gestion des Engrais et Sols',
+    description: 'Déclaration sur la gestion des engrais et la qualité des sols',
+    progress: 98,
+    capturedInfo: [
+      { label: 'Surface traitée', value: '120 hectares' },
+      { label: 'Type d\'engrais principal', value: 'NPK organique' },
+      { label: 'Dernière analyse de sol', value: '15/01/2024' },
+      { label: 'pH moyen du sol', value: '6.8' }
+    ],
+    pendingInfo: [
+      { label: 'Plan de fertilisation 2024' },
+      { label: 'Registre d\'épandage mis à jour' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Analyse complète des sols',
+        description: 'Réaliser des prélèvements et analyses de sol pour chaque parcelle',
+        dueDate: '2024-02-20',
+        priority: 'Normal'
+      },
+      {
+        title: 'Établir le plan de fertilisation',
+        description: 'Calculer les besoins en nutriments pour chaque culture',
+        dueDate: '2024-02-25',
+        priority: 'Normal'
+      },
+      {
+        title: 'Mise à jour du registre d\'épandage',
+        description: 'Documenter toutes les applications d\'engrais avec dates et quantités',
+        dueDate: '2024-02-28',
+        priority: 'Normal'
+      },
+      {
+        title: 'Vérification des zones sensibles',
+        description: 'Identifier et cartographier les zones à proximité des cours d\'eau',
+        dueDate: '2024-03-05',
+        priority: 'Normal'
+      },
+      {
+        title: 'Validation du plan',
+        description: 'Faire valider le plan par un conseiller agronomique',
+        dueDate: '2024-03-10',
+        priority: 'Normal'
+      }
+    ]
+  },
   'bien-etre': {
     id: 'bien-etre',
     title: 'Déclaration de Bien-être Animal',
@@ -485,13 +566,13 @@ const declarations: Record<string, DeclarationData> = {
       },
       {
         title: 'Contrôle des points d\'eau',
-        description: 'Vérifier l\'accès et le fonctionnement des abreuvoirs',
+        description: 'Vérifier l\'accès à l\'eau pour tous les animaux',
         dueDate: '2024-02-25',
         priority: 'Normal'
       },
       {
         title: 'Évaluation de l\'alimentation',
-        description: 'Contrôler les rations et l\'accès aux mangeoires',
+        description: 'Contrôler les pratiques d\'alimentation',
         dueDate: '2024-02-28',
         priority: 'Normal'
       },
@@ -503,7 +584,7 @@ const declarations: Record<string, DeclarationData> = {
       },
       {
         title: 'Documentation des soins',
-        description: 'Mettre à jour le registre des soins et interventions',
+        description: 'Mettre à jour le registre des soins',
         dueDate: '2024-03-10',
         priority: 'Normal'
       }
@@ -814,10 +895,148 @@ const declarations: Record<string, DeclarationData> = {
 export function DeclarationDetails() {
   const { id } = useParams<{ id: string }>();
   const declaration = declarations[id || ''];
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedHelper, setSelectedHelper] = React.useState<'chambre' | 'ekumen' | null>(null);
+  const [message, setMessage] = React.useState('');
+  const [isSending, setIsSending] = React.useState(false);
+  const [isSent, setIsSent] = React.useState(false);
 
   if (!declaration) {
     return <div>Déclaration non trouvée</div>;
   }
+
+  const handleHelperSelect = (helper: 'chambre' | 'ekumen') => {
+    setSelectedHelper(helper);
+    setDialogOpen(true);
+    setMessage('');
+    setIsSent(false);
+  };
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+    
+    setIsSending(true);
+    // Simulate sending message
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsSending(false);
+    setIsSent(true);
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+      setDialogOpen(false);
+      setMessage('');
+      setIsSent(false);
+    }, 3000);
+  };
+
+  const renderHelpButton = () => {
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              variant="default"
+              className="bg-teal-700 text-white hover:bg-teal-800"
+            >
+              <HelpCircle className="w-4 h-4 mr-2" />
+              Obtenir de l'aide
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => handleHelperSelect('chambre')}>
+              <Building2 className="mr-2 h-4 w-4" />
+              <span>Chambre d'agriculture</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleHelperSelect('ekumen')}>
+              <Users className="mr-2 h-4 w-4" />
+              <span>Équipe Ekumen</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Dialog open={dialogOpen} onOpenChange={(open) => {
+          if (!open) {
+            setMessage('');
+            setIsSent(false);
+          }
+          setDialogOpen(open);
+        }}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>
+                {selectedHelper === 'chambre' ? 'Chambre d\'agriculture' : 'Équipe Ekumen'}
+              </DialogTitle>
+              <DialogDescription>
+                {selectedHelper === 'chambre' ? (
+                  <div className="space-y-4">
+                    <p>La Chambre d'agriculture vous accompagne dans vos démarches administratives et réglementaires.</p>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>01 23 45 67 89</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      <span>contact@chambre-agriculture.fr</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <p>Notre équipe technique est là pour vous aider avec l'utilisation de la plateforme et répondre à vos questions.</p>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>01 98 76 54 32</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      <span>support@ekumen.fr</span>
+                    </div>
+                  </div>
+                )}
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="mt-4 space-y-4">
+              <div>
+                <h4 className="mb-2 text-sm font-medium">Votre message</h4>
+                <Textarea
+                  placeholder={`Décrivez votre question concernant ${declaration.title}...`}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="min-h-[100px]"
+                  disabled={isSending || isSent}
+                />
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button
+                onClick={handleSendMessage}
+                disabled={!message.trim() || isSending || isSent}
+                className={`w-full ${isSent ? 'bg-green-600 hover:bg-green-700' : 'bg-teal-700 hover:bg-teal-800'}`}
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Envoi en cours...
+                  </>
+                ) : isSent ? (
+                  <>
+                    <CheckCircle2 className="mr-2 h-4 w-4" />
+                    Message envoyé !
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Envoyer
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  };
 
   const renderRegulationInfo = () => {
     if (!declaration.regulationInfo) return null;
@@ -952,15 +1171,7 @@ export function DeclarationDetails() {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button
-                            variant="default"
-                            size="sm"
-                            className="bg-teal-700 text-white hover:bg-teal-800"
-                            onClick={() => {}}
-                          >
-                            <HelpCircle className="w-4 h-4 mr-2" />
-                            Obtenir de l'aide
-                          </Button>
+                          {renderHelpButton()}
                           <Button
                             variant="outline"
                             size="sm"
@@ -1020,15 +1231,7 @@ export function DeclarationDetails() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="bg-teal-700 text-white hover:bg-teal-800"
-                        onClick={() => {}}
-                      >
-                        <HelpCircle className="w-4 h-4 mr-2" />
-                        Obtenir de l'aide
-                      </Button>
+                      {renderHelpButton()}
                       <Button
                         variant="outline"
                         size="sm"

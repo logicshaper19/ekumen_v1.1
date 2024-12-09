@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 const upcomingDeclarations = [
   {
-    id: 'foncier-rural',
+    id: 'engrais-sols',
     title: "Gestion des Engrais et Sols",
     dueDate: "31 Décembre 2024",
     progress: 98,
   },
   {
-    id: 'declaration-activite',
+    id: 'phytosanitaires',
     title: "Rapport sur l'Utilisation des Produits Phytosanitaires",
     dueDate: "31 Décembre 2024",
     progress: 98,
@@ -29,7 +29,7 @@ export function UpcomingDeclarations() {
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {
-    navigate(`/dashboard/declarations/${id}`);
+    navigate(`/declarations/${id}`);
   };
 
   return (
