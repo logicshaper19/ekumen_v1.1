@@ -191,7 +191,7 @@ const declarations: Record<string, DeclarationData> = {
       }
     ]
   },
-  'pac': {
+  'pac_policy': {
     id: 'pac',
     title: 'PAC - Politique Agricole Commune',
     description: 'Demande de paiement unique de la PAC',
@@ -816,74 +816,6 @@ const declarations: Record<string, DeclarationData> = {
         title: 'Documentation des soins',
         description: 'Mettre à jour le registre des soins',
         dueDate: '2024-03-10',
-        priority: 'Normal'
-      }
-    ]
-  },
-  'pac': {
-    id: 'pac',
-    title: 'PAC - Politique Agricole Commune',
-    description: 'Déclaration annuelle PAC',
-    progress: 30,
-    isRegulated: true,
-    regulationInfo: {
-      currentRegulation: {
-        title: 'PAC 2023-2027',
-        description: 'Cadre actuel de la Politique Agricole Commune',
-        effectiveDate: '1er janvier 2023',
-        source: 'Commission Européenne - DG AGRI'
-      },
-      upcomingRegulation: {
-        title: 'Modifications PAC 2024',
-        description: 'Ajustements et nouvelles mesures pour la PAC 2024',
-        effectiveDate: '1er janvier 2024',
-        source: 'Ministère de l\'Agriculture',
-        changes: [
-          'Renforcement des eco-schemes',
-          'Nouvelles conditions pour les aides couplées',
-          'Modification du calcul des surfaces d\'intérêt écologique',
-          'Introduction de nouvelles mesures agro-environnementales'
-        ]
-      }
-    },
-    capturedInfo: [
-      { label: 'Numéro Pacage', value: '031234567' },
-      { label: 'Surface déclarée', value: '85 hectares' },
-      { label: 'DPB', value: '70 droits activés' }
-    ],
-    pendingInfo: [
-      { label: 'Photos géolocalisées' },
-      { label: 'Justificatifs SIE' }
-    ],
-    resolutionSteps: [
-      {
-        title: 'Mise à jour parcellaire',
-        description: 'Vérifier et mettre à jour les limites des parcelles',
-        dueDate: '2024-03-15',
-        priority: 'Normal'
-      },
-      {
-        title: 'Déclaration cultures',
-        description: 'Déclarer les cultures pour chaque parcelle',
-        dueDate: '2024-03-20',
-        priority: 'Normal'
-      },
-      {
-        title: 'Calcul SIE',
-        description: 'Calculer les Surfaces d\'Intérêt Écologique',
-        dueDate: '2024-03-25',
-        priority: 'Normal'
-      },
-      {
-        title: 'Vérification conformité',
-        description: 'Contrôler la conformité avec les exigences PAC',
-        dueDate: '2024-03-30',
-        priority: 'Normal'
-      },
-      {
-        title: 'Finalisation dossier',
-        description: 'Rassembler tous les justificatifs nécessaires',
-        dueDate: '2024-04-05',
         priority: 'Normal'
       }
     ]

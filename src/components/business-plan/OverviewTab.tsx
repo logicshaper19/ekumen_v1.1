@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/components/ui/separator.tsx';
 import { Building2, Wheat, Droplets } from 'lucide-react';
 
 export function OverviewTab() {
