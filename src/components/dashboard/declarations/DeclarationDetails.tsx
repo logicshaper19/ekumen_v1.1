@@ -194,7 +194,7 @@ const declarations: Record<string, DeclarationData> = {
   'pac_policy': {
     id: 'pac',
     title: 'PAC - Politique Agricole Commune',
-    description: 'Demande de paiement unique de la PAC',
+    description: 'Déclaration annuelle PAC',
     progress: 30,
     isRegulated: true,
     regulationInfo: {
@@ -220,42 +220,41 @@ const declarations: Record<string, DeclarationData> = {
     capturedInfo: [
       { label: 'Numéro Pacage', value: '031234567' },
       { label: 'Surface déclarée', value: '85 hectares' },
-      { label: 'Droits à paiement de base', value: '85 DPB' }
+      { label: 'DPB', value: '70 droits activés' }
     ],
     pendingInfo: [
-      { label: 'Relevé parcellaire graphique' },
-      { label: 'Attestation d\'assurance récolte' },
-      { label: 'Justificatifs des SIE' }
+      { label: 'Photos géolocalisées' },
+      { label: 'Justificatifs SIE' }
     ],
     resolutionSteps: [
       {
-        title: 'Mise à jour du RPG',
-        description: 'Vérifier et actualiser les limites de parcelles sur TelePAC',
-        dueDate: '2024-02-20',
+        title: 'Mise à jour parcellaire',
+        description: 'Vérifier et mettre à jour les limites des parcelles',
+        dueDate: '2024-03-15',
         priority: 'Normal'
       },
       {
-        title: 'Déclaration des cultures',
-        description: 'Renseigner les cultures prévues pour chaque îlot',
-        dueDate: '2024-02-25',
+        title: 'Déclaration cultures',
+        description: 'Déclarer les cultures pour chaque parcelle',
+        dueDate: '2024-03-20',
         priority: 'Normal'
       },
       {
-        title: 'Calcul des SIE',
-        description: 'Identifier et mesurer les Surfaces d\'Intérêt Écologique',
-        dueDate: '2024-02-28',
+        title: 'Calcul SIE',
+        description: 'Calculer les Surfaces d\'Intérêt Écologique',
+        dueDate: '2024-03-25',
         priority: 'Normal'
       },
       {
-        title: 'Vérification des critères',
-        description: 'Contrôler le respect des critères de verdissement',
-        dueDate: '2024-03-05',
+        title: 'Vérification conformité',
+        description: 'Contrôler la conformité avec les exigences PAC',
+        dueDate: '2024-03-30',
         priority: 'Normal'
       },
       {
-        title: 'Finalisation du dossier',
-        description: 'Rassembler les justificatifs et signer la déclaration',
-        dueDate: '2024-03-10',
+        title: 'Finalisation dossier',
+        description: 'Rassembler tous les justificatifs nécessaires',
+        dueDate: '2024-04-05',
         priority: 'Normal'
       }
     ]
