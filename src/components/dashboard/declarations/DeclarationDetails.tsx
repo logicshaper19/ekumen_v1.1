@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon, Users, Building2, Mail, Phone, Loader2, Send } from 'lucide-react';
 import { FormLayout } from '@/components/ui/form-layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -94,7 +93,6 @@ const declarations: Record<string, DeclarationData> = {
     title: 'Foncier Rural',
     description: 'Déclaration des terres agricoles et leur statut',
     progress: 0,
-    status: 'À commencer',
     isRegulated: true,
     regulationInfo: {
       currentRegulation: {
@@ -1191,6 +1189,11 @@ export function DeclarationDetails() {
           </TabsContent>
           <TabsContent value="evolutions" className="mt-6">
             {renderRegulationInfo()}
+            {declaration.isRegulated && (
+              <div className="flex justify-end gap-4 mt-8">
+                {renderHelpButton()}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       ) : (
@@ -1247,6 +1250,11 @@ export function DeclarationDetails() {
               </div>
             </CardContent>
           </Card>
+          {declaration.isRegulated && (
+            <div className="flex justify-end mt-8">
+              {renderHelpButton()}
+            </div>
+          )}
         </div>
       )}
     </div>

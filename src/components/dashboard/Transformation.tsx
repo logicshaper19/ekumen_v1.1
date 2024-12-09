@@ -1,225 +1,279 @@
-import React, { useState } from 'react';
-import { TrendingUp, Clock, Sprout, Droplets, Leaf, Factory, ArrowRight, Zap, Cloud, Coins, Users, ChevronRight, ArrowLeft, Target } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { ChevronRight, Coins, Clock, Droplets, Factory, Leaf, Sprout, Target, TrendingUp, ArrowRight, Zap, Cloud, Users, ArrowLeft } from "lucide-react"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-const transformations = [
+interface TransformationData {
+  id: number
+  icon: any
+  title: string
+  shortDesc: string
+  description: string
+  benefits: string[]
+  kpis: {
+    title: string
+    value: string
+    icon: any
+  }[]
+  steps: string[]
+}
+
+export const transformations: TransformationData[] = [
   {
-    id: 'regenerative',
-    title: "Agriculture Régénératrice",
-    shortDesc: "Régénérez vos sols et augmentez votre résilience",
-    description: "Adoptez des pratiques qui régénèrent les sols face aux changements climatiques tout en améliorant votre rentabilité",
+    id: 1,
+    icon: Sprout,
+    title: "Agriculture régénératrice",
+    shortDesc: "Améliorer la santé des sols et la biodiversité",
+    description:
+      "L'agriculture régénératrice est une approche qui vise à restaurer la santé des sols tout en maintenant une production rentable. Elle combine plusieurs pratiques comme la rotation des cultures, la couverture permanente des sols et la réduction du travail du sol.",
+    benefits: [
+      "Amélioration de la structure et fertilité du sol",
+      "Réduction des coûts en intrants",
+      "Meilleure rétention d'eau",
+      "Augmentation de la biodiversité",
+      "Plus grande résilience aux aléas climatiques"
+    ],
+    kpis: [
+      {
+        title: "Économie d'intrants",
+        value: "80€/ha",
+        icon: Coins
+      },
+      {
+        title: "Gain matière organique",
+        value: "+6%",
+        icon: Sprout
+      },
+      {
+        title: "Rétention d'eau",
+        value: "12mm",
+        icon: Droplets
+      }
+    ],
+    steps: [
+      "Réaliser un diagnostic initial des sols",
+      "Planifier la rotation des cultures",
+      "Introduire des couverts végétaux",
+      "Réduire progressivement le travail du sol",
+      "Suivre l'évolution des indicateurs"
+    ]
+  },
+  {
+    id: 2,
     icon: Leaf,
+    title: "Certification Bio",
+    shortDesc: "Transition vers l'agriculture biologique",
+    description:
+      "La certification biologique permet de valoriser une production respectueuse de l'environnement. Elle implique l'abandon des pesticides et engrais de synthèse au profit de méthodes naturelles.",
     benefits: [
-      "Résilience accrue aux conditions météorologiques extrêmes",
-      "Réduction des coûts d'intrants",
-      "Amélioration de la qualité des sols",
-      "Accès aux primes carbone"
+      "Prix de vente plus élevés",
+      "Accès à de nouveaux marchés",
+      "Impact environnemental réduit",
+      "Meilleure image auprès des consommateurs",
+      "Indépendance vis-à-vis des intrants chimiques"
     ],
     kpis: [
-      { title: "Réduction des Coûts", value: "-30%", icon: Coins },
-      { title: "Matière Organique", value: "+2.5%", icon: Sprout },
-      { title: "Rendement", value: "+15%", icon: Target },
+      {
+        title: "Prime de vente",
+        value: "+7%",
+        icon: Coins
+      },
+      {
+        title: "Score biodiversité",
+        value: "8/10",
+        icon: Sprout
+      },
+      {
+        title: "Retour sur invest.",
+        value: "2 ans",
+        icon: Clock
+      }
     ],
     steps: [
-      "Réaliser un diagnostic de vos sols",
-      "Former votre équipe aux pratiques régénératrices",
-      "Mettre en place un plan de rotation des cultures",
-      "Implanter des couverts végétaux"
+      "Étudier le cahier des charges bio",
+      "Contacter un organisme certificateur",
+      "Planifier la période de conversion",
+      "Adapter ses pratiques culturales",
+      "Développer ses débouchés commerciaux"
     ]
   },
   {
-    id: 'energy',
-    title: "Transformation Énergétique",
-    shortDesc: "Réduisez votre dépendance énergétique",
-    description: "Réduisez votre dépendance aux énergies fossiles et maîtrisez vos coûts énergétiques à long terme",
-    icon: Zap,
+    id: 3,
+    icon: Droplets,
+    title: "Irrigation de précision",
+    shortDesc: "Optimiser la gestion de l'eau",
+    description:
+      "L'irrigation de précision permet d'optimiser l'utilisation de l'eau en apportant la juste dose au bon moment. Elle s'appuie sur des capteurs et des outils d'aide à la décision.",
     benefits: [
-      "Indépendance énergétique",
-      "Réduction des coûts opérationnels",
-      "Subventions disponibles",
-      "Impact environnemental positif"
+      "Économies d'eau significatives",
+      "Meilleure croissance des cultures",
+      "Réduction des maladies fongiques",
+      "Optimisation du temps de travail",
+      "Diminution de la facture d'eau"
     ],
     kpis: [
-      { title: "Économies Annuelles", value: "25k€", icon: Coins },
-      { title: "Autonomie", value: "80%", icon: Zap },
-      { title: "CO2 Évité", value: "-45t", icon: Leaf },
+      {
+        title: "Économie d'eau",
+        value: "850m³",
+        icon: Droplets
+      },
+      {
+        title: "Gain rendement",
+        value: "+5%",
+        icon: Target
+      },
+      {
+        title: "Coût irrigation",
+        value: "-120€",
+        icon: Coins
+      }
     ],
     steps: [
-      "Réaliser un audit énergétique",
-      "Identifier les solutions adaptées",
-      "Monter les dossiers de financement",
-      "Installer les équipements"
+      "Cartographier son parcellaire",
+      "Installer des sondes d'humidité",
+      "Mettre en place un système de pilotage",
+      "Former le personnel",
+      "Suivre les indicateurs de performance"
     ]
   },
   {
-    id: 'digital',
-    title: "Agriculture Connectée",
-    shortDesc: "Optimisez grâce au numérique",
-    description: "Optimisez vos opérations grâce aux technologies numériques et à l'agriculture de précision",
-    icon: Cloud,
-    benefits: [
-      "Optimisation de l'irrigation",
-      "Réduction des intrants",
-      "Suivi précis des cultures",
-      "Aide à la décision"
-    ],
-    kpis: [
-      { title: "Productivité", value: "+20%", icon: Target },
-      { title: "Intrants", value: "-15%", icon: Droplets },
-      { title: "ROI", value: "250%", icon: Coins },
-    ],
-    steps: [
-      "Cartographier vos parcelles",
-      "Installer les capteurs",
-      "Former aux outils numériques",
-      "Analyser et optimiser"
-    ]
-  },
-  {
-    id: 'processing',
-    title: "Transformation à la Ferme",
-    shortDesc: "Créez plus de valeur sur place",
-    description: "Créez de la valeur ajoutée en transformant vos produits directement sur votre exploitation",
+    id: 4,
     icon: Factory,
+    title: "Méthanisation agricole",
+    shortDesc: "Produire de l'énergie à partir des déchets",
+    description:
+      "La méthanisation permet de valoriser les effluents d'élevage et résidus de culture en produisant du biogaz et un digestat utilisable comme fertilisant.",
     benefits: [
-      "Meilleure valorisation",
-      "Contrôle de la chaîne de valeur",
-      "Relation directe consommateur",
-      "Indépendance commerciale"
+      "Nouvelle source de revenus",
+      "Valorisation des déchets",
+      "Production d'un fertilisant naturel",
+      "Réduction des émissions de GES",
+      "Autonomie énergétique accrue"
     ],
     kpis: [
-      { title: "Marge", value: "+45%", icon: Coins },
-      { title: "Clients Directs", value: "120", icon: Users },
-      { title: "Valorisation", value: "2.5x", icon: Target },
+      {
+        title: "Revenu additionnel",
+        value: "15k€",
+        icon: Coins
+      },
+      {
+        title: "Économie engrais",
+        value: "2.5t",
+        icon: Droplets
+      },
+      {
+        title: "ROI",
+        value: "4 ans",
+        icon: Clock
+      }
     ],
     steps: [
-      "Étudier le marché local",
-      "Concevoir votre atelier",
-      "Obtenir les certifications",
-      "Développer vos produits"
+      "Évaluer le gisement disponible",
+      "Réaliser une étude de faisabilité",
+      "Monter le plan de financement",
+      "Obtenir les autorisations",
+      "Construire et mettre en service"
     ]
   }
 ];
 
 export function Transformation() {
-  const [selectedTransform, setSelectedTransform] = useState(null);
+  const navigate = useNavigate()
 
-  if (selectedTransform) {
-    const transform = transformations.find(t => t.id === selectedTransform);
-    return (
-      <div className="space-y-8">
-        <div>
-          <button 
-            onClick={() => setSelectedTransform(null)}
-            className="flex items-center text-sm text-gray-600 hover:text-black mb-4"
-          >
-            <ArrowLeft className="h-4 w-4 mr-1" />
-            Retour aux transformations
-          </button>
-          <h1 className="text-3xl font-bold text-gray-900">{transform.title}</h1>
-          <p className="mt-2 text-gray-600">{transform.description}</p>
-        </div>
-
-        {/* KPIs */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {transform.kpis.map((kpi, index) => (
-            <Card key={index}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-gray-500">
-                  {kpi.title}
-                </CardTitle>
-                <kpi.icon className="h-4 w-4 text-gray-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{kpi.value}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Benefits and Steps side by side */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Benefits */}
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Bénéfices</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {transform.benefits.map((benefit, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" />
-                    <span className="text-gray-600">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Steps */}
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Prochaines étapes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {transform.steps.map((step, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center text-sm font-medium">
-                      {index + 1}
-                    </div>
-                    <p className="text-gray-600 flex-1">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Add to Strategy Button */}
-        <div className="flex justify-end">
-          <Button className="bg-teal-700 text-white hover:bg-teal-800 px-6">
-            Ajouter à ma stratégie
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  const farmKPIs = [
+    {
+      title: "Temps de mise en œuvre",
+      value: "2-3 ans",
+      icon: Clock,
+      description: "Durée moyenne pour une transformation complète"
+    },
+    {
+      title: "Impact sur le rendement",
+      value: "+12%",
+      icon: TrendingUp,
+      description: "Augmentation moyenne des rendements après 3 ans"
+    },
+    {
+      title: "Impact sur les revenus",
+      value: "+15%",
+      icon: Coins,
+      description: "Amélioration du revenu net après transformation"
+    },
+    {
+      title: "Score environnemental",
+      value: "A+",
+      icon: Leaf,
+      description: "Impact positif sur la biodiversité et les sols"
+    }
+  ]
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Transformation</h1>
-        <p className="mt-2 text-gray-600">
-          Découvrez les opportunités de transformation pour votre exploitation
+      <div className="space-y-4">
+        <h1 className="text-3xl font-semibold">Transformations pour votre exploitation</h1>
+        <p className="text-gray-600">
+          Voici une sélection de transformations adaptées à votre exploitation. Chaque transformation 
+          a été choisie pour maximiser votre impact tout en respectant vos objectifs.
         </p>
       </div>
 
-      <div className="grid gap-4">
-        {transformations.map((transform) => (
-          <Card 
-            key={transform.id}
-            className="cursor-pointer hover:bg-gray-50 transition-colors"
-            onClick={() => setSelectedTransform(transform.id)}
-          >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-black/5">
-                    <transform.icon className="h-5 w-5 text-black" />
-                  </div>
-                  <div>
-                    <CardTitle>{transform.title}</CardTitle>
-                    <p className="text-sm text-gray-600">{transform.shortDesc}</p>
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {farmKPIs.map((kpi, index) => (
+          <Card key={index}>
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-4">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <kpi.icon className="h-6 w-6 text-primary" />
                 </div>
-                <ChevronRight className="h-5 w-5 text-gray-400" />
+                <div>
+                  <p className="text-sm font-medium text-gray-500">{kpi.title}</p>
+                  <h3 className="text-2xl font-bold">{kpi.value}</h3>
+                </div>
               </div>
-            </CardHeader>
+              <p className="mt-2 text-sm text-gray-500">{kpi.description}</p>
+            </CardContent>
           </Card>
         ))}
       </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Transformations disponibles</h2>
+        <div className="grid gap-4">
+          {transformations.map((transform) => (
+            <Card 
+              key={transform.id}
+              className="cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => navigate(`/transformation/${transform.id}/details`)}
+            >
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-black/5">
+                      <transform.icon className="h-5 w-5 text-black" />
+                    </div>
+                    <div>
+                      <CardTitle>{transform.title}</CardTitle>
+                      <p className="text-sm text-gray-600">{transform.shortDesc}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-teal-700">
+                        {transform.kpis[0].value}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {transform.kpis[0].title}
+                      </p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </div>
     </div>
-  );
+  )
 }
