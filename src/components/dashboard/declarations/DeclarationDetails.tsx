@@ -131,6 +131,37 @@ const declarations: Record<string, DeclarationData> = {
       }
     ]
   },
+  'conformite-sante-securite': {
+    id: 'conformite-sante-securite',
+    title: 'Conformité en Santé et Sécurité',
+    description: 'Déclaration des mesures de santé et sécurité au travail',
+    progress: 98,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Réglementation sur la Santé et Sécurité au Travail',
+        description: 'Dispositions actuelles concernant la sécurité et la santé des travailleurs agricoles',
+        effectiveDate: '2024-01-01',
+        source: 'Ministère du Travail'
+      }
+    },
+    capturedInfo: [
+      { label: 'Document unique', value: 'Mis à jour le 15/01/2024' },
+      { label: 'Formation sécurité', value: 'Complétée pour tous les employés' },
+      { label: 'Équipements de protection', value: 'Conformes aux normes' }
+    ],
+    pendingInfo: [
+      { label: 'Rapport annuel de médecine du travail' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Mise à jour documentation',
+        description: 'Obtenir le rapport annuel de médecine du travail',
+        dueDate: '2024-03-01',
+        priority: 'Normal'
+      }
+    ]
+  },
   'identification-animaux': {
     id: 'identification-animaux',
     title: 'Identification et Enregistrement des Animaux',
@@ -405,103 +436,6 @@ const declarations: Record<string, DeclarationData> = {
       {
         title: 'Bilan des pratiques alternatives',
         description: 'Documenter les méthodes de lutte alternatives utilisées',
-        dueDate: '2024-03-10',
-        priority: 'Normal'
-      }
-    ]
-  },
-  'conformite-sante-securite': {
-    id: 'conformite-sante-securite',
-    title: 'Conformité en Santé et Sécurité',
-    description: 'Rapport de conformité aux normes de santé et sécurité',
-    progress: 98,
-    capturedInfo: [
-      { label: 'Document unique', value: 'Mis à jour le 10/01/2024' },
-      { label: 'Nombre d\'employés', value: '5' },
-      { label: 'Formation sécurité', value: 'Réalisée le 05/01/2024' },
-      { label: 'Médecine du travail', value: 'Visites à jour' }
-    ],
-    pendingInfo: [
-      { label: 'Attestations formations' },
-      { label: 'Registre des accidents' },
-      { label: 'Fiches de postes mises à jour' }
-    ],
-    resolutionSteps: [
-      {
-        title: 'Mise à jour du Document Unique',
-        description: 'Évaluer les risques pour chaque poste de travail',
-        dueDate: '2024-02-20',
-        priority: 'Normal'
-      },
-      {
-        title: 'Vérification des équipements',
-        description: 'Contrôler tous les équipements de protection individuelle',
-        dueDate: '2024-02-25',
-        priority: 'Normal'
-      },
-      {
-        title: 'Formation des employés',
-        description: 'Organiser les formations sécurité et premiers secours',
-        dueDate: '2024-02-28',
-        priority: 'Normal'
-      },
-      {
-        title: 'Mise à jour des protocoles',
-        description: 'Réviser les procédures d\'urgence et affichages obligatoires',
-        dueDate: '2024-03-05',
-        priority: 'Normal'
-      },
-      {
-        title: 'Audit interne',
-        description: 'Réaliser un audit complet des installations et pratiques',
-        dueDate: '2024-03-10',
-        priority: 'Normal'
-      }
-    ]
-  },
-  'engrais-sols': {
-    id: 'engrais-sols',
-    title: 'Gestion des Engrais et Sols',
-    description: 'Déclaration sur la gestion des engrais et la qualité des sols',
-    progress: 98,
-    capturedInfo: [
-      { label: 'Surface traitée', value: '120 hectares' },
-      { label: 'Type d\'engrais principal', value: 'NPK organique' },
-      { label: 'Dernière analyse de sol', value: '15/01/2024' },
-      { label: 'pH moyen du sol', value: '6.8' }
-    ],
-    pendingInfo: [
-      { label: 'Plan de fertilisation 2024' },
-      { label: 'Registre d\'épandage mis à jour' }
-    ],
-    resolutionSteps: [
-      {
-        title: 'Analyse complète des sols',
-        description: 'Réaliser des prélèvements et analyses de sol pour chaque parcelle',
-        dueDate: '2024-02-20',
-        priority: 'Normal'
-      },
-      {
-        title: 'Établir le plan de fertilisation',
-        description: 'Calculer les besoins en nutriments pour chaque culture',
-        dueDate: '2024-02-25',
-        priority: 'Normal'
-      },
-      {
-        title: 'Mise à jour du registre d\'épandage',
-        description: 'Documenter toutes les applications d\'engrais avec dates et quantités',
-        dueDate: '2024-02-28',
-        priority: 'Normal'
-      },
-      {
-        title: 'Vérification des zones sensibles',
-        description: 'Identifier et cartographier les zones à proximité des cours d\'eau',
-        dueDate: '2024-03-05',
-        priority: 'Normal'
-      },
-      {
-        title: 'Validation du plan',
-        description: 'Faire valider le plan par un conseiller agronomique',
         dueDate: '2024-03-10',
         priority: 'Normal'
       }
