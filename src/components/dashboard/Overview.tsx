@@ -268,7 +268,7 @@ export function Overview() {
               <div className="p-1.5 bg-orange-100 rounded-lg">
                 <AlertTriangle className="h-5 w-5 text-orange-600" />
               </div>
-              <h2 className="text-xl font-semibold text-red-500">Risques et Opportunités TEST</h2>
+              <h2 className="text-xl font-semibold">Risques et Opportunités</h2>
             </CardTitle>
           </CardHeader>
           <CardContent>
