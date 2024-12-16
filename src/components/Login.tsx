@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { LoginCredentials } from '../types/auth';
-import { SSOProviders } from './auth/SSOProviders';
 
 export function Login() {
   const { login } = useAuth();
@@ -29,9 +28,6 @@ export function Login() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-10 px-8 shadow-lg sm:rounded-xl">
-          {/* SSO Providers */}
-          <SSOProviders />
-          
           {/* Email/Password Form */}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>

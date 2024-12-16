@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: true,
       user,
     });
-    navigate('/dashboard');
+    navigate('/tableau-de-bord');
   };
 
   const logout = () => {

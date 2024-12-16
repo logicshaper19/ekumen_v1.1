@@ -3,6 +3,7 @@ import { UpcomingDeclarations } from './UpcomingDeclarations';
 import { PublicDeclarations } from './declarations/PublicDeclarations';
 import { PrivateDeclarations } from './declarations/PrivateDeclarations';
 import { FilingRequirementsChart } from './declarations/FilingRequirementsChart';
+import { Overview } from './Overview';
 import { useAuth } from '../../context/AuthContext';
 import { ChevronRight } from 'lucide-react';
 
@@ -46,10 +47,11 @@ export function Dashboard() {
 
   return (
     <div className="p-8">
-      {/* Header Section with Échéances à Venir */}
+      {/* Header Section with Overview and Échéances à Venir */}
       <div className="grid grid-cols-[1fr_400px] gap-8 mb-8">
         <div className="space-y-4">
           <h1 className="text-[40px] font-bold text-black mb-1">Conformité</h1>
+          <Overview />
           <FilingRequirementsChart />
         </div>
         <UpcomingDeclarations />

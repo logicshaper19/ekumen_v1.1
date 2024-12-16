@@ -5,7 +5,6 @@ import { Benefits } from './components/landing/Benefits';
 import { HowItWorks } from './components/landing/HowItWorks';
 import { Signup } from './components/Signup';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
-import { Dashboard } from './components/dashboard/Dashboard';
 import { Community } from './components/dashboard/Community';
 import { BusinessPlan } from './components/dashboard/BusinessPlan';
 import { Transformation } from './components/dashboard/Transformation';
@@ -25,6 +24,9 @@ import { FinancialPlanDetailsPage } from './pages/FinancialPlanDetailsPage';
 import { CropDetailsPage } from './pages/CropDetailsPage';
 import { RiskOpportunityEvolution } from './components/business-plan/RiskOpportunityEvolution';
 import { DiscussionDetails } from './components/dashboard/DiscussionDetails';
+import { TableauDeBord } from './pages/TableauDeBord';
+import { Conformite } from './pages/Conformite';
+import { Declarations } from './components/dashboard/Declarations';
 
 function App() {
   const location = useLocation();
@@ -55,17 +57,17 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
-        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
-        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/dashboard" />} />
-        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/dashboard" />} />
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/tableau-de-bord" />} />
+        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/tableau-de-bord" />} />
+        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/tableau-de-bord" />} />
         
         {/* Protected Routes */}
         <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
-          <Route path="dashboard">
-            <Route index element={<Dashboard />} />
-            <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
-            <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
-          </Route>
+          <Route index element={<Navigate to="/tableau-de-bord" replace />} />
+          <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
+          <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
+          <Route path="tableau-de-bord" element={<TableauDeBord />} />
+          <Route path="conformite" element={<Conformite />} />
           <Route path="community" element={<Community />} />
           <Route path="community/discussion/:id" element={<DiscussionDetails />} />
           <Route path="business-plan" element={<BusinessPlan />} />
