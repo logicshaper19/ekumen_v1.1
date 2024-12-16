@@ -364,7 +364,7 @@ export function Overview() {
             </div>
             <div className="mt-6 flex justify-end">
               <Link 
-                to="/community"
+                to="/messagerie"
                 className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
               >
                 Voir toutes les conversations

@@ -5,7 +5,7 @@ import { Benefits } from './components/landing/Benefits';
 import { HowItWorks } from './components/landing/HowItWorks';
 import { Signup } from './components/Signup';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
-import { Community } from './components/dashboard/Community';
+import { Messagerie } from './components/dashboard/Messagerie';
 import { BusinessPlan } from './components/dashboard/BusinessPlan';
 import { Transformation } from './components/dashboard/Transformation';
 import { TransformationDetails } from './components/dashboard/TransformationDetails';
@@ -71,8 +71,8 @@ function App() {
           <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
           <Route path="reglementations" element={<Reglementations />} />
-          <Route path="community" element={<Community />} />
-          <Route path="community/discussion/:id" element={<DiscussionDetails />} />
+          <Route path="messagerie" element={<Messagerie />} />
+          <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="business-plan/add-objective" element={<AddObjective />} />
           <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
