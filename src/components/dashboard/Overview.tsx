@@ -278,7 +278,7 @@ export function Overview() {
                 return (
                   <div 
                     key={item.id} 
-                    className="p-4 bg-white border border-gray-200 rounded-lg"
+                    className="p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
                   >
                     <div className="flex items-start gap-4">
                       <div className={`p-2 rounded-lg ${
@@ -342,7 +342,7 @@ export function Overview() {
               {conversations.map((conversation) => {
                 const Icon = conversation.partner.icon;
                 return (
-                  <div key={conversation.id} className="p-4 bg-white border rounded-lg">
+                  <div key={conversation.id} className="p-4 bg-white border rounded-lg hover:bg-gray-50">
                     <div className="flex gap-4">
                       <div className={`p-2 ${conversation.partner.iconBg} rounded-lg`}>
                         <Icon className={`h-5 w-5 ${conversation.partner.iconColor}`} />
