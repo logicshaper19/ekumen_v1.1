@@ -24,8 +24,8 @@ export function AnalyticsCard({
     <Card className="!bg-[#F5F5F0]">
       <CardContent className="pt-6">
         <div className="flex gap-4">
-          <div className="p-2 bg-red-500 rounded-lg h-fit">
-            <Icon className="h-5 w-5 text-white" />
+          <div className="p-2 bg-primary/10 rounded-lg h-fit">
+            <Icon className="h-5 w-5 text-primary" />
           </div>
           <div>
             <p className="text-sm text-muted-foreground">{title}</p>
