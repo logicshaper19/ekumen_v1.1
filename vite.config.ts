@@ -22,7 +22,8 @@ export default defineConfig({
       'clsx',
       'tailwind-merge',
       'lucide-react',
-      'recharts'
+      'recharts',
+      'date-fns'
     ]
   },
   server: {
