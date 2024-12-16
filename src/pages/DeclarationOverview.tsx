@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import { ComplianceChart, TrendChart, DistributionChart } from '@/components/charts/DeclarationCharts';
 import { chartData } from '@/data/declarationChartData';
+import { HelpCircle, FileText } from 'lucide-react';
 
 interface DeclarationContent {
   id: string;
@@ -478,6 +479,49 @@ export function DeclarationOverview() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 whitespace-pre-line">{declaration.risks}</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* CTAs */}
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <HelpCircle className="h-12 w-12 text-primary" />
+              <div>
+                <h3 className="text-lg font-semibold">Besoin d'aide?</h3>
+                <p className="text-sm text-muted-foreground mb-4">Obtenez de l'aide d'un conseiller expert</p>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    // Existing help functionality
+                  }}
+                >
+                  Besoin d'aide
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <FileText className="h-12 w-12 text-primary" />
+              <div>
+                <h3 className="text-lg font-semibold">Remplir un formulaire?</h3>
+                <p className="text-sm text-muted-foreground mb-4">Accédez au formulaire détaillé et à l'aide au remplissage</p>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => navigate(`/reglementations/${declarationId}`)}
+                >
+                  Accéder au formulaire
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
