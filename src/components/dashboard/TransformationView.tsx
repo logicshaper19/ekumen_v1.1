@@ -13,7 +13,7 @@ import {
   Building,
   GraduationCap,
 } from 'lucide-react';
-import { transformations } from './Transformation';
+import { strategicTransformations, nonStrategicTransformations } from './Transformation';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Mock data from TransformationExploration
@@ -74,7 +74,7 @@ export function TransformationView() {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  const transformation = transformations.find(t => t.id === Number(id));
+  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === Number(id));
   
   if (!transformation) {
     return <div>Transformation non trouvée</div>;

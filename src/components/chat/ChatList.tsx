@@ -59,7 +59,7 @@ export function ChatList({ threads, activeThreadId, onThreadSelect }: ChatListPr
                   key={thread.id}
                   onClick={() => onThreadSelect(thread.id)}
                   className={`w-full text-left p-3 hover:bg-gray-100 transition-colors ${
-                    activeThreadId === thread.id ? 'bg-gray-100' : ''
+                    activeThreadId === thread.id ? 'bg-[#F5F5F0]' : ''
                   }`}
                 >
                   <div className="flex items-start space-x-3">

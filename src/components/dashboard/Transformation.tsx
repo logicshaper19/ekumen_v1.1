@@ -1,6 +1,25 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { ChevronRight, Coins, Clock, Droplets, Factory, Leaf, Sprout, Target, TrendingUp, ArrowRight, Zap, Cloud, Users, ArrowLeft } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { 
+  ChevronRight, 
+  Coins, 
+  Clock, 
+  Droplets, 
+  Factory, 
+  Leaf, 
+  Sprout, 
+  Target, 
+  TrendingUp, 
+  ArrowRight, 
+  Zap, 
+  Cloud, 
+  Users, 
+  ArrowLeft,
+  Tractor,
+  Wheat,
+  Sun
+} from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -19,7 +38,7 @@ interface TransformationData {
   steps: string[]
 }
 
-export const transformations: TransformationData[] = [
+export const strategicTransformations: TransformationData[] = [
   {
     id: 1,
     icon: Sprout,
@@ -99,81 +118,162 @@ export const transformations: TransformationData[] = [
     ]
   },
   {
-    id: 3,
-    icon: Droplets,
-    title: "Irrigation de précision",
-    shortDesc: "Optimiser la gestion de l'eau",
+    id: 5,
+    icon: Users,
+    title: "Coopérative agricole",
+    shortDesc: "Mutualisation des ressources et savoirs",
     description:
-      "L'irrigation de précision permet d'optimiser l'utilisation de l'eau en apportant la juste dose au bon moment. Elle s'appuie sur des capteurs et des outils d'aide à la décision.",
+      "La création ou l'intégration d'une coopérative agricole permet de mutualiser les ressources, partager les connaissances et renforcer le pouvoir de négociation.",
     benefits: [
-      "Économies d'eau significatives",
-      "Meilleure croissance des cultures",
-      "Réduction des maladies fongiques",
-      "Optimisation du temps de travail",
-      "Diminution de la facture d'eau"
+      "Économies d'échelle sur les achats",
+      "Meilleur pouvoir de négociation",
+      "Partage d'expérience et de matériel",
+      "Accès à de nouveaux marchés",
+      "Réduction des risques"
     ],
     kpis: [
       {
-        title: "Économie d'eau",
-        value: "850m³",
-        icon: Droplets
-      },
-      {
-        title: "Gain rendement",
-        value: "+5%",
-        icon: Target
-      },
-      {
-        title: "Coût irrigation",
-        value: "-120€",
-        icon: Coins
-      }
-    ],
-    steps: [
-      "Cartographier son parcellaire",
-      "Installer des sondes d'humidité",
-      "Mettre en place un système de pilotage",
-      "Former le personnel",
-      "Suivre les indicateurs de performance"
-    ]
-  },
-  {
-    id: 4,
-    icon: Factory,
-    title: "Méthanisation agricole",
-    shortDesc: "Produire de l'énergie à partir des déchets",
-    description:
-      "La méthanisation permet de valoriser les effluents d'élevage et résidus de culture en produisant du biogaz et un digestat utilisable comme fertilisant.",
-    benefits: [
-      "Nouvelle source de revenus",
-      "Valorisation des déchets",
-      "Production d'un fertilisant naturel",
-      "Réduction des émissions de GES",
-      "Autonomie énergétique accrue"
-    ],
-    kpis: [
-      {
-        title: "Revenu additionnel",
-        value: "15k€",
+        title: "Réduction coûts",
+        value: "25%",
         icon: Coins
       },
       {
-        title: "Économie engrais",
-        value: "2.5t",
-        icon: Droplets
+        title: "Réseau",
+        value: "50+",
+        icon: Users
       },
       {
-        title: "ROI",
-        value: "4 ans",
+        title: "ROI estimé",
+        value: "1 an",
         icon: Clock
       }
     ],
     steps: [
-      "Évaluer le gisement disponible",
-      "Réaliser une étude de faisabilité",
-      "Monter le plan de financement",
-      "Obtenir les autorisations",
-      "Construire et mettre en service"
+      "Identifier les partenaires potentiels",
+      "Définir le modèle de gouvernance",
+      "Établir les statuts",
+      "Mettre en place la structure",
+      "Développer les services communs"
+    ]
+  }
+];
+
+export const nonStrategicTransformations: TransformationData[] = [
+  {
+    id: 3,
+    icon: Tractor,
+    title: "Agriculture de précision",
+    shortDesc: "Optimisation des ressources par la technologie",
+    description:
+      "L'agriculture de précision utilise les technologies modernes pour optimiser l'utilisation des ressources. Elle permet une gestion plus fine des parcelles grâce aux données collectées.",
+    benefits: [
+      "Optimisation des intrants",
+      "Réduction des coûts opérationnels",
+      "Meilleure traçabilité",
+      "Gestion précise des parcelles",
+      "Amélioration des rendements"
+    ],
+    kpis: [
+      {
+        title: "Économie d'intrants",
+        value: "15%",
+        icon: Coins
+      },
+      {
+        title: "Gain productivité",
+        value: "+10%",
+        icon: TrendingUp
+      },
+      {
+        title: "ROI estimé",
+        value: "3 ans",
+        icon: Clock
+      }
+    ],
+    steps: [
+      "Cartographier les parcelles",
+      "Installer les capteurs",
+      "Former les équipes",
+      "Mettre en place le suivi",
+      "Analyser les données"
+    ]
+  },
+  {
+    id: 4,
+    icon: Sun,
+    title: "Transition énergétique",
+    shortDesc: "Vers l'autonomie énergétique",
+    description:
+      "La transition énergétique vise à réduire la dépendance aux énergies fossiles en favorisant les énergies renouvelables et l'efficacité énergétique sur l'exploitation.",
+    benefits: [
+      "Réduction des coûts énergétiques",
+      "Indépendance énergétique",
+      "Impact environnemental réduit",
+      "Revenus complémentaires possibles",
+      "Image positive"
+    ],
+    kpis: [
+      {
+        title: "Économie énergie",
+        value: "40%",
+        icon: Zap
+      },
+      {
+        title: "Production solaire",
+        value: "50kW",
+        icon: Sun
+      },
+      {
+        title: "Amortissement",
+        value: "8 ans",
+        icon: Clock
+      }
+    ],
+    steps: [
+      "Audit énergétique",
+      "Étude de faisabilité",
+      "Installation des équipements",
+      "Raccordement au réseau",
+      "Suivi de la production"
+    ]
+  },
+  {
+    id: 6,
+    icon: Cloud,
+    title: "Smart Farming",
+    shortDesc: "Agriculture connectée et données",
+    description:
+      "Le Smart Farming utilise l'IoT, l'intelligence artificielle et le cloud computing pour optimiser la production agricole grâce à une prise de décision basée sur les données.",
+    benefits: [
+      "Optimisation des processus",
+      "Prédiction des rendements",
+      "Détection précoce des problèmes",
+      "Réduction du gaspillage",
+      "Traçabilité améliorée"
+    ],
+    kpis: [
+      {
+        title: "Productivité",
+        value: "+20%",
+        icon: TrendingUp
+      },
+      {
+        title: "Précision",
+        value: "95%",
+        icon: Target
+      },
+      {
+        title: "Données/jour",
+        value: "2.5GB",
+        icon: Cloud
+      }
+    ],
+    steps: [
+      "Déployer les capteurs IoT",
+      "Configurer la plateforme cloud",
+      "Former les équipes aux outils",
+      "Intégrer les systèmes existants",
+      "Mettre en place le monitoring"
     ]
   }
 ];
@@ -181,28 +281,28 @@ export const transformations: TransformationData[] = [
 // Farm-wide KPIs
 const farmKPIs = [
   {
-    title: "Temps de mise en œuvre",
+    title: "Mise en œuvre",
     value: "2-3 ans",
     icon: Clock,
-    description: "Durée moyenne pour une transformation complète"
+    description: "Pour une transformation complète"
   },
   {
-    title: "Impact sur le rendement",
+    title: "Rendement",
     value: "+12%",
     icon: TrendingUp,
-    description: "Augmentation moyenne des rendements après 3 ans"
+    description: "Après 3 ans"
   },
   {
-    title: "Impact sur les revenus",
+    title: "Revenus",
     value: "+15%",
     icon: Coins,
-    description: "Amélioration du revenu net après transformation"
+    description: "D'amélioration du revenu net"
   },
   {
-    title: "Score environnemental",
+    title: "Environnement",
     value: "A+",
     icon: Leaf,
-    description: "Impact positif sur la biodiversité et les sols"
+    description: "Biodiversité et sols positivement impactés"
   }
 ];
 
@@ -215,14 +315,14 @@ export function Transformation() {
       <div>
         <h1 className="text-3xl font-bold">Transformations pour votre exploitation</h1>
         <p className="text-muted-foreground mt-2">
-          Voici une sélection de transformations adaptées à votre exploitation. Chaque transformation a été choisie pour maximiser votre impact tout en respectant vos objectifs.
+          Découvrez les transformations disponibles pour votre exploitation, alignées ou non avec vos objectifs stratégiques.
         </p>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {farmKPIs.map((kpi, i) => (
-          <Card key={i} className="bg-card/50">
+          <Card key={i} className="bg-[#F5F5F0]">
             <CardContent className="pt-6">
               <div className="flex gap-4">
                 <div className="p-2 bg-primary/10 rounded-lg h-fit">
@@ -239,42 +339,95 @@ export function Transformation() {
         ))}
       </div>
 
-      {/* Transformations List */}
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Transformations disponibles</h2>
-        <div className="grid gap-4">
-          {transformations.map((transform) => (
-            <Card 
-              key={transform.id}
-              className="cursor-pointer hover:bg-accent/50 transition-colors"
-              onClick={() => navigate(`/transformation/${transform.id}`)}
-            >
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <transform.icon className="h-5 w-5 text-primary" />
+      {/* Transformations Lists */}
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Strategic Transformations */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            Transformations alignées à vos objectifs
+            <Target className="h-5 w-5 text-primary" />
+          </h2>
+          <div className="grid gap-4">
+            {strategicTransformations.map((transform) => (
+              <Card 
+                key={transform.id}
+                className="cursor-pointer hover:bg-accent/50 transition-colors"
+                onClick={() => navigate(`/transformation/${transform.id}`)}
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <transform.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <CardTitle>{transform.title}</CardTitle>
+                          <Badge variant="secondary" className="ml-2">
+                            <Target className="h-3 w-3 mr-1" />
+                            Stratégique
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{transform.shortDesc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <CardTitle>{transform.title}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{transform.shortDesc}</p>
+                    <div className="flex items-center gap-6">
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-primary">
+                          {transform.kpis[0].value}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {transform.kpis[0].title}
+                        </p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </div>
                   </div>
-                  <div className="flex items-center gap-6">
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-primary">
-                        {transform.kpis[0].value}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {transform.kpis[0].title}
-                      </p>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Non-Strategic Transformations */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">
+            Autres transformations disponibles
+          </h2>
+          <div className="grid gap-4">
+            {nonStrategicTransformations.map((transform) => (
+              <Card 
+                key={transform.id}
+                className="cursor-pointer hover:bg-accent/50 transition-colors"
+                onClick={() => navigate(`/transformation/${transform.id}`)}
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <transform.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle>{transform.title}</CardTitle>
+                        <p className="text-sm text-muted-foreground">{transform.shortDesc}</p>
+                      </div>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    <div className="flex items-center gap-6">
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-primary">
+                          {transform.kpis[0].value}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {transform.kpis[0].title}
+                        </p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-            </Card>
-          ))}
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -210,15 +210,18 @@ export function BusinessPlan() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {currentKPIs.map((kpi, index) => (
-          <AnalyticsCard
-            key={index}
-            title={kpi.title}
-            value={kpi.value}
-            change={kpi.change}
-            trend={kpi.trend}
-            icon={kpi.icon}
-            description={kpi.description}
-          />
+          <Card key={index} className="bg-[#F5F5F0]">
+            <CardContent className="pt-6">
+              <AnalyticsCard
+                title={kpi.title}
+                value={kpi.value}
+                change={kpi.change}
+                trend={kpi.trend}
+                icon={kpi.icon}
+                description={kpi.description}
+              />
+            </CardContent>
+          </Card>
         ))}
       </div>
 

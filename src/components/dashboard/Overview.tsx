@@ -181,76 +181,78 @@ export function Overview() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {objectives.map((objective) => {
-                  const Icon = objective.icon;
-                  return (
-                    <div key={objective.id} className="p-4 bg-gray-50 rounded-xl space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-[#005E5D] bg-opacity-10 rounded-lg">
-                          <Icon className="h-5 w-5 text-[#005E5D]" />
-                        </div>
-                        <div>
-                          <h3 className="text-base font-semibold text-gray-900">
-                            {objective.name}
-                          </h3>
-                          <p className="text-sm text-gray-600">{objective.shortDesc}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1">
-                          <div className="relative">
-                            <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
-                              <div 
-                                className="h-full bg-[#005E5D] rounded-full transition-all duration-500"
-                                style={{ 
-                                  width: `${(objective.current / objective.target) * 100}%`,
-                                }}
-                              />
-                            </div>
+                <div className="grid gap-4">
+                  {objectives.map((objective) => (
+                    <Card key={objective.id} className="bg-[#F5F5F0] hover:bg-[#F5F5F0]/90 transition-colors">
+                      <CardHeader>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-[#005E5D] bg-opacity-10 rounded-lg">
+                            <objective.icon className="h-5 w-5 text-[#005E5D]" />
+                          </div>
+                          <div>
+                            <h3 className="text-base font-semibold text-gray-900">
+                              {objective.name}
+                            </h3>
+                            <p className="text-sm text-gray-600">{objective.shortDesc}</p>
                           </div>
                         </div>
-                        
-                        <div className="flex items-baseline gap-1 min-w-[90px] justify-end">
-                          <span className="text-lg font-bold text-[#005E5D]">
-                            {objective.current}
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            / {objective.target} {objective.unit}
-                          </span>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1">
+                            <div className="relative">
+                              <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-[#005E5D] rounded-full transition-all duration-500"
+                                  style={{ 
+                                    width: `${(objective.current / objective.target) * 100}%`,
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-baseline gap-1 min-w-[90px] justify-end">
+                            <span className="text-lg font-bold text-[#005E5D]">
+                              {objective.current}
+                            </span>
+                            <span className="text-sm text-gray-600">
+                              / {objective.target} {objective.unit}
+                            </span>
+                          </div>
                         </div>
-                      </div>
 
-                      {(objective.current / objective.target) >= 0.9 ? (
-                        <div className="flex items-center gap-1.5 text-green-700 bg-green-50 px-2.5 py-1 rounded-full text-sm">
-                          <CheckCircle className="h-4 w-4" />
-                          <span>Presque atteint</span>
-                        </div>
-                      ) : (objective.current / objective.target) >= 0.6 ? (
-                        <div className="flex items-center gap-1.5 text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full text-sm">
-                          <TrendingUp className="h-4 w-4" />
-                          <span>En bonne voie</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1.5 text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full text-sm">
-                          <AlertCircle className="h-4 w-4" />
-                          <span>À améliorer</span>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+                        {(objective.current / objective.target) >= 0.9 ? (
+                          <div className="flex items-center gap-1.5 text-green-700 bg-green-50 px-2.5 py-1 rounded-full text-sm">
+                            <CheckCircle className="h-4 w-4" />
+                            <span>Presque atteint</span>
+                          </div>
+                        ) : (objective.current / objective.target) >= 0.6 ? (
+                          <div className="flex items-center gap-1.5 text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full text-sm">
+                            <TrendingUp className="h-4 w-4" />
+                            <span>En bonne voie</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1.5 text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full text-sm">
+                            <AlertCircle className="h-4 w-4" />
+                            <span>À améliorer</span>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
 
-              <div className="mt-6 flex justify-center">
-                <Link 
-                  to="/business-plan"
-                  state={{ activeTab: 'strategy' }}
-                  className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
-                >
-                  Explorer tous les objectifs
-                  <span aria-hidden="true">→</span>
-                </Link>
+                <div className="mt-6 flex justify-center">
+                  <Link 
+                    to="/business-plan"
+                    state={{ activeTab: 'strategy' }}
+                    className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
+                  >
+                    Explorer tous les objectifs
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -276,7 +278,7 @@ export function Overview() {
                 return (
                   <div 
                     key={item.id} 
-                    className="p-4 bg-white border border-gray-200 rounded-lg"
+                    className="p-4 bg-[#F5F5F0] border border-gray-200 rounded-lg"
                   >
                     <div className="flex items-start gap-4">
                       <div className={`p-2 rounded-lg ${
@@ -340,7 +342,7 @@ export function Overview() {
               {conversations.map((conversation) => {
                 const Icon = conversation.partner.icon;
                 return (
-                  <div key={conversation.id} className="p-4 border rounded-lg">
+                  <div key={conversation.id} className="p-4 bg-[#F5F5F0] border rounded-lg">
                     <div className="flex gap-4">
                       <div className={`p-2 ${conversation.partner.iconBg} rounded-lg`}>
                         <Icon className={`h-5 w-5 ${conversation.partner.iconColor}`} />
