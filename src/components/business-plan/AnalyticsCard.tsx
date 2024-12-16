@@ -21,7 +21,7 @@ export function AnalyticsCard({
   description
 }: AnalyticsCardProps) {
   return (
-    <Card className="bg-[#F5F5F0]">
+    <Card className="!bg-[#F5F5F0]">
       <CardContent className="pt-6">
         <div className="flex gap-4">
           <div className="p-2 bg-red-500 rounded-lg h-fit">
