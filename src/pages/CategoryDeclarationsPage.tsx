@@ -15,7 +15,7 @@ export function CategoryDeclarationsPage() {
   const category = categories.find(c => c.id === categoryId);
 
   const handleDeclarationClick = (declarationId: string) => {
-    navigate(`/declarations/${declarationId}`);
+    navigate(`/categories/${categoryId}/declarations/${declarationId}/overview`);
   };
 
   if (!category) {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -8,8 +7,6 @@ interface Declaration {
   id: string;
   title: string;
   description: string;
-  progress: number;
-  status: string;
   category: string;
   hasChanges?: boolean;
 }
@@ -33,16 +30,12 @@ export const categories: Category[] = [
         id: 'declaration-activite',
         title: 'Déclaration d\'Activité Agricole',
         description: 'Enregistrement officiel de votre activité agricole',
-        progress: 0,
-        status: 'À commencer',
         category: 'registration'
       },
       {
         id: 'foncier-rural',
         title: 'Foncier Rural',
         description: 'Déclaration des terres agricoles et leur statut',
-        progress: 0,
-        status: 'À commencer',
         category: 'registration',
         hasChanges: true
       }
@@ -57,40 +50,30 @@ export const categories: Category[] = [
         id: 'engrais-sols',
         title: 'Gestion des Engrais et Sols',
         description: 'Déclaration sur la gestion des engrais et la qualité des sols',
-        progress: 98,
-        status: 'En cours',
         category: 'environmental'
       },
       {
         id: 'phytosanitaires',
         title: 'Rapport sur l\'Utilisation des Produits Phytosanitaires',
         description: 'Utilisation des produits de protection des cultures',
-        progress: 98,
-        status: 'En cours',
         category: 'environmental'
       },
       {
         id: 'efa',
         title: 'Zones de Focus Écologiques (EFA)',
         description: 'Déclaration des zones écologiques',
-        progress: 0,
-        status: 'À commencer',
         category: 'environmental'
       },
       {
         id: 'eau',
         title: 'Déclaration d\'Eau Agricole',
         description: 'Utilisation et gestion de l\'eau',
-        progress: 0,
-        status: 'À commencer',
         category: 'environmental'
       },
       {
         id: 'carbone',
         title: 'Bilan Carbone',
         description: 'Évaluation de l\'empreinte carbone',
-        progress: 0,
-        status: 'À commencer',
         category: 'environmental'
       }
     ]
@@ -104,8 +87,6 @@ export const categories: Category[] = [
         id: 'conformite-sante-securite',
         title: 'Conformité en Santé et Sécurité',
         description: 'Rapport de conformité aux normes de santé et sécurité',
-        progress: 98,
-        status: 'En cours',
         category: 'health-safety'
       }
     ]
@@ -119,16 +100,12 @@ export const categories: Category[] = [
         id: 'pac',
         title: 'PAC - Politique Agricole Commune',
         description: 'Demande de paiement unique de la PAC',
-        progress: 0,
-        status: 'À commencer',
         category: 'subsidy'
       },
       {
         id: 'aides',
         title: 'Demandes d\'Aides et Subventions',
         description: 'Autres demandes de subventions agricoles',
-        progress: 0,
-        status: 'À commencer',
         category: 'subsidy'
       }
     ]
@@ -143,16 +120,12 @@ export const categories: Category[] = [
         id: 'identification-animaux',
         title: 'Identification et Enregistrement des Animaux',
         description: 'Suivi et identification du bétail',
-        progress: 0,
-        status: 'À commencer',
         category: 'livestock'
       },
       {
         id: 'bien-etre',
         title: 'Déclaration de Bien-être Animal',
         description: 'Conditions d\'élevage et bien-être animal',
-        progress: 0,
-        status: 'À commencer',
         category: 'livestock'
       }
     ]
@@ -166,16 +139,12 @@ export const categories: Category[] = [
         id: 'cotisation',
         title: 'Cotisation Agricole (Déclaration des Salaires)',
         description: 'Déclaration des charges sociales',
-        progress: 0,
-        status: 'À commencer',
         category: 'tax'
       },
       {
         id: 'tva',
         title: 'Déclaration de TVA Agricole',
         description: 'Déclaration de la TVA pour activités agricoles',
-        progress: 0,
-        status: 'À commencer',
         category: 'tax'
       }
     ]
@@ -184,92 +153,50 @@ export const categories: Category[] = [
 
 export function PublicDeclarations() {
   const navigate = useNavigate();
-  
-  const getCategoryProgress = (category: Category) => {
-    const totalDeclarations = category.declarations.length;
-    const completedDeclarations = category.declarations.filter(d => d.progress === 100).length;
-    return (completedDeclarations / totalDeclarations) * 100;
-  };
-
-  const handleDeclarationClick = (declarationId: string) => {
-    navigate(`/declarations/${declarationId}`);
-  };
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-6">Déclarations Publiques</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {categories.map((category) => {
-          const progress = getCategoryProgress(category);
-          
-          return (
-            <Card
-              key={category.id}
-              className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/declarations/categories/${category.id}`)}
-            >
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <CardTitle className="text-lg">
-                      {category.title}
-                    </CardTitle>
-                    {category.hasChanges && (
-                      <span className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-sm">
-                        Réglementation évolutive
-                      </span>
-                    )}
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  {category.description}
-                </p>
-                <div className="space-y-4">
-                  {category.declarations.map((declaration) => (
-                    <div
-                      key={declaration.id}
-                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeclarationClick(declaration.id);
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-gray-900">{declaration.title}</h3>
-                          <p className="text-sm text-gray-600">{declaration.description}</p>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-gray-400" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {categories.map((category) => (
+        <Card key={category.id}>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>{category.title}</span>
+              {category.hasChanges && (
+                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                  Mis à jour
+                </span>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600 mb-6">{category.description}</p>
+            <div className="space-y-4">
+              {category.declarations.map((declaration) => (
+                <div
+                  key={declaration.id}
+                  className="p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                  onClick={() => navigate(`/categories/${category.id}/declarations/${declaration.id}/overview`)}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1 flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-medium">{declaration.title}</h3>
+                        {declaration.hasChanges && (
+                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                            Mis à jour
+                          </span>
+                        )}
                       </div>
-                      <div className="mt-2">
-                        <Progress value={declaration.progress} className="h-1.5" />
-                        <div className="flex justify-between text-sm mt-1">
-                          <span className="text-gray-600">{declaration.status}</span>
-                          <span className="text-gray-900 font-medium">{declaration.progress}%</span>
-                        </div>
-                      </div>
+                      <p className="text-sm text-gray-600">{declaration.description}</p>
                     </div>
-                  ))}
-                </div>
-                <div className="space-y-2">
-                  <Progress value={progress} className="h-2" />
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">
-                      {progress === 100 ? 'Complété' : 'En cours'}
-                    </span>
-                    <span className="text-gray-900 font-medium">
-                      {Math.round(progress)}%
-                    </span>
+                    <ChevronRight className="h-5 w-5 text-gray-400" />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 }

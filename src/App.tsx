@@ -17,6 +17,7 @@ import { SignupFlow } from './components/auth/SignupFlow';
 import { useAuth } from './context/AuthContext';
 import { DeclarationDetails } from './components/dashboard/declarations/DeclarationDetails';
 import { DeclarationDetailsPage } from './pages/DeclarationDetailsPage';
+import { DeclarationOverview } from './pages/DeclarationOverview';
 import { CategoryDeclarationsPage } from './pages/CategoryDeclarationsPage';
 import { PublicDeclarations } from './components/dashboard/declarations/PublicDeclarations';
 import { AddObjective } from './components/business-plan/AddObjective';
@@ -66,6 +67,8 @@ function App() {
           <Route index element={<Navigate to="/tableau-de-bord" replace />} />
           <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
           <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
+          <Route path="categories/:categoryId/declarations/:declarationId/overview" element={<DeclarationOverview />} />
+          <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="community" element={<Community />} />

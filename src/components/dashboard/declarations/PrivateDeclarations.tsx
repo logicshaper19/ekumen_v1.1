@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { ChevronRight, Lock, Plus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -11,9 +10,6 @@ interface PrivateDeclaration {
   title: string;
   buyer: string;
   description: string;
-  progress: number;
-  status: string;
-  dueDate: string;
 }
 
 const privateDeclarations: PrivateDeclaration[] = [
@@ -21,37 +17,25 @@ const privateDeclarations: PrivateDeclaration[] = [
     id: 'certification-qualite',
     title: "Certification Qualité",
     buyer: "Carrefour",
-    description: "Déclaration des pratiques agricoles pour la certification qualité Carrefour",
-    progress: 0,
-    status: "À commencer",
-    dueDate: "31 Décembre 2024"
+    description: "Déclaration des pratiques agricoles pour la certification qualité Carrefour"
   },
   {
     id: 'certification-agriculture-durable',
     title: "Certification Agriculture Durable",
     buyer: "Groupama",
-    description: "Documentation des pratiques durables pour l'assurance agricole",
-    progress: 0,
-    status: "À commencer",
-    dueDate: "31 Décembre 2024"
+    description: "Documentation des pratiques durables pour l'assurance agricole"
   },
   {
     id: 'label-rouge',
     title: "Label Rouge",
     buyer: "Label Rouge",
-    description: "Certification pour le Label Rouge - qualité supérieure",
-    progress: 0,
-    status: "À commencer",
-    dueDate: "31 Décembre 2024"
+    description: "Certification pour le Label Rouge - qualité supérieure"
   },
   {
     id: 'certification-bio',
     title: "Certification Bio",
     buyer: "Biocoop",
-    description: "Documentation pour la certification agriculture biologique",
-    progress: 0,
-    status: "À commencer",
-    dueDate: "31 Décembre 2024"
+    description: "Documentation pour la certification agriculture biologique"
   }
 ];
 
@@ -59,15 +43,14 @@ export function PrivateDeclarations() {
   const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleDeclarationClick = (declarationId: string) => {
-    navigate(`/declarations/${declarationId}`);
+  const handleDeclarationClick = (id: string) => {
+    navigate(`/declarations/${id}/overview`);
   };
 
   const handleNewDeclaration = (declaration: {
     title: string;
     buyer: string;
     description: string;
-    dueDate: string;
     documents: File[];
   }) => {
     // TODO: Implement API call to create new declaration
@@ -89,7 +72,7 @@ export function PrivateDeclarations() {
         {privateDeclarations.map((declaration) => (
           <Card 
             key={declaration.id}
-            className="p-4 cursor-pointer hover:bg-accent/50 transition-colors"
+            className="cursor-pointer hover:bg-accent/50 transition-colors"
             onClick={() => handleDeclarationClick(declaration.id)}
           >
             <CardHeader className="pb-2">
@@ -109,21 +92,9 @@ export function PrivateDeclarations() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600">
                 {declaration.description}
               </p>
-              <div className="space-y-2">
-                <Progress value={declaration.progress} className="h-2" />
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{declaration.status}</span>
-                  <span className="text-gray-900 font-medium">
-                    {declaration.progress}%
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Échéance: {declaration.dueDate}
-                </p>
-              </div>
             </CardContent>
           </Card>
         ))}

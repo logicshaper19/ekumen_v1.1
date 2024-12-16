@@ -15,10 +15,13 @@ import {
   CloudRain,
   Building2,
   Phone,
-  Users
+  Users,
+  ChevronRight,
+  CalendarClock,
+  FileText
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { declarations } from '@/data/declarations';
 
 // Mock data - Replace with real data from your backend
 const objectives = [
@@ -111,7 +114,7 @@ const conversations = [
       name: 'Sophie Laurent',
       role: 'Responsable Coopérative',
       organization: 'Coopérative Agricole',
-      icon: GrainIcon,
+      icon: Phone,
       iconBg: 'bg-amber-100',
       iconColor: 'text-amber-600'
     },
