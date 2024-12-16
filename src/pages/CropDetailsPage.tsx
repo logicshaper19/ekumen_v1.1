@@ -296,7 +296,7 @@ export function CropDetailsPage() {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
+        <Card className="bg-[#F5F5F0]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Surface</CardTitle>
           </CardHeader>
@@ -304,7 +304,7 @@ export function CropDetailsPage() {
             <div className="text-2xl font-bold">{crop.surface} ha</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#F5F5F0]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Rendement</CardTitle>
           </CardHeader>
@@ -312,7 +312,7 @@ export function CropDetailsPage() {
             <div className="text-2xl font-bold">{crop.yield} t/ha</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#F5F5F0]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Prix net</CardTitle>
           </CardHeader>
@@ -320,7 +320,7 @@ export function CropDetailsPage() {
             <div className="text-2xl font-bold">{crop.netPrice} €/t</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#F5F5F0]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Marge/ha</CardTitle>
           </CardHeader>
@@ -333,7 +333,7 @@ export function CropDetailsPage() {
       {/* Costs and Timeline Grid */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Detailed Costs */}
-        <Card className="md:col-span-4">
+        <Card className="md:col-span-4 bg-[#F5F5F0]">
           <CardHeader>
             <CardTitle>Détail des Charges</CardTitle>
           </CardHeader>
@@ -386,7 +386,7 @@ export function CropDetailsPage() {
         </Card>
 
         {/* Timeline */}
-        <Card className="md:col-span-1">
+        <Card className="md:col-span-1 bg-[#F5F5F0]">
           <CardHeader>
             <CardTitle>Calendrier des Interventions</CardTitle>
           </CardHeader>

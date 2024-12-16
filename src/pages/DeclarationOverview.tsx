@@ -385,7 +385,7 @@ export function DeclarationOverview() {
                 <TrendChart data={charts.usage} />
               </CardContent>
             </Card>
-            <Card className="md:col-span-2">
+            <Card className="md:col-span-2 bg-[#F5F5F0]">
               <CardHeader>
                 <CardTitle>Répartition par Type</CardTitle>
               </CardHeader>
@@ -415,7 +415,7 @@ export function DeclarationOverview() {
                 <ComplianceChart data={charts.compliance} />
               </CardContent>
             </Card>
-            <Card className="md:col-span-2">
+            <Card className="md:col-span-2 bg-[#F5F5F0]">
               <CardHeader>
                 <CardTitle>Répartition des Risques</CardTitle>
               </CardHeader>
@@ -445,7 +445,7 @@ export function DeclarationOverview() {
                 <DistributionChart data={charts.distribution} />
               </CardContent>
             </Card>
-            <Card className="md:col-span-2">
+            <Card className="md:col-span-2 bg-[#F5F5F0]">
               <CardHeader>
                 <CardTitle>Qualité des Sols par Zone</CardTitle>
               </CardHeader>
