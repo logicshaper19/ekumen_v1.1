@@ -34,7 +34,7 @@ export function UpcomingDeclarations() {
         {upcomingDeclarations.map((declaration) => (
           <Card 
             key={declaration.id}
-            className="cursor-pointer hover:bg-accent/50 transition-colors"
+            className="cursor-pointer bg-[#F5F5F0] hover:bg-accent/50 transition-colors"
             onClick={() => handleClick(declaration.id)}
           >
             <CardContent className="p-4">
