@@ -13,7 +13,9 @@ import {
   CloudOff,
   AlertCircle,
   Plus,
-  Search
+  Search,
+  Check,
+  ChevronDown
 } from "lucide-react";
 import {
   Dialog,
@@ -23,16 +25,57 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+
+// Simplified Select Components
+const Select = ({ children, value, onValueChange }: { children: React.ReactNode, value?: string, onValueChange?: (value: string) => void }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(value);
+
+  return (
+    <div className="relative">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+      >
+        <span>{selectedValue || "Select..."}</span>
+        <ChevronDown className="h-4 w-4" />
+      </div>
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1 rounded-md border bg-popover text-popover-foreground shadow-md">
+          {React.Children.map(children, (child) => {
+            if (React.isValidElement(child)) {
+              return React.cloneElement(child as React.ReactElement, {
+                onClick: () => {
+                  setSelectedValue(child.props.children);
+                  onValueChange?.(child.props.value);
+                  setIsOpen(false);
+                },
+              });
+            }
+            return child;
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SelectItem = ({ children, value, onClick }: { children: React.ReactNode, value: string, onClick?: () => void }) => (
+  <div
+    className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+    onClick={onClick}
+  >
+    {children}
+  </div>
+);
+
+const SelectTrigger = Select;
+const SelectContent = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+const SelectValue = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 
 interface IntegratedTool {
   id: string;
@@ -186,15 +229,10 @@ export function MyData() {
                   />
                 </div>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Catégorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Toutes les catégories</SelectItem>
-                    <SelectItem value="analyses">Analyses</SelectItem>
-                    <SelectItem value="plans">Plans</SelectItem>
-                    <SelectItem value="certifications">Certifications</SelectItem>
-                  </SelectContent>
+                  <SelectItem value="">Toutes les catégories</SelectItem>
+                  <SelectItem value="analyses">Analyses</SelectItem>
+                  <SelectItem value="plans">Plans</SelectItem>
+                  <SelectItem value="certifications">Certifications</SelectItem>
                 </Select>
               </div>
 
@@ -384,14 +422,9 @@ export function MyData() {
             <div className="space-y-2">
               <Label>Catégorie</Label>
               <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner une catégorie" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="analyses">Analyses</SelectItem>
-                  <SelectItem value="plans">Plans</SelectItem>
-                  <SelectItem value="certifications">Certifications</SelectItem>
-                </SelectContent>
+                <SelectItem value="analyses">Analyses</SelectItem>
+                <SelectItem value="plans">Plans</SelectItem>
+                <SelectItem value="certifications">Certifications</SelectItem>
               </Select>
             </div>
             <div className="space-y-2">
