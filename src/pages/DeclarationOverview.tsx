@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import { ComplianceChart, TrendChart, DistributionChart } from '@/components/charts/DeclarationCharts';
 import { chartData } from '@/data/declarationChartData';
-import { HelpCircle, FileText, Building2, Users, Bank } from 'lucide-react';
+import { HelpCircle, FileText, Building2, Users, Building } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -327,7 +327,7 @@ export function DeclarationOverview() {
 
   const helpers = [
     { id: 'chambre', name: 'Chambre d\'Agriculture', icon: Building2 },
-    { id: 'bank', name: 'Ekumen Bank', icon: Bank },
+    { id: 'bank', name: 'Ekumen Bank', icon: Building },
     { id: 'coop', name: 'Coopérative', icon: Users },
   ];
 
