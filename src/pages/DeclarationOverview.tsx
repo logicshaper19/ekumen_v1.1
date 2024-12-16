@@ -564,7 +564,7 @@ export function DeclarationOverview() {
                 <Button 
                   variant="outline" 
                   className="w-full"
-                  onClick={() => navigate(`/reglementations/${declarationContents[declarationId || ''].id}`)}
+                  onClick={() => navigate(`/declarations/${declarationContents[declarationId || ''].id}`)}
                 >
                   Accéder au formulaire
                 </Button>
