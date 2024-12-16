@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon, Users, Building2, Mail, Phone, Loader2, Send } from 'lucide-react';
 import { FormLayout } from '@/components/ui/form-layout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ListTodo, HelpCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
@@ -75,7 +74,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Annuel',
     dueDate: '31 Janvier 2025',
     progress: 75,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Type d\'activité', value: 'Polyculture-élevage' },
       { label: 'Surface totale', value: '150 hectares' },
@@ -124,7 +124,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Variable',
     dueDate: 'Variable',
     progress: 30,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Dernier bilan', value: '2023' },
       { label: 'Émissions totales', value: '250 tCO2e' },
@@ -141,6 +142,7 @@ const declarations: Record<string, DeclarationData> = {
     dueDate: '15 Mai 2025',
     progress: 0,
     isRegulated: true,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Surface EFA', value: '7.5 hectares' },
       { label: 'Types EFA', value: 'Haies, Jachères' },
@@ -156,7 +158,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Variable',
     dueDate: 'Variable',
     progress: 50,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Volume annuel', value: '25000 m³' },
       { label: 'Type d\'irrigation', value: 'Aspersion' },
@@ -172,7 +175,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Continu',
     dueDate: 'Continu',
     progress: 100,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Nombre d\'animaux', value: '120' },
       { label: 'Type d\'élevage', value: 'Bovin laitier' },
@@ -254,7 +258,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Mensuel',
     dueDate: '5 du mois suivant',
     progress: 100,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Nombre d\'employés', value: '12' },
       { label: 'Masse salariale', value: '35000€' },
@@ -270,7 +275,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Trimestriel',
     dueDate: '20 du mois suivant',
     progress: 75,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Régime TVA', value: 'Réel' },
       { label: 'Période', value: 'T4 2024' },
@@ -286,7 +292,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Variable',
     dueDate: 'Variable',
     progress: 40,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Surface totale', value: '150 hectares' },
       { label: 'Type de terres', value: 'Terres arables' },
@@ -302,7 +309,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Variable',
     dueDate: 'Variable',
     progress: 25,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Types d\'aides', value: 'Investissement, Modernisation' },
       { label: 'Montant demandé', value: '75000€' },
@@ -318,7 +326,8 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Continu',
     dueDate: 'Continu',
     progress: 100,
-    isRegulated: true,
+    isRegulated: false,
+    regulationInfo: undefined,
     capturedInfo: [
       { label: 'Nombre d\'animaux', value: '120' },
       { label: 'Type d\'élevage', value: 'Bovin laitier' },
@@ -367,6 +376,7 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Annuel',
     dueDate: '31 Décembre 2024',
     progress: 0,
+    isRegulated: false,
     capturedInfo: [
       { label: 'Acheteur', value: 'Carrefour' },
       { label: 'Type de certification', value: 'Qualité' }
@@ -390,6 +400,7 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Annuel',
     dueDate: '31 Décembre 2024',
     progress: 0,
+    isRegulated: false,
     capturedInfo: [
       { label: 'Assureur', value: 'Groupama' },
       { label: 'Type de certification', value: 'Agriculture Durable' }
@@ -413,6 +424,7 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Annuel',
     dueDate: '31 Décembre 2024',
     progress: 0,
+    isRegulated: false,
     capturedInfo: [
       { label: 'Organisme', value: 'Label Rouge' },
       { label: 'Type de label', value: 'Qualité Supérieure' }
@@ -436,6 +448,7 @@ const declarations: Record<string, DeclarationData> = {
     frequency: 'Annuel',
     dueDate: '31 Décembre 2024',
     progress: 0,
+    isRegulated: false,
     capturedInfo: [
       { label: 'Distributeur', value: 'Biocoop' },
       { label: 'Type de certification', value: 'Agriculture Biologique' }
@@ -728,76 +741,64 @@ export function DeclarationDetails() {
       <p className="mt-2 text-gray-600">{declaration.description}</p>
 
       {declaration.isRegulated ? (
-        <Tabs defaultValue="apercu" className="w-full">
-          <TabsList className="w-full border-b">
-            <TabsTrigger value="apercu" className="px-8">Aperçu</TabsTrigger>
-            <TabsTrigger value="evolutions" className="px-8">Évolutions</TabsTrigger>
-          </TabsList>
-          <TabsContent value="apercu" className="mt-6">
-            <div className="space-y-6">
-              <FormLayout
-                progress={declaration.progress}
-                capturedInfo={declaration.capturedInfo}
-                pendingInfo={declaration.pendingInfo}
-              />
-              <Card>
-                <CardHeader>
-                  <CardTitle>Plan de Résolution</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {declaration.resolutionSteps.map((step, index) => (
-                      <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-gray-900">{step.title}</h4>
-                          <p className="mt-1 text-sm text-gray-600">{step.description}</p>
-                          <div className="flex items-center gap-4 mt-2">
-                            <div className="flex items-center gap-1 text-sm text-gray-500">
-                              <Clock className="w-4 h-4" />
-                              <span>Échéance: {step.dueDate}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {step.priority === 'Urgent' && (
-                                <AlertTriangle className="w-4 h-4 text-red-500" />
-                              )}
-                              {step.priority === 'Important' && (
-                                <AlertTriangle className="w-4 h-4 text-orange-500" />
-                              )}
-                              {step.priority === 'Normal' && (
-                                <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                              )}
-                              <span className="text-sm text-gray-500">{step.priority}</span>
-                            </div>
-                          </div>
+        <div className="space-y-6">
+          <FormLayout
+            progress={declaration.progress}
+            capturedInfo={declaration.capturedInfo}
+            pendingInfo={declaration.pendingInfo}
+          />
+          <Card>
+            <CardHeader>
+              <CardTitle>Plan de Résolution</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {declaration.resolutionSteps.map((step, index) => (
+                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900">{step.title}</h4>
+                      <p className="mt-1 text-sm text-gray-600">{step.description}</p>
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                          <Clock className="w-4 h-4" />
+                          <span>Échéance: {step.dueDate}</span>
                         </div>
-                        <div className="flex gap-2">
-                          {renderHelpButton()}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
-                            onClick={() => {}}
-                          >
-                            <ListTodo className="w-4 h-4 mr-2" />
-                            Ajouter à mes tâches
-                          </Button>
+                        <div className="flex items-center gap-1">
+                          {step.priority === 'Urgent' && (
+                            <AlertTriangle className="w-4 h-4 text-red-500" />
+                          )}
+                          {step.priority === 'Important' && (
+                            <AlertTriangle className="w-4 h-4 text-orange-500" />
+                          )}
+                          {step.priority === 'Normal' && (
+                            <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                          )}
+                          <span className="text-sm text-gray-500">{step.priority}</span>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                    <div className="flex gap-2">
+                      {renderHelpButton()}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
+                        onClick={() => {}}
+                      >
+                        <ListTodo className="w-4 h-4 mr-2" />
+                        Ajouter à mes tâches
+                      </Button>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          <TabsContent value="evolutions" className="mt-6">
-            {renderRegulationInfo()}
-            {declaration.isRegulated && (
-              <div className="flex justify-end gap-4 mt-8">
-                {renderHelpButton()}
+                ))}
               </div>
-            )}
-          </TabsContent>
-        </Tabs>
+            </CardContent>
+          </Card>
+          {renderRegulationInfo()}
+          <div className="flex justify-end gap-4 mt-8">
+            {renderHelpButton()}
+          </div>
+        </div>
       ) : (
         <div className="space-y-6">
           <FormLayout
