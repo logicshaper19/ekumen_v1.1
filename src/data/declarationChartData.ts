@@ -296,6 +296,60 @@ export const chartData = {
       { name: 'Investissements', value: 8 },
       { name: 'Services', value: 2 }
     ]
+  },
+  'declaration-activite': {
+    compliance: [
+      { name: 'Conforme', value: 75 },
+      { name: 'En cours', value: 20 },
+      { name: 'Non conforme', value: 5 }
+    ],
+    usage: [
+      { month: 'Jan', value: 40 },
+      { month: 'Fév', value: 45 },
+      { month: 'Mar', value: 50 },
+      { month: 'Avr', value: 55 },
+      { month: 'Mai', value: 60 },
+      { month: 'Juin', value: 65 },
+      { month: 'Juil', value: 70 },
+      { month: 'Août', value: 75 },
+      { month: 'Sept', value: 80 },
+      { month: 'Oct', value: 85 },
+      { month: 'Nov', value: 90 },
+      { month: 'Déc', value: 95 }
+    ],
+    distribution: [
+      { name: 'Cultures', value: 45 },
+      { name: 'Élevage', value: 30 },
+      { name: 'Viticulture', value: 15 },
+      { name: 'Autres', value: 10 }
+    ]
+  },
+  'foncier-rural': {
+    compliance: [
+      { name: 'Conforme', value: 90 },
+      { name: 'En cours', value: 8 },
+      { name: 'Non conforme', value: 2 }
+    ],
+    usage: [
+      { month: 'Jan', value: 85 },
+      { month: 'Fév', value: 85 },
+      { month: 'Mar', value: 88 },
+      { month: 'Avr', value: 90 },
+      { month: 'Mai', value: 92 },
+      { month: 'Juin', value: 92 },
+      { month: 'Juil', value: 95 },
+      { month: 'Août', value: 95 },
+      { month: 'Sept', value: 95 },
+      { month: 'Oct', value: 93 },
+      { month: 'Nov', value: 92 },
+      { month: 'Déc', value: 90 }
+    ],
+    distribution: [
+      { name: 'Terres arables', value: 50 },
+      { name: 'Pâturages', value: 30 },
+      { name: 'Forêts', value: 15 },
+      { name: 'Bâtiments', value: 5 }
+    ]
   }
 };
 

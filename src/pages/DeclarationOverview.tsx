@@ -326,6 +326,8 @@ export function DeclarationOverview() {
       case 'bien-etre':
       case 'cotisation':
       case 'tva':
+      case 'declaration-activite':
+      case 'foncier-rural':
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
@@ -415,66 +417,6 @@ export function DeclarationOverview() {
           </div>
         );
 
-      case 'declaration-activite':
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>État de Conformité</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ComplianceChart data={charts.compliance} />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Activité Mensuelle</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <TrendChart data={charts.usage} />
-              </CardContent>
-            </Card>
-            <Card className="md:col-span-2">
-              <CardHeader>
-                <CardTitle>Répartition par Type d'Activité</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <DistributionChart data={charts.distribution} />
-              </CardContent>
-            </Card>
-          </div>
-        );
-
-      case 'foncier-rural':
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>État des Déclarations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ComplianceChart data={charts.compliance} />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Évolution Mensuelle</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <TrendChart data={charts.usage} />
-              </CardContent>
-            </Card>
-            <Card className="md:col-span-2">
-              <CardHeader>
-                <CardTitle>Types de Terres</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <DistributionChart data={charts.distribution} />
-              </CardContent>
-            </Card>
-          </div>
-        );
-      
       default:
         return null;
     }
