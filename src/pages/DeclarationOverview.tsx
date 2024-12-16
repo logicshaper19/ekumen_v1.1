@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import { ComplianceChart, TrendChart, DistributionChart } from '@/components/charts/DeclarationCharts';
 import { chartData } from '@/data/declarationChartData';
-import { HelpCircle, FileText } from 'lucide-react';
+import { HelpCircle, FileText, Building2, Users, Bank } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface DeclarationContent {
   id: string;
@@ -306,10 +321,33 @@ const declarationContents: Record<string, DeclarationContent> = {
 export function DeclarationOverview() {
   const navigate = useNavigate();
   const { categoryId, declarationId } = useParams();
-  
+  const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+  const [selectedHelper, setSelectedHelper] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
+
+  const helpers = [
+    { id: 'chambre', name: 'Chambre d\'Agriculture', icon: Building2 },
+    { id: 'bank', name: 'Ekumen Bank', icon: Bank },
+    { id: 'coop', name: 'Coopérative', icon: Users },
+  ];
+
+  const handleHelperSelect = (helperId: string) => {
+    setSelectedHelper(helperId);
+    setHelpDialogOpen(true);
+  };
+
+  const handleSendMessage = () => {
+    // Here we would handle sending the message
+    console.log('Sending message to:', selectedHelper);
+    console.log('Message:', message);
+    setHelpDialogOpen(false);
+    setMessage('');
+    setSelectedHelper(null);
+  };
+
   const declaration = declarationContents[declarationId || ''];
   const charts = chartData[declarationId as keyof typeof chartData];
-  
+
   if (!declaration) {
     return <div>Déclaration non trouvée</div>;
   }
@@ -492,15 +530,25 @@ export function DeclarationOverview() {
               <div>
                 <h3 className="text-lg font-semibold">Besoin d'aide?</h3>
                 <p className="text-sm text-muted-foreground mb-4">Obtenez de l'aide d'un conseiller expert</p>
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => {
-                    // Existing help functionality
-                  }}
-                >
-                  Besoin d'aide
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                      Besoin d'aide
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    {helpers.map((helper) => (
+                      <DropdownMenuItem
+                        key={helper.id}
+                        onClick={() => handleHelperSelect(helper.id)}
+                        className="cursor-pointer"
+                      >
+                        <helper.icon className="mr-2 h-4 w-4" />
+                        <span>{helper.name}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </CardContent>
@@ -516,7 +564,7 @@ export function DeclarationOverview() {
                 <Button 
                   variant="outline" 
                   className="w-full"
-                  onClick={() => navigate(`/reglementations/${declarationId}`)}
+                  onClick={() => navigate(`/reglementations/${declarationContents[declarationId || ''].id}`)}
                 >
                   Accéder au formulaire
                 </Button>
@@ -525,6 +573,31 @@ export function DeclarationOverview() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Help Dialog */}
+      <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Demander de l'aide à {helpers.find(h => h.id === selectedHelper)?.name}</DialogTitle>
+            <DialogDescription>
+              Décrivez votre besoin d'assistance ci-dessous. Un conseiller vous répondra dans les plus brefs délais.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Textarea
+              placeholder="Décrivez votre besoin..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="min-h-[100px]"
+            />
+          </div>
+          <DialogFooter>
+            <Button type="submit" onClick={handleSendMessage} disabled={!message.trim()}>
+              Envoyer la demande
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
