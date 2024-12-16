@@ -8,8 +8,7 @@ import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { Messagerie } from './components/dashboard/Messagerie';
 import { BusinessPlan } from './components/dashboard/BusinessPlan';
 import { Transformation } from './components/dashboard/Transformation';
-import { TransformationDetails } from './components/dashboard/TransformationDetails';
-import { TransformationExploration } from './components/dashboard/TransformationExploration';
+import { TransformationView } from './components/dashboard/TransformationView';
 import { MyData } from './components/data/MyData';
 import { Login } from './components/Login';
 import { LandingNav } from './components/navigation/LandingNav';
@@ -79,8 +78,7 @@ function App() {
           <Route path="business-plan/financial-plan-details/crop/:cropName" element={<CropDetailsPage />} />
           <Route path="business-plan/risks-opportunities/:id" element={<RiskOpportunityEvolution />} />
           <Route path="transformation" element={<Transformation />} />
-          <Route path="transformation/:id/details" element={<TransformationDetails />} />
-          <Route path="transformation/:id/explore" element={<TransformationExploration />} />
+          <Route path="transformation/:id" element={<TransformationView />} />
           <Route path="mes-donnees" element={<MyData />} />
         </Route>
         

@@ -247,7 +247,7 @@ export function Transformation() {
             <Card 
               key={transform.id}
               className="cursor-pointer hover:bg-accent/50 transition-colors"
-              onClick={() => navigate(`/transformation/${transform.id}/details`)}
+              onClick={() => navigate(`/transformation/${transform.id}`)}
             >
               <CardHeader>
                 <div className="flex items-center justify-between">
