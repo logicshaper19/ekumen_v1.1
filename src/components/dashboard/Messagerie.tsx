@@ -106,40 +106,46 @@ const mockThreads: ChatThreadType[] = mockUsers.map(user => ({
   unreadCount: mockMessages[user.id].filter(m => !m.read && m.senderId !== 'current-user-id').length,
 }));
 
-export function Community() {
-  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
-  
-  const handleSendMessage = (content: string, attachments: File[]) => {
-    // Here you would typically send the message to your backend
-    console.log('Sending message:', { content, attachments });
+const mockCurrentUser = {
+  id: 'current-user-id',
+  name: 'Vous',
+  avatar: '/avatars/current-user.jpg',
+  role: 'Agriculteur',
+  online: true,
+};
+
+export function Messagerie() {
+  const [selectedThread, setSelectedThread] = useState<ChatThreadType | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const handleThreadSelect = (thread: ChatThreadType) => {
+    setSelectedThread(thread);
+    // In a real app, we would fetch messages for the selected thread here
+    setMessages(mockMessages[thread.id]);
   };
 
-  const activeThread = activeThreadId 
-    ? mockThreads.find(t => t.id === activeThreadId)
-    : null;
-  
-  const activeParticipant = activeThread
-    ? activeThread.participants.find(p => p.id !== 'current-user-id')
-    : null;
-
   return (
-    <div className="h-[calc(100vh-4rem)] flex">
-      <ChatList
-        threads={mockThreads}
-        activeThreadId={activeThreadId}
-        onThreadSelect={setActiveThreadId}
-      />
-      {activeThreadId && activeParticipant ? (
-        <ChatThread
-          messages={mockMessages[activeThreadId]}
-          participant={activeParticipant}
-          onSendMessage={handleSendMessage}
+    <div className="flex h-full">
+      <div className="w-1/3 border-r border-gray-200">
+        <ChatList
+          threads={mockThreads}
+          selectedThread={selectedThread}
+          onThreadSelect={handleThreadSelect}
         />
-      ) : (
-        <div className="flex-1 flex items-center justify-center text-gray-500">
-          Sélectionnez une conversation pour commencer
-        </div>
-      )}
+      </div>
+      <div className="flex-1">
+        {selectedThread ? (
+          <ChatThread
+            thread={selectedThread}
+            messages={messages}
+            currentUser={mockCurrentUser}
+          />
+        ) : (
+          <div className="flex items-center justify-center h-full text-gray-500">
+            Sélectionnez une conversation pour commencer
+          </div>
+        )}
+      </div>
     </div>
   );
 }
