@@ -113,7 +113,6 @@ interface MissingDocument {
 
 export function MyData() {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const integratedTools: IntegratedTool[] = [
@@ -219,21 +218,13 @@ export function MyData() {
             </TabsList>
 
             <TabsContent value="documents" className="space-y-4">
-              <div className="flex gap-4 mb-4">
-                <div className="flex-1">
-                  <Input
-                    placeholder="Rechercher un document..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectItem value="">Toutes les catégories</SelectItem>
-                  <SelectItem value="analyses">Analyses</SelectItem>
-                  <SelectItem value="plans">Plans</SelectItem>
-                  <SelectItem value="certifications">Certifications</SelectItem>
-                </Select>
+              <div className="mb-4">
+                <Input
+                  placeholder="Rechercher un document..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full"
+                />
               </div>
 
               <div className="space-y-4">

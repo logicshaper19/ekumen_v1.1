@@ -32,7 +32,15 @@ const mockUsers: ChatUser[] = [
   },
 ];
 
-const mockMessages: Record<string, Message[]> = {
+const mockCurrentUser: ChatUser = {
+  id: 'current-user-id',
+  name: 'Vous',
+  avatar: '/avatars/current-user.jpg',
+  role: 'Agriculteur',
+  online: true,
+};
+
+const mockMessages: { [key: string]: Message[] } = {
   '1': [
     {
       id: '1',
@@ -93,35 +101,25 @@ const mockMessages: Record<string, Message[]> = {
   ]
 };
 
-const mockThreads: ChatThreadType[] = mockUsers.map(user => ({
+console.log('Mock Messages Available:', mockMessages);
+
+const mockThreads = mockUsers.map(user => ({
   id: user.id,
-  participants: [user, {
-    id: 'current-user-id',
-    name: 'Vous',
-    avatar: '/avatars/current-user.jpg',
-    role: 'Agriculteur',
-    online: true,
-  }],
+  participants: [mockCurrentUser, user],
   lastMessage: mockMessages[user.id][mockMessages[user.id].length - 1],
   unreadCount: mockMessages[user.id].filter(m => !m.read && m.senderId !== 'current-user-id').length,
 }));
-
-const mockCurrentUser = {
-  id: 'current-user-id',
-  name: 'Vous',
-  avatar: '/avatars/current-user.jpg',
-  role: 'Agriculteur',
-  online: true,
-};
 
 export function Messagerie() {
   const [selectedThread, setSelectedThread] = useState<ChatThreadType | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const handleThreadSelect = (thread: ChatThreadType) => {
-    setSelectedThread(thread);
-    // In a real app, we would fetch messages for the selected thread here
-    setMessages(mockMessages[thread.id]);
+  const handleThreadSelect = (threadId: string) => {
+    const thread = mockThreads.find(t => t.id === threadId);
+    if (thread) {
+      setSelectedThread(thread);
+      setMessages(mockMessages[threadId]);
+    }
   };
 
   return (
@@ -129,7 +127,7 @@ export function Messagerie() {
       <div className="w-1/3 border-r border-gray-200">
         <ChatList
           threads={mockThreads}
-          selectedThread={selectedThread}
+          activeThreadId={selectedThread?.id || null}
           onThreadSelect={handleThreadSelect}
         />
       </div>

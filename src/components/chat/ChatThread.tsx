@@ -6,28 +6,32 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ChatMessage } from './ChatMessage';
 import { DocumentsPanel } from './DocumentsPanel';
-import { Message, ChatUser } from '@/types/chat';
+import { Message, ChatUser, ChatThreadType } from '@/types/chat';
 
 interface ChatThreadProps {
-  messages: Message[];
-  participant: ChatUser;
-  onSendMessage: (content: string, attachments: File[]) => void;
+  thread: ChatThreadType;
+  messages?: Message[];
+  currentUser: ChatUser;
+  onSendMessage?: (content: string, attachments: File[]) => void;
 }
 
-export function ChatThread({ messages, participant, onSendMessage }: ChatThreadProps) {
+export function ChatThread({ thread, messages = [], currentUser }: ChatThreadProps) {
   const [newMessage, setNewMessage] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
   const [showDocuments, setShowDocuments] = useState(false);
 
-  // Count total attachments
-  const totalAttachments = messages.reduce(
-    (sum, message) => sum + message.attachments.length,
+  // Get the other participant from the thread
+  const participant = thread?.participants?.find(p => p.id !== currentUser?.id);
+
+  // Count total attachments with null checks
+  const totalAttachments = messages?.reduce(
+    (sum, message) => sum + (message.attachments?.length || 0),
     0
-  );
+  ) || 0;
 
   const handleSend = () => {
     if (newMessage.trim() || attachments.length > 0) {
-      onSendMessage(newMessage.trim(), attachments);
+      onSendMessage?.(newMessage.trim(), attachments);
       setNewMessage('');
       setAttachments([]);
     }
@@ -49,6 +53,12 @@ export function ChatThread({ messages, participant, onSendMessage }: ChatThreadP
   const removeAttachment = (index: number) => {
     setAttachments(attachments.filter((_, i) => i !== index));
   };
+
+  if (!thread || !participant) {
+    return <div className="flex items-center justify-center h-full text-gray-500">
+      Conversation non disponible
+    </div>;
+  }
 
   return (
     <div className="flex-1 flex">
@@ -91,7 +101,7 @@ export function ChatThread({ messages, participant, onSendMessage }: ChatThreadP
               <ChatMessage
                 key={message.id}
                 message={message}
-                isCurrentUser={message.senderId === 'current-user-id'}
+                isCurrentUser={message.senderId === currentUser.id}
               />
             ))}
           </div>
