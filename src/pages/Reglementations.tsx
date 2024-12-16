@@ -4,12 +4,12 @@ import { PublicDeclarations } from '../components/dashboard/declarations/PublicD
 import { PrivateDeclarations } from '../components/dashboard/declarations/PrivateDeclarations';
 import { FilingRequirementsChart } from '../components/dashboard/declarations/FilingRequirementsChart';
 
-export function Conformite() {
+export function Reglementations() {
   const [activeTab, setActiveTab] = useState('public');
 
   return (
     <div className="p-8">
-      <h1 className="text-[40px] font-bold text-black mb-6">Conformité</h1>
+      <h1 className="text-[40px] font-bold text-black mb-6">Réglementations</h1>
       
       <div className="grid grid-cols-[1fr_400px] gap-8 mb-8">
         <div className="space-y-4">

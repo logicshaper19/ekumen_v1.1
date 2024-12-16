@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { NewPrivateDeclarationDialog } from './NewPrivateDeclarationDialog';
 
 interface PrivateDeclaration {
-  id: number;
+  id: string;
   title: string;
   buyer: string;
   description: string;
@@ -18,7 +18,7 @@ interface PrivateDeclaration {
 
 const privateDeclarations: PrivateDeclaration[] = [
   {
-    id: 1,
+    id: 'certification-qualite',
     title: "Certification Qualité",
     buyer: "Carrefour",
     description: "Déclaration des pratiques agricoles pour la certification qualité Carrefour",
@@ -27,7 +27,7 @@ const privateDeclarations: PrivateDeclaration[] = [
     dueDate: "31 Décembre 2024"
   },
   {
-    id: 2,
+    id: 'certification-agriculture-durable',
     title: "Certification Agriculture Durable",
     buyer: "Groupama",
     description: "Documentation des pratiques durables pour l'assurance agricole",
@@ -36,7 +36,7 @@ const privateDeclarations: PrivateDeclaration[] = [
     dueDate: "31 Décembre 2024"
   },
   {
-    id: 3,
+    id: 'label-rouge',
     title: "Label Rouge",
     buyer: "Label Rouge",
     description: "Certification pour le Label Rouge - qualité supérieure",
@@ -45,7 +45,7 @@ const privateDeclarations: PrivateDeclaration[] = [
     dueDate: "31 Décembre 2024"
   },
   {
-    id: 4,
+    id: 'certification-bio',
     title: "Certification Bio",
     buyer: "Biocoop",
     description: "Documentation pour la certification agriculture biologique",
@@ -59,7 +59,7 @@ export function PrivateDeclarations() {
   const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleDeclarationClick = (declarationId: number) => {
+  const handleDeclarationClick = (declarationId: string) => {
     navigate(`/declarations/${declarationId}`);
   };
 

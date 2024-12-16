@@ -13,7 +13,7 @@ import {
 
 const navigation = [
   { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard },
-  { name: 'Conformité', href: '/conformite', icon: FileText },
+  { name: 'Réglementations', href: '/reglementations', icon: FileText },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
   { name: 'Transformation', href: '/transformation', icon: Factory },
   { name: 'Communauté', href: '/community', icon: Users },

@@ -242,7 +242,7 @@ export function Overview() {
               <div className="mt-6 flex justify-center">
                 <Link 
                   to="/objectifs"
-                  className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-white border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
                 >
                   Explorer tous les objectifs
                   <span aria-hidden="true">→</span>
@@ -311,7 +311,7 @@ export function Overview() {
             <div className="mt-6 flex justify-end">
               <Link 
                 to="/risques-opportunites"
-                className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-white border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
               >
                 Voir tous les risques et opportunités
                 <span aria-hidden="true">→</span>
@@ -362,7 +362,7 @@ export function Overview() {
             <div className="mt-6 flex justify-end">
               <Link 
                 to="/messages"
-                className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-white border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
               >
                 Voir toutes les conversations
                 <span aria-hidden="true">→</span>

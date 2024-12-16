@@ -10,8 +10,8 @@ export function DeclarationDetailsPage() {
     <div className="p-8">
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <Link to="/dashboard" className="hover:text-primary">
-          Déclarations
+        <Link to="/reglementations" className="hover:text-primary">
+          Réglementations
         </Link>
         <ChevronRight className="h-4 w-4" />
         <span className="text-foreground">Détails de la Déclaration</span>

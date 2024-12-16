@@ -31,7 +31,7 @@ export function UpcomingDeclarations() {
   const navigate = useNavigate();
 
   const handleClick = (id: string) => {
-    navigate(`/dashboard/declarations/${id}`);
+    navigate(`/declarations/${id}`);
   };
 
   return (

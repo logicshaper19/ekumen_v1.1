@@ -192,7 +192,7 @@ export function PublicDeclarations() {
   };
 
   const handleDeclarationClick = (declarationId: string) => {
-    navigate(`/dashboard/declarations/${declarationId}`);
+    navigate(`/declarations/${declarationId}`);
   };
 
   return (
@@ -206,7 +206,7 @@ export function PublicDeclarations() {
             <Card
               key={category.id}
               className="h-full hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/dashboard/declarations/categories/${category.id}`)}
+              onClick={() => navigate(`/declarations/categories/${category.id}`)}
             >
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -227,6 +227,33 @@ export function PublicDeclarations() {
                 <p className="text-sm text-gray-600 mb-4">
                   {category.description}
                 </p>
+                <div className="space-y-4">
+                  {category.declarations.map((declaration) => (
+                    <div
+                      key={declaration.id}
+                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeclarationClick(declaration.id);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-medium text-gray-900">{declaration.title}</h3>
+                          <p className="text-sm text-gray-600">{declaration.description}</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400" />
+                      </div>
+                      <div className="mt-2">
+                        <Progress value={declaration.progress} className="h-1.5" />
+                        <div className="flex justify-between text-sm mt-1">
+                          <span className="text-gray-600">{declaration.status}</span>
+                          <span className="text-gray-900 font-medium">{declaration.progress}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 <div className="space-y-2">
                   <Progress value={progress} className="h-2" />
                   <div className="flex justify-between text-sm">

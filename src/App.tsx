@@ -25,7 +25,7 @@ import { CropDetailsPage } from './pages/CropDetailsPage';
 import { RiskOpportunityEvolution } from './components/business-plan/RiskOpportunityEvolution';
 import { DiscussionDetails } from './components/dashboard/DiscussionDetails';
 import { TableauDeBord } from './pages/TableauDeBord';
-import { Conformite } from './pages/Conformite';
+import { Reglementations } from './pages/Reglementations';
 import { Declarations } from './components/dashboard/Declarations';
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
           <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
           <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
-          <Route path="conformite" element={<Conformite />} />
+          <Route path="reglementations" element={<Reglementations />} />
           <Route path="community" element={<Community />} />
           <Route path="community/discussion/:id" element={<DiscussionDetails />} />
           <Route path="business-plan" element={<BusinessPlan />} />

@@ -359,7 +359,99 @@ const declarations: Record<string, DeclarationData> = {
         priority: 'Normal'
       }
     ]
-  }
+  },
+  'certification-qualite': {
+    id: 'certification-qualite',
+    title: 'Certification Qualité',
+    description: 'Déclaration des pratiques agricoles pour la certification qualité Carrefour',
+    frequency: 'Annuel',
+    dueDate: '31 Décembre 2024',
+    progress: 0,
+    capturedInfo: [
+      { label: 'Acheteur', value: 'Carrefour' },
+      { label: 'Type de certification', value: 'Qualité' }
+    ],
+    pendingInfo: [
+      { label: 'Documentation requise', description: 'Préparation des documents pour la certification' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Audit initial',
+        description: 'Préparation et réalisation de l\'audit de certification',
+        dueDate: '2024-11-30',
+        priority: 'Important'
+      }
+    ]
+  },
+  'certification-agriculture-durable': {
+    id: 'certification-agriculture-durable',
+    title: 'Certification Agriculture Durable',
+    description: 'Documentation des pratiques durables pour l\'assurance agricole',
+    frequency: 'Annuel',
+    dueDate: '31 Décembre 2024',
+    progress: 0,
+    capturedInfo: [
+      { label: 'Assureur', value: 'Groupama' },
+      { label: 'Type de certification', value: 'Agriculture Durable' }
+    ],
+    pendingInfo: [
+      { label: 'Évaluation', description: 'Évaluation des pratiques agricoles durables' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Documentation',
+        description: 'Compilation des preuves de pratiques durables',
+        dueDate: '2024-11-30',
+        priority: 'Normal'
+      }
+    ]
+  },
+  'label-rouge': {
+    id: 'label-rouge',
+    title: 'Label Rouge',
+    description: 'Certification pour le Label Rouge - qualité supérieure',
+    frequency: 'Annuel',
+    dueDate: '31 Décembre 2024',
+    progress: 0,
+    capturedInfo: [
+      { label: 'Organisme', value: 'Label Rouge' },
+      { label: 'Type de label', value: 'Qualité Supérieure' }
+    ],
+    pendingInfo: [
+      { label: 'Cahier des charges', description: 'Vérification de la conformité au cahier des charges' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Audit de conformité',
+        description: 'Vérification des critères Label Rouge',
+        dueDate: '2024-11-30',
+        priority: 'Important'
+      }
+    ]
+  },
+  'certification-bio': {
+    id: 'certification-bio',
+    title: 'Certification Bio',
+    description: 'Documentation pour la certification agriculture biologique',
+    frequency: 'Annuel',
+    dueDate: '31 Décembre 2024',
+    progress: 0,
+    capturedInfo: [
+      { label: 'Distributeur', value: 'Biocoop' },
+      { label: 'Type de certification', value: 'Agriculture Biologique' }
+    ],
+    pendingInfo: [
+      { label: 'Conversion', description: 'Suivi du processus de conversion bio' }
+    ],
+    resolutionSteps: [
+      {
+        title: 'Audit bio',
+        description: 'Préparation à l\'audit de certification bio',
+        dueDate: '2024-11-30',
+        priority: 'Important'
+      }
+    ]
+  },
 };
 
 export function DeclarationDetails() {
@@ -376,7 +468,7 @@ export function DeclarationDetails() {
   const [isSent, setIsSent] = React.useState(false);
 
   const handleBack = () => {
-    navigate('/dashboard');
+    navigate('/reglementations');
   };
 
   if (!declaration) {
@@ -388,7 +480,7 @@ export function DeclarationDetails() {
           onClick={handleBack}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Retour aux déclarations
+          Retour aux réglementations
         </Button>
         <h2 className="text-xl font-semibold text-red-600">Déclaration non trouvée</h2>
         <p className="mt-2 text-gray-600">La déclaration que vous recherchez n'existe pas.</p>
@@ -615,7 +707,7 @@ export function DeclarationDetails() {
         onClick={handleBack}
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Retour aux déclarations
+        Retour aux réglementations
       </Button>
       <DeclarationAnalytics
         progress={declaration.progress}
