@@ -111,7 +111,7 @@ export function PlotsMap() {
                       <p className="text-sm mb-1">Code Postal: {plot.zipCode}</p>
                       <p className="text-sm mb-1">Culture actuelle: {plot.currentCrop}</p>
                       <div className="mt-2">
-                        <p className="text-sm font-semibold">Rotation des cultures:</p>
+                        <p className="text-sm font-semibold">Rotation de l'assolement:</p>
                         {plot.cropRotation.map((rotation) => (
                           <p key={rotation.year} className="text-sm">
                             {rotation.year}: {rotation.crop}

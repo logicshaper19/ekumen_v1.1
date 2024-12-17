@@ -27,59 +27,59 @@ import cn from 'classnames';
 const objectives = [
   {
     id: 1,
-    name: "Consommation d'eau",
-    shortDesc: "-14% d'ici 2024",
-    icon: Droplets,
-    target: 14,
-    current: 8,
+    name: "Augmenter mon revenu",
+    shortDesc: "+5% sur 5 ans",
+    icon: Euro,
+    target: 5,
+    current: 2,
     unit: '%',
     status: 'warning'
   },
   {
     id: 2,
-    name: "Surface Bio",
-    shortDesc: "+25% de surface",
-    icon: Leaf,
-    target: 25,
-    current: 20,
+    name: "Émissions CO²",
+    shortDesc: "-5% sur 5 ans",
+    icon: Factory,
+    target: 5,
+    current: 2,
     unit: '%',
-    status: 'success'
+    status: 'warning'
   },
   {
     id: 3,
-    name: "Émissions CO2",
-    shortDesc: "-30% d'ici 2025",
-    icon: Factory,
-    target: 30,
-    current: 15,
+    name: "Consommation d'eau",
+    shortDesc: "-5% sur 5 ans",
+    icon: Droplets,
+    target: 5,
+    current: 1,
     unit: '%',
     status: 'warning'
-  }
+  },
 ];
 
 const risksAndOpportunities = [
   {
     id: 1,
     type: 'risk',
-    title: 'Volatilité des prix des intrants',
-    description: 'Augmentation prévue des coûts des fertilisants de 15% en 2024',
-    icon: Euro,
+    title: "Augmentation des risques caniculaires",
+    description: "7 jours supplémentaires par an au dessus de 35° d'ici à 2050",
+    icon: CloudRain,
     severity: 'high'
   },
   {
     id: 2,
-    type: 'opportunity',
-    title: 'Nouveau marché bio local',
-    description: 'Ouverture d\'un marché bio à 15km avec forte demande',
-    icon: Store,
+    type: 'risk',
+    title: "Stress hydrique",
+    description: "Baisse des précipitation de 5% pendant la période estivale d'ici à 2050",
+    icon: Droplets,
     severity: 'medium'
   },
   {
     id: 3,
-    type: 'risk',
-    title: 'Stress hydrique',
-    description: 'Risque de sécheresse pour la saison à venir',
-    icon: CloudRain,
+    type: 'opportunity',
+    title: "Développement de la filière carotte dans votre région",
+    description: "+10% de producteurs se sont lancés dans la production de carotte dans votre région",
+    icon: Store,
     severity: 'medium'
   }
 ];
@@ -162,53 +162,29 @@ export function Overview() {
 
         {/* Strategic Objectives Section - Takes up 1 column */}
         <div className="col-span-1">
-          <h2 className="text-lg font-semibold mb-4">Objectifs Stratégiques</h2>
+          <h2 className="text-lg font-semibold mb-4">Vos objectifs stratégiques</h2>
           <div className="space-y-6">
-            {/* Consommation d'eau */}
-            <div className="space-y-2">
-              <h3 className="text-base">Consommation d'eau</h3>
-              <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-orange-500 rounded-full"
-                  style={{ width: '57%' }}
-                />
+            {objectives.map((objective) => (
+              <div key={objective.id} className="space-y-2">
+                <h3 className="text-base">{objective.name}</h3>
+                <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full rounded-full ${
+                      objective.status === 'success' ? 'bg-green-500' : 'bg-orange-500'
+                    }`}
+                    style={{ width: `${(objective.current / objective.target) * 100}%` }}
+                  />
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  {objective.status === 'success' ? (
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <AlertTriangle className="h-4 w-4 text-orange-500" />
+                  )}
+                  <span>{objective.current} / {objective.target}{objective.unit}</span>
+                </div>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <AlertTriangle className="h-4 w-4 text-orange-500" />
-                <span>8 / 14%</span>
-              </div>
-            </div>
-
-            {/* Surface Bio */}
-            <div className="space-y-2">
-              <h3 className="text-base">Surface Bio</h3>
-              <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-green-500 rounded-full"
-                  style={{ width: '80%' }}
-                />
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <CheckCircle className="h-4 w-4 text-green-500" />
-                <span>20 / 25%</span>
-              </div>
-            </div>
-
-            {/* Émissions CO2 */}
-            <div className="space-y-2">
-              <h3 className="text-base">Émissions CO2</h3>
-              <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-orange-500 rounded-full"
-                  style={{ width: '50%' }}
-                />
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <AlertTriangle className="h-4 w-4 text-orange-500" />
-                <span>15 / 30%</span>
-              </div>
-            </div>
-
+            ))}
             <Link 
               to="/business-plan"
               state={{ activeTab: 'strategy' }}

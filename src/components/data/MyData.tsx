@@ -132,17 +132,25 @@ export function MyData() {
     },
     { 
       id: '3',
-      name: 'Ekumen Bank',
-      description: 'Données bancaires et financières',
-      status: 'disconnected'
+      name: 'Crédit Agricole Open Bank',
+      description: 'Données bancaires',
+      status: 'connected',
+      lastSync: '15/12/2023'
+    },
+    { 
+      id: '4',
+      name: 'Crédit Mutuel Open Bank',
+      description: 'Données bancaires',
+      status: 'connected',
+      lastSync: '15/12/2023'
     }
   ];
 
   const documents: Document[] = [
     {
       id: '1',
-      name: 'Analyse de Sol - Parcelle Nord',
-      category: 'Analyses',
+      name: 'ITK 2023 source MesParcelles',
+      category: 'ITK',
       uploadDate: '15/12/2023',
       type: 'PDF',
       size: '2.4 MB',
@@ -150,45 +158,79 @@ export function MyData() {
     },
     {
       id: '2',
-      name: 'Plan de Fumure 2024',
-      category: 'Plans',
+      name: 'ITK 2022 source MesParcelles',
+      category: 'ITK',
       uploadDate: '14/12/2023',
-      type: 'XLSX',
+      type: 'PDF',
+      size: '2.1 MB',
+      source: 'MesParcelles'
+    },
+    {
+      id: '3',
+      name: 'Analyse de sol - Parcelle Nord',
+      category: 'Analyses',
+      uploadDate: '10/12/2023',
+      type: 'PDF',
       size: '1.8 MB'
+    },
+    {
+      id: '4',
+      name: 'Analyse de sol - Parcelle Sud',
+      category: 'Analyses',
+      uploadDate: '10/12/2023',
+      type: 'PDF',
+      size: '1.7 MB'
+    },
+    {
+      id: '5',
+      name: 'Liasse fiscale 2022',
+      category: 'Fiscal',
+      uploadDate: '01/03/2023',
+      type: 'PDF',
+      size: '3.2 MB'
+    },
+    {
+      id: '6',
+      name: 'Liasse fiscale 2023',
+      category: 'Fiscal',
+      uploadDate: '01/03/2024',
+      type: 'PDF',
+      size: '3.4 MB'
+    },
+    {
+      id: '7',
+      name: 'Plan de fumure',
+      category: 'Plans',
+      uploadDate: '15/12/2023',
+      type: 'PDF',
+      size: '1.5 MB'
     }
   ];
 
   const auditReports: AuditReport[] = [
     {
       id: '1',
-      name: 'Audit HVE 2023',
-      partner: 'Chambre d\'Agriculture',
+      name: 'Fiche traçabilité Coopérative',
+      partner: 'Coopérative Agricole',
       sharedDate: '10/12/2023',
       status: 'Validé'
     },
     {
       id: '2',
-      name: 'Diagnostic Carbone',
-      partner: 'Ekumen Bank',
+      name: 'Fiche HVE 2022',
+      partner: 'Chambre d\'Agriculture',
       sharedDate: '05/12/2023',
-      status: 'En cours'
+      status: 'Validé'
     }
   ];
 
   const missingDocuments: MissingDocument[] = [
     {
       id: '1',
-      name: 'Certificat HVE',
-      category: 'Certifications',
+      name: 'Liasse fiscale 2021',
+      category: 'Fiscal',
       urgency: 'high',
       deadline: '31/12/2023'
-    },
-    {
-      id: '2',
-      name: 'Analyse d\'eau',
-      category: 'Analyses',
-      urgency: 'medium',
-      deadline: '15/01/2024'
     }
   ];
 
@@ -207,111 +249,106 @@ export function MyData() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <Tabs defaultValue="documents" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="documents">Documents</TabsTrigger>
-              <TabsTrigger value="tools">Outils Intégrés</TabsTrigger>
-              <TabsTrigger value="audits">Audits</TabsTrigger>
-              <TabsTrigger value="missing">Documents Manquants</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="documents" className="space-y-4">
-              <div className="mb-4">
-                <Input
-                  placeholder="Rechercher un document..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full"
-                />
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <Card className="!bg-[#F5F5F0]">
+          <CardContent className="pt-6">
+            <div className="flex gap-4">
+              <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                <Files className="h-5 w-5 text-primary" />
               </div>
-
-              <div className="space-y-4">
-                {documents.map(doc => (
-                  <Card key={doc.id}>
-                    <CardContent className="flex items-center justify-between p-4">
-                      <div className="flex items-center gap-4">
-                        <FileText className="h-8 w-8 text-gray-400" />
-                        <div>
-                          <h3 className="font-medium">{doc.name}</h3>
-                          <p className="text-sm text-gray-500">
-                            {doc.category} • {doc.uploadDate} • {doc.size}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {doc.source && (
-                          <span className="text-sm text-gray-500">{doc.source}</span>
-                        )}
-                        <Button variant="outline" size="sm">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div>
+                <p className="text-sm text-muted-foreground">Documents par Catégorie</p>
+                <p className="text-2xl font-bold">28</p>
+                <p className="text-sm text-muted-foreground">12 ITK, 8 Analyses, 8 Autres</p>
               </div>
-            </TabsContent>
+            </div>
+          </CardContent>
+        </Card>
 
-            <TabsContent value="tools" className="space-y-4">
-              {integratedTools.map(tool => (
-                <Card key={tool.id}>
+        <Card className="!bg-[#F5F5F0]">
+          <CardContent className="pt-6">
+            <div className="flex gap-4">
+              <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                <Check className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Taux de Complétude</p>
+                <p className="text-2xl font-bold">95%</p>
+                <p className="text-sm text-muted-foreground">1 document manquant</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="!bg-[#F5F5F0]">
+          <CardContent className="pt-6">
+            <div className="flex gap-4">
+              <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                <HardDrive className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Dernières Activités</p>
+                <p className="text-2xl font-bold">8</p>
+                <p className="text-sm text-muted-foreground">nouveaux documents ce mois</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="!bg-[#F5F5F0]">
+          <CardContent className="pt-6">
+            <div className="flex gap-4">
+              <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                <ExternalLink className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Outils Connectés</p>
+                <p className="text-2xl font-bold">4/4</p>
+                <p className="text-sm text-muted-foreground">Tous les outils connectés</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <Tabs defaultValue="documents" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="tools">Outils Intégrés</TabsTrigger>
+            <TabsTrigger value="audits">Audits</TabsTrigger>
+            <TabsTrigger value="missing">Documents Manquants</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="documents" className="space-y-4">
+            <div className="mb-4">
+              <Input
+                placeholder="Rechercher un document..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full"
+              />
+            </div>
+
+            <div className="space-y-4">
+              {documents.map(doc => (
+                <Card key={doc.id}>
                   <CardContent className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-4">
-                      <ExternalLink className="h-8 w-8 text-gray-400" />
-                      <div>
-                        <h3 className="font-medium">{tool.name}</h3>
-                        <p className="text-sm text-gray-500">{tool.description}</p>
-                        {tool.lastSync && (
-                          <p className="text-sm text-gray-500">
-                            Dernière synchronisation: {tool.lastSync}
-                          </p>
-                        )}
+                      <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                        <FileText className="h-5 w-5 text-primary" />
                       </div>
-                    </div>
-                    <Button 
-                      variant={tool.status === 'connected' ? "outline" : "default"}
-                      className="gap-2"
-                    >
-                      {tool.status === 'connected' ? (
-                        <>
-                          <CloudOff className="h-4 w-4" />
-                          Déconnecter
-                        </>
-                      ) : (
-                        <>
-                          <ExternalLink className="h-4 w-4" />
-                          Connecter
-                        </>
-                      )}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="audits" className="space-y-4">
-              {auditReports.map(audit => (
-                <Card key={audit.id}>
-                  <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-4">
-                      <Share2 className="h-8 w-8 text-gray-400" />
                       <div>
-                        <h3 className="font-medium">{audit.name}</h3>
+                        <h3 className="font-medium">{doc.name}</h3>
                         <p className="text-sm text-gray-500">
-                          Partagé avec {audit.partner} • {audit.sharedDate}
+                          {doc.category} • {doc.uploadDate} • {doc.size}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`px-2 py-1 rounded-full text-sm ${
-                        audit.status === 'Validé' 
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {audit.status}
-                      </span>
+                      {doc.source && (
+                        <span className="text-sm text-gray-500">{doc.source}</span>
+                      )}
                       <Button variant="outline" size="sm">
                         <Download className="h-4 w-4" />
                       </Button>
@@ -319,85 +356,116 @@ export function MyData() {
                   </CardContent>
                 </Card>
               ))}
-            </TabsContent>
+            </div>
+          </TabsContent>
 
-            <TabsContent value="missing" className="space-y-4">
-              {missingDocuments.map(doc => (
-                <Card key={doc.id}>
-                  <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-4">
-                      <AlertCircle className={`h-8 w-8 ${
+          <TabsContent value="tools" className="space-y-4">
+            {integratedTools.map(tool => (
+              <Card key={tool.id}>
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                      <ExternalLink className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium">{tool.name}</h3>
+                      <p className="text-sm text-gray-500">{tool.description}</p>
+                      {tool.lastSync && (
+                        <p className="text-sm text-gray-500">
+                          Dernière synchronisation: {tool.lastSync}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <Button 
+                    variant={tool.status === 'connected' ? "outline" : "default"}
+                    className="gap-2"
+                  >
+                    {tool.status === 'connected' ? (
+                      <>
+                        <CloudOff className="h-4 w-4" />
+                        Déconnecter
+                      </>
+                    ) : (
+                      <>
+                        <ExternalLink className="h-4 w-4" />
+                        Connecter
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+
+          <TabsContent value="audits" className="space-y-4">
+            {auditReports.map(audit => (
+              <Card key={audit.id}>
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-primary/10 rounded-lg h-fit">
+                      <Share2 className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium">{audit.name}</h3>
+                      <p className="text-sm text-gray-500">
+                        Partagé avec {audit.partner} • {audit.sharedDate}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`px-2 py-1 rounded-full text-sm ${
+                      audit.status === 'Validé' 
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {audit.status}
+                    </span>
+                    <Button variant="outline" size="sm">
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+
+          <TabsContent value="missing" className="space-y-4">
+            {missingDocuments.map(doc => (
+              <Card key={doc.id}>
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center gap-4">
+                    <div className={`p-2 rounded-lg h-fit ${
+                      doc.urgency === 'high' 
+                        ? 'bg-red-100'
+                        : doc.urgency === 'medium'
+                          ? 'bg-yellow-100'
+                          : 'bg-blue-100'
+                    }`}>
+                      <AlertCircle className={`h-5 w-5 ${
                         doc.urgency === 'high' 
                           ? 'text-red-500'
                           : doc.urgency === 'medium'
                             ? 'text-yellow-500'
                             : 'text-blue-500'
                       }`} />
-                      <div>
-                        <h3 className="font-medium">{doc.name}</h3>
-                        <p className="text-sm text-gray-500">
-                          {doc.category}
-                          {doc.deadline && ` • Échéance: ${doc.deadline}`}
-                        </p>
-                      </div>
                     </div>
-                    <Button onClick={() => setIsUploadDialogOpen(true)}>
-                      Ajouter
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-          </Tabs>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Stockage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Utilisé</span>
-                  <span className="text-sm font-medium">2.4 GB</span>
-                </div>
-                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-[#005E5D] rounded-full" 
-                    style={{ width: '40%' }}
-                  />
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Disponible</span>
-                  <span className="text-sm font-medium">3.6 GB</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Catégories</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Analyses</span>
-                  <span className="text-sm text-gray-500">12 fichiers</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Plans</span>
-                  <span className="text-sm text-gray-500">8 fichiers</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Certifications</span>
-                  <span className="text-sm text-gray-500">5 fichiers</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                    <div>
+                      <h3 className="font-medium">{doc.name}</h3>
+                      <p className="text-sm text-gray-500">
+                        {doc.category}
+                        {doc.deadline && ` • Échéance: ${doc.deadline}`}
+                      </p>
+                    </div>
+                  </div>
+                  <Button onClick={() => setIsUploadDialogOpen(true)}>
+                    Ajouter
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Upload Dialog */}
