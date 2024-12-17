@@ -73,7 +73,7 @@ export function ChatMessage({ message, isCurrentUser }: ChatMessageProps) {
           }`}
         >
           <p className="text-sm">{message.content}</p>
-          {message.attachments.map((attachment) => (
+          {message.attachments?.map((attachment) => (
             <AttachmentPreview key={attachment.id} attachment={attachment} />
           ))}
         </div>

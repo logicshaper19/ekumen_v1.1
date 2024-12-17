@@ -1,6 +1,6 @@
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator.tsx';
-import { Building2, Wheat, Euro, Scale, Coins, Tractor } from 'lucide-react';
+import { Building2, Wheat, Euro, Scale, Coins, Tractor, Droplet } from 'lucide-react';
 import { AnalyticsCard } from '@/components/ui/analytics-card';
 
 export function OverviewTab() {

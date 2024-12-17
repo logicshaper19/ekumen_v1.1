@@ -20,8 +20,10 @@ export function ChatThread({ thread, messages = [], currentUser }: ChatThreadPro
   const [attachments, setAttachments] = useState<File[]>([]);
   const [showDocuments, setShowDocuments] = useState(false);
 
-  // Get the other participant from the thread
+  // Get the other participant from the thread with null checks
   const participant = thread?.participants?.find(p => p.id !== currentUser?.id);
+  const participantName = participant?.name || 'Unknown';
+  const participantInitial = participantName.charAt(0) || 'U';
 
   // Count total attachments with null checks
   const totalAttachments = messages?.reduce(
@@ -68,15 +70,15 @@ export function ChatThread({ thread, messages = [], currentUser }: ChatThreadPro
           <div className="flex items-center space-x-3">
             <div className="relative">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={participant.avatar} alt={participant.name} />
-                <AvatarFallback>{participant.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={participant.avatar} alt={participantName} />
+                <AvatarFallback>{participantInitial}</AvatarFallback>
               </Avatar>
               {participant.online && (
                 <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white" />
               )}
             </div>
             <div>
-              <h2 className="text-sm font-medium text-gray-900">{participant.name}</h2>
+              <h2 className="text-sm font-medium text-gray-900">{participantName}</h2>
               <p className="text-xs text-gray-500">
                 {participant.online ? 'En ligne' : participant.lastSeen ? `Vu ${participant.lastSeen}` : ''}
               </p>
@@ -97,11 +99,12 @@ export function ChatThread({ thread, messages = [], currentUser }: ChatThreadPro
         {/* Messages */}
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4">
-            {messages.map((message) => (
+            {messages.map((message, index) => (
               <ChatMessage
-                key={message.id}
+                key={message.id || index}
                 message={message}
                 isCurrentUser={message.senderId === currentUser.id}
+                participant={participant}
               />
             ))}
           </div>

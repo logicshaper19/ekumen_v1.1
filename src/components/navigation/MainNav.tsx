@@ -7,11 +7,13 @@ import {
   TrendingUp, 
   Factory, 
   Database,
-  LogOut 
+  LogOut,
+  ScrollText
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard },
+  { name: 'Réglementations', href: '/reglementations', icon: ScrollText },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
   { name: 'Transformation', href: '/transformation', icon: Factory },
   { name: 'Messagerie', href: '/messagerie', icon: Users },

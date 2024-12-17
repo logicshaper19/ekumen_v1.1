@@ -13,23 +13,23 @@ export interface Message {
   receiverId: string;
   content: string;
   timestamp: string;
-  attachments: Attachment[];
+  attachments?: Attachment[];
   read: boolean;
 }
 
 export interface ChatUser {
   id: string;
-  name: string;
-  avatar: string;
+  name?: string;
+  avatar?: string;
   role: string;
   organization?: string;
   lastSeen?: string;
-  online: boolean;
+  online?: boolean;
 }
 
 export interface ChatThread {
   id: string;
-  participants: ChatUser[];
-  lastMessage: Message;
-  unreadCount: number;
+  participants?: ChatUser[];
+  lastMessage?: Message;
+  unreadCount?: number;
 }

@@ -1,36 +1,101 @@
 import React, { useState } from 'react';
-import { ChatList } from '../chat/ChatList';
-import { ChatThread } from '../chat/ChatThread';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChatThread as ChatThreadType, Message, ChatUser } from '@/types/chat';
+import { Contact } from '../messaging/types';
+import { OverviewTab } from '../messaging/OverviewTab';
+import { MessagesTab } from '../messaging/MessagesTab';
+import { PartnersTab } from '../messaging/PartnersTab';
 
-// Mock data
-const mockUsers: ChatUser[] = [
+// Mock contacts data
+const mockContacts: Contact[] = [
   {
     id: '1',
-    name: 'Marie Dubois',
-    avatar: '/avatars/marie.jpg',
-    role: 'Agriculteur',
-    organization: 'Crédit Agricole',
-    online: true,
+    firstName: 'Marie',
+    lastName: 'Dubois',
+    email: 'marie.dubois@creditagricole.fr',
+    phone: '06 12 34 56 78',
+    company: 'Crédit Agricole',
+    role: 'Conseillère Financière'
   },
   {
     id: '2',
-    name: 'Jean Martin',
-    avatar: '/avatars/jean.jpg',
-    role: 'Conseiller',
-    organization: 'Chambre d\'Agriculture',
-    lastSeen: 'il y a 2h',
-    online: false,
+    firstName: 'Jean',
+    lastName: 'Martin',
+    email: 'j.martin@chambre-agriculture.fr',
+    phone: '06 23 45 67 89',
+    company: 'Chambre d\'Agriculture',
+    role: 'Conseiller Technique'
   },
   {
     id: '3',
-    name: 'Sophie Laurent',
-    avatar: '/avatars/sophie.jpg',
-    role: 'Responsable',
-    organization: 'Coopérative Agricole',
-    online: true,
+    firstName: 'Sophie',
+    lastName: 'Laurent',
+    email: 's.laurent@cooperative-agricole.fr',
+    phone: '06 34 56 78 90',
+    company: 'Coopérative Agricole',
+    role: 'Responsable Commercial'
   },
+  {
+    id: '4',
+    firstName: 'Pierre',
+    lastName: 'Durand',
+    email: 'p.durand@msa.fr',
+    phone: '06 45 67 89 01',
+    company: 'MSA',
+    role: 'Gestionnaire de Compte'
+  },
+  {
+    id: '5',
+    firstName: 'Claire',
+    lastName: 'Moreau',
+    email: 'c.moreau@safer.fr',
+    phone: '06 56 78 90 12',
+    company: 'SAFER',
+    role: 'Conseillère Foncier'
+  }
 ];
+
+// Mock messages data
+const mockMessages: { [key: string]: Message[] } = {
+  '1': [
+    {
+      id: '1',
+      senderId: '1',
+      receiverId: 'current-user-id',
+      content: 'Votre dossier de financement pour le nouveau tracteur a été approuvé.',
+      timestamp: '2024-12-16T11:30:00',
+      read: false,
+    },
+    {
+      id: '2',
+      senderId: 'current-user-id',
+      receiverId: '1',
+      content: 'Merci beaucoup pour cette excellente nouvelle !',
+      timestamp: '2024-12-16T11:35:00',
+      read: true,
+    }
+  ],
+  '2': [
+    {
+      id: '3',
+      senderId: '2',
+      receiverId: 'current-user-id',
+      content: 'Je vous propose un rendez-vous la semaine prochaine pour discuter de votre plan de culture.',
+      timestamp: '2024-12-15T14:20:00',
+      read: false,
+    }
+  ],
+  '3': [
+    {
+      id: '4',
+      senderId: '3',
+      receiverId: 'current-user-id',
+      content: 'Les nouveaux prix pour les semences sont disponibles.',
+      timestamp: '2024-12-14T09:15:00',
+      read: true,
+    }
+  ]
+};
 
 const mockCurrentUser: ChatUser = {
   id: 'current-user-id',
@@ -40,77 +105,15 @@ const mockCurrentUser: ChatUser = {
   online: true,
 };
 
-const mockMessages: { [key: string]: Message[] } = {
-  '1': [
-    {
-      id: '1',
-      senderId: '1',
-      receiverId: 'current-user-id',
-      content: 'Votre dossier de financement pour le nouveau tracteur a été approuvé.',
-      timestamp: '2024-12-16T11:30:00',
-      attachments: [
-        {
-          id: '1',
-          type: 'document',
-          url: '/documents/approval.pdf',
-          name: 'Approbation_Financement.pdf',
-          size: '2.4 MB'
-        }
-      ],
-      read: true,
-    },
-    {
-      id: '2',
-      senderId: 'current-user-id',
-      receiverId: '1',
-      content: 'Merci beaucoup ! Je vais examiner les détails.',
-      timestamp: '2024-12-16T11:35:00',
-      attachments: [],
-      read: true,
-    }
-  ],
-  '2': [
-    {
-      id: '3',
-      senderId: '2',
-      receiverId: 'current-user-id',
-      content: 'Je passerai demain pour évaluer l\'état des cultures.',
-      timestamp: '2024-12-16T10:15:00',
-      attachments: [],
-      read: false,
-    }
-  ],
-  '3': [
-    {
-      id: '4',
-      senderId: '3',
-      receiverId: 'current-user-id',
-      content: 'Nouveaux prix des dispositions pour la saison à venir. À discuter ensemble.',
-      timestamp: '2024-12-16T09:45:00',
-      attachments: [
-        {
-          id: '2',
-          type: 'document',
-          url: '/documents/prices.pdf',
-          name: 'Grille_Tarifaire_2024.pdf',
-          size: '1.8 MB'
-        }
-      ],
-      read: false,
-    }
-  ]
-};
-
-console.log('Mock Messages Available:', mockMessages);
-
-const mockThreads = mockUsers.map(user => ({
-  id: user.id,
-  participants: [mockCurrentUser, user],
-  lastMessage: mockMessages[user.id][mockMessages[user.id].length - 1],
-  unreadCount: mockMessages[user.id].filter(m => !m.read && m.senderId !== 'current-user-id').length,
-}));
+const mockThreads = mockContacts.map(contact => ({
+  id: contact.id,
+  participants: [mockCurrentUser, contact],
+  lastMessage: mockMessages[contact.id]?.[mockMessages[contact.id]?.length - 1],
+  unreadCount: mockMessages[contact.id]?.filter(m => !m.read && m.senderId !== 'current-user-id').length || 0,
+})).filter(thread => thread.lastMessage);
 
 export function Messagerie() {
+  const [activeTab, setActiveTab] = useState('overview');
   const [selectedThread, setSelectedThread] = useState<ChatThreadType | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -122,35 +125,61 @@ export function Messagerie() {
     }
   };
 
+  const handleMessagePartner = (partnerId: string) => {
+    setActiveTab('messages');
+    handleThreadSelect(partnerId);
+  };
+
+  const navigateToMessages = () => {
+    setActiveTab('messages');
+  };
+
+  const navigateToPartners = () => {
+    setActiveTab('partners');
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="space-y-1 mb-6">
-        <h1 className="text-2xl font-bold">Messagerie</h1>
-        <p className="text-gray-600">Vos conversations</p>
+        <h1 className="text-2xl font-bold">Communication</h1>
+        <p className="text-gray-600">Gérez vos messages et partenaires</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="w-full">
-          <ChatList
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+          <TabsTrigger value="messages">Messages</TabsTrigger>
+          <TabsTrigger value="partners">Partenaires</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <OverviewTab
+            contacts={mockContacts}
+            messages={mockMessages}
             threads={mockThreads}
-            activeThreadId={selectedThread?.id || null}
+            onNavigateToMessages={navigateToMessages}
+            onNavigateToPartners={navigateToPartners}
+          />
+        </TabsContent>
+
+        <TabsContent value="messages">
+          <MessagesTab
+            threads={mockThreads}
+            messages={messages}
+            selectedThread={selectedThread}
+            currentUser={mockCurrentUser}
             onThreadSelect={handleThreadSelect}
           />
-        </div>
-        <div className="col-span-2">
-          {selectedThread ? (
-            <ChatThread
-              thread={selectedThread}
-              messages={messages}
-              currentUser={mockCurrentUser}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full text-gray-500">
-              Sélectionnez une conversation pour commencer
-            </div>
-          )}
-        </div>
-      </div>
+        </TabsContent>
+
+        <TabsContent value="partners">
+          <PartnersTab
+            contacts={mockContacts}
+            messages={mockMessages}
+            onMessagePartner={handleMessagePartner}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
