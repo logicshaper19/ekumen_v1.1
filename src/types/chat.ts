@@ -1,10 +1,9 @@
 export interface Attachment {
   id: string;
-  type: 'image' | 'document' | 'link';
-  url: string;
   name: string;
-  size?: string;
-  previewUrl?: string;
+  type: 'image' | 'document';
+  url: string;
+  size?: number;
 }
 
 export interface Message {
@@ -13,23 +12,22 @@ export interface Message {
   receiverId: string;
   content: string;
   timestamp: string;
-  attachments?: Attachment[];
   read: boolean;
+  attachments?: Attachment[];
 }
 
 export interface ChatUser {
   id: string;
-  name?: string;
+  name: string;
   avatar?: string;
-  role: string;
-  organization?: string;
-  lastSeen?: string;
+  role?: string;
   online?: boolean;
+  lastSeen?: string;
 }
 
 export interface ChatThread {
   id: string;
-  participants?: ChatUser[];
+  participants: ChatUser[];
   lastMessage?: Message;
   unreadCount?: number;
 }

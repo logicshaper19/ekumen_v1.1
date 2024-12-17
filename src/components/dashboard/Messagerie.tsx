@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ChatThread as ChatThreadType, Message, ChatUser } from '@/types/chat';
+import { ChatThread as ChatThreadType, Message, ChatUser, Attachment } from '@/types/chat';
 import { Contact } from '../messaging/types';
-import { OverviewTab } from '../messaging/OverviewTab';
 import { MessagesTab } from '../messaging/MessagesTab';
 import { PartnersTab } from '../messaging/PartnersTab';
 
@@ -62,17 +61,42 @@ const mockMessages: { [key: string]: Message[] } = {
       id: '1',
       senderId: '1',
       receiverId: 'current-user-id',
-      content: 'Votre dossier de financement pour le nouveau tracteur a été approuvé.',
+      content: 'Voici les documents pour votre dossier de financement.',
       timestamp: '2024-12-16T11:30:00',
       read: false,
+      attachments: [
+        {
+          id: 'doc-1',
+          name: 'Dossier_Financement.pdf',
+          type: 'document',
+          url: 'https://example.com/financement.pdf',
+          size: 2048576
+        },
+        {
+          id: 'doc-2',
+          name: 'Plan_Business.xlsx',
+          type: 'document',
+          url: 'https://example.com/business_plan.xlsx',
+          size: 1548576
+        }
+      ]
     },
     {
       id: '2',
       senderId: 'current-user-id',
       receiverId: '1',
-      content: 'Merci beaucoup pour cette excellente nouvelle !',
+      content: 'Merci, voici les documents signés en retour.',
       timestamp: '2024-12-16T11:35:00',
       read: true,
+      attachments: [
+        {
+          id: 'doc-3',
+          name: 'Documents_Signes.pdf',
+          type: 'document',
+          url: 'https://example.com/documents_signes.pdf',
+          size: 3048576
+        }
+      ]
     }
   ],
   '2': [
@@ -107,13 +131,19 @@ const mockCurrentUser: ChatUser = {
 
 const mockThreads = mockContacts.map(contact => ({
   id: contact.id,
-  participants: [mockCurrentUser, contact],
+  participants: [mockCurrentUser, {
+    id: contact.id,
+    name: `${contact.firstName} ${contact.lastName}`,
+    role: contact.role,
+    avatar: `/avatars/${contact.id}.jpg`,
+    online: Math.random() > 0.5,
+  }],
   lastMessage: mockMessages[contact.id]?.[mockMessages[contact.id]?.length - 1],
   unreadCount: mockMessages[contact.id]?.filter(m => !m.read && m.senderId !== 'current-user-id').length || 0,
 })).filter(thread => thread.lastMessage);
 
 export function Messagerie() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('messages');
   const [selectedThread, setSelectedThread] = useState<ChatThreadType | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -121,8 +151,45 @@ export function Messagerie() {
     const thread = mockThreads.find(t => t.id === threadId);
     if (thread) {
       setSelectedThread(thread);
-      setMessages(mockMessages[threadId]);
+      setMessages(mockMessages[threadId] || []);
     }
+  };
+
+  const handleSendMessage = async (content: string, threadId: string, files?: File[]) => {
+    const attachments: Attachment[] = [];
+    
+    // Process files if any
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const isImage = file.type.startsWith('image/');
+        // In a real app, you would upload the file to a server and get a URL back
+        const mockUrl = URL.createObjectURL(file);
+        
+        attachments.push({
+          id: `attachment-${Date.now()}-${Math.random()}`,
+          name: file.name,
+          type: isImage ? 'image' : 'document',
+          url: mockUrl,
+          size: file.size,
+        });
+      }
+    }
+
+    const newMessage: Message = {
+      id: `msg-${Date.now()}`,
+      content,
+      senderId: mockCurrentUser.id,
+      receiverId: mockContacts.find(c => c.id === threadId)?.id || '',
+      timestamp: new Date().toISOString(),
+      read: true,
+      attachments,
+    };
+
+    // Update messages for the thread
+    setMessages(prev => [...prev, newMessage]);
+
+    // Update mockMessages and threads
+    mockMessages[threadId] = [...(mockMessages[threadId] || []), newMessage];
   };
 
   const handleMessagePartner = (partnerId: string) => {
@@ -130,45 +197,28 @@ export function Messagerie() {
     handleThreadSelect(partnerId);
   };
 
-  const navigateToMessages = () => {
-    setActiveTab('messages');
-  };
-
-  const navigateToPartners = () => {
-    setActiveTab('partners');
-  };
-
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="space-y-1 mb-6">
-        <h1 className="text-2xl font-bold">Communication</h1>
-        <p className="text-gray-600">Gérez vos messages et partenaires</p>
+    <div className="h-[calc(100vh-4rem)] p-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-[40px] font-bold text-black">Communication</h1>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
-          <TabsTrigger value="messages">Messages</TabsTrigger>
-          <TabsTrigger value="partners">Partenaires</TabsTrigger>
-        </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="h-[calc(100%-5rem)]">
+        <div className="flex justify-end mb-6">
+          <TabsList className="bg-white p-1 h-auto">
+            <TabsTrigger value="messages" className="px-4 py-2">Messages</TabsTrigger>
+            <TabsTrigger value="partners" className="px-4 py-2">Partenaires</TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="overview">
-          <OverviewTab
-            contacts={mockContacts}
-            messages={mockMessages}
-            threads={mockThreads}
-            onNavigateToMessages={navigateToMessages}
-            onNavigateToPartners={navigateToPartners}
-          />
-        </TabsContent>
-
-        <TabsContent value="messages">
+        <TabsContent value="messages" className="h-[calc(100%-4rem)]">
           <MessagesTab
             threads={mockThreads}
-            messages={messages}
-            selectedThread={selectedThread}
             currentUser={mockCurrentUser}
+            selectedThread={selectedThread}
+            messages={messages}
             onThreadSelect={handleThreadSelect}
+            onSendMessage={handleSendMessage}
           />
         </TabsContent>
 
@@ -177,6 +227,10 @@ export function Messagerie() {
             contacts={mockContacts}
             messages={mockMessages}
             onMessagePartner={handleMessagePartner}
+            currentUser={mockCurrentUser}
+            threads={mockThreads}
+            onThreadSelect={handleThreadSelect}
+            onSendMessage={handleSendMessage}
           />
         </TabsContent>
       </Tabs>
