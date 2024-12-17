@@ -3,7 +3,7 @@ import { Overview } from '../components/dashboard/Overview';
 
 export function TableauDeBord() {
   return (
-    <div className="p-8">
+    <div className="max-w-7xl mx-auto">
       <Overview />
     </div>
   );

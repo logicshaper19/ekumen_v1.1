@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertTriangle, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 interface RiskOpportunityItem {
   id: string;
@@ -108,59 +109,57 @@ export function RisksAndOpportunities() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold mb-6">Analyse des Risques et Opportunités</h2>
-        
-        <p className="text-gray-600 mb-6">
-          {risks.length} risques et {opportunities.length} opportunités identifiés par vos parties prenantes
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Risks Section */}
-          <div>
-            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-red-500" />
-              Risques Principaux
-            </h3>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <dl className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Analyse des Risques et Opportunités</CardTitle>
+          <p className="text-gray-600">
+            {risks.length} risques et {opportunities.length} opportunités identifiés par vos parties prenantes
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Risks Section */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <AlertTriangle className="w-5 h-5 text-red-500" />
+                <h3 className="text-lg font-medium">Risques Principaux</h3>
+              </div>
+              <div className="space-y-4">
                 {risks.map((risk) => (
                   <div 
                     key={risk.id}
                     onClick={() => handleItemClick(risk.id)}
-                    className="cursor-pointer hover:bg-white p-3 -mx-2 rounded-md transition-colors"
+                    className="cursor-pointer p-3 rounded-md transition-colors bg-white hover:bg-accent/50"
                   >
                     <dt className="text-sm text-gray-500 mb-1">{risk.title} ({risk.stakeholder})</dt>
                     <dd className="text-sm font-medium text-gray-900">{risk.description}</dd>
                   </div>
                 ))}
-              </dl>
+              </div>
             </div>
-          </div>
-          
-          {/* Opportunities Section */}
-          <div>
-            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-green-500" />
-              Opportunités Clés
-            </h3>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <dl className="space-y-4">
+            
+            {/* Opportunities Section */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <TrendingUp className="w-5 h-5 text-green-500" />
+                <h3 className="text-lg font-medium">Opportunités Clés</h3>
+              </div>
+              <div className="space-y-4">
                 {opportunities.map((opportunity) => (
                   <div 
                     key={opportunity.id}
                     onClick={() => handleItemClick(opportunity.id)}
-                    className="cursor-pointer hover:bg-white p-3 -mx-2 rounded-md transition-colors"
+                    className="cursor-pointer p-3 rounded-md transition-colors bg-white hover:bg-accent/50"
                   >
                     <dt className="text-sm text-gray-500 mb-1">{opportunity.title} ({opportunity.stakeholder})</dt>
                     <dd className="text-sm font-medium text-gray-900">{opportunity.description}</dd>
                   </div>
                 ))}
-              </dl>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

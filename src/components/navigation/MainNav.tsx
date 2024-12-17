@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   LayoutDashboard, 
-  FileText, 
   Users, 
   TrendingUp, 
   Factory, 
@@ -12,8 +11,7 @@ import {
 } from 'lucide-react';
 
 const navigation = [
-  { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard },
-  { name: 'Réglementations', href: '/reglementations', icon: FileText },
+  { name: 'Tableau de Bord', href: '/', icon: LayoutDashboard },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
   { name: 'Transformation', href: '/transformation', icon: Factory },
   { name: 'Messagerie', href: '/messagerie', icon: Users },
@@ -32,13 +30,13 @@ export function MainNav() {
   };
 
   return (
-    <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50 sticky">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between h-14">
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/dashboard" className="text-2xl font-bold text-gray-900">
+              <Link to="/dashboard" className="text-xl font-bold text-gray-900">
                 Ekumen
               </Link>
             </div>

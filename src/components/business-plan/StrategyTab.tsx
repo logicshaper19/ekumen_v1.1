@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 export function StrategyTab() {
   const navigate = useNavigate();
@@ -19,23 +20,24 @@ export function StrategyTab() {
         </Button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold mb-4">Stratégie d'Exploitation</h2>
-
-        <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Stratégie d'Exploitation</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-8">
           <div>
             <h3 className="text-lg font-medium mb-3">Axes Stratégiques</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 border border-gray-200 rounded-lg">
-                <div className="text-green-600 font-semibold mb-2">Diversification</div>
+              <div className="p-4 bg-white rounded-lg hover:bg-accent/50 transition-colors">
+                <div className="text-primary font-semibold mb-2">Diversification</div>
                 <p className="text-sm text-gray-600">Introduction de nouvelles cultures à haute valeur ajoutée</p>
               </div>
-              <div className="p-4 border border-gray-200 rounded-lg">
-                <div className="text-blue-600 font-semibold mb-2">Durabilité</div>
+              <div className="p-4 bg-white rounded-lg hover:bg-accent/50 transition-colors">
+                <div className="text-primary font-semibold mb-2">Durabilité</div>
                 <p className="text-sm text-gray-600">Transition vers des pratiques agricoles plus durables</p>
               </div>
-              <div className="p-4 border border-gray-200 rounded-lg">
-                <div className="text-purple-600 font-semibold mb-2">Innovation</div>
+              <div className="p-4 bg-white rounded-lg hover:bg-accent/50 transition-colors">
+                <div className="text-primary font-semibold mb-2">Innovation</div>
                 <p className="text-sm text-gray-600">Adoption de technologies agricoles de précision</p>
               </div>
             </div>
@@ -46,7 +48,7 @@ export function StrategyTab() {
             <div className="space-y-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600 font-semibold">1</span>
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold">1</span>
                 </div>
                 <div className="ml-4">
                   <h4 className="text-base font-medium">Court Terme (0-6 mois)</h4>
@@ -60,7 +62,7 @@ export function StrategyTab() {
 
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-semibold">2</span>
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold">2</span>
                 </div>
                 <div className="ml-4">
                   <h4 className="text-base font-medium">Moyen Terme (6-18 mois)</h4>
@@ -74,7 +76,7 @@ export function StrategyTab() {
 
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-600 font-semibold">3</span>
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold">3</span>
                 </div>
                 <div className="ml-4">
                   <h4 className="text-base font-medium">Long Terme (18+ mois)</h4>
@@ -87,8 +89,8 @@ export function StrategyTab() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

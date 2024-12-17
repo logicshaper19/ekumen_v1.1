@@ -123,26 +123,33 @@ export function Messagerie() {
   };
 
   return (
-    <div className="flex h-full">
-      <div className="w-1/3 border-r border-gray-200">
-        <ChatList
-          threads={mockThreads}
-          activeThreadId={selectedThread?.id || null}
-          onThreadSelect={handleThreadSelect}
-        />
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="space-y-1 mb-6">
+        <h1 className="text-2xl font-bold">Messagerie</h1>
+        <p className="text-gray-600">Vos conversations</p>
       </div>
-      <div className="flex-1">
-        {selectedThread ? (
-          <ChatThread
-            thread={selectedThread}
-            messages={messages}
-            currentUser={mockCurrentUser}
+
+      <div className="grid grid-cols-3 gap-6">
+        <div className="w-full">
+          <ChatList
+            threads={mockThreads}
+            activeThreadId={selectedThread?.id || null}
+            onThreadSelect={handleThreadSelect}
           />
-        ) : (
-          <div className="flex items-center justify-center h-full text-gray-500">
-            Sélectionnez une conversation pour commencer
-          </div>
-        )}
+        </div>
+        <div className="col-span-2">
+          {selectedThread ? (
+            <ChatThread
+              thread={selectedThread}
+              messages={messages}
+              currentUser={mockCurrentUser}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full text-gray-500">
+              Sélectionnez une conversation pour commencer
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -190,14 +190,15 @@ export function BusinessPlan() {
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Plan d'Affaires</h2>
-        <p className="text-muted-foreground">
-          Suivez et gérez votre plan d'affaires, incluant vos objectifs stratégiques et indicateurs de performance clés pour optimiser la performance de votre exploitation.
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="space-y-1 mb-6">
+        <h1 className="text-2xl font-bold">Plan d'Affaires</h1>
+        <p className="text-gray-600">
+          Suivez et gérez votre plan d'affaires, incluant vos objectifs stratégiques et indicateurs de performance clés.
         </p>
       </div>
-      <div className="flex justify-end space-x-4 border-b">
+
+      <div className="flex justify-end space-x-4 border-b mb-6">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -214,7 +215,7 @@ export function BusinessPlan() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {currentKPIs.map((kpi, index) => (
           <Card key={index}>
             <CardContent className="pt-6">
