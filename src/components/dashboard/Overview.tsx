@@ -146,7 +146,7 @@ function GrainIcon(props: any) {
 export function Overview() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <div className="space-y-1">
+      <div className="space-y-3">
         <h1 className="text-2xl font-bold">Tableau de Bord</h1>
         <p className="text-gray-600">Bonjour Guillaume</p>
       </div>
@@ -210,20 +210,25 @@ export function Overview() {
             </div>
 
             <Link 
-              to="/objectifs"
-              className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
+              to="/business-plan"
+              state={{ activeTab: 'strategy' }}
+              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
             >
               Voir les objectifs
-              <ChevronRight className="h-4 w-4 ml-1" />
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
       </div>
 
       {/* Bottom Row: Risks/Opportunities (1/2) and Conversations (1/2) */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 mt-12">
         {/* Risks and Opportunities Section */}
         <div>
+          <div className="flex items-center gap-2 mb-4">
+            <AlertTriangle className="h-5 w-5 text-orange-500" />
+            <h2 className="text-lg font-semibold">Risques et Opportunités</h2>
+          </div>
           <div className="space-y-4">
             {risksAndOpportunities.map((item) => {
               const Icon = item.icon;
@@ -280,6 +285,10 @@ export function Overview() {
 
         {/* Recent Conversations Section */}
         <div>
+          <div className="flex items-center gap-2 mb-4">
+            <MessageSquare className="h-5 w-5 text-blue-500" />
+            <h2 className="text-lg font-semibold">Dernières Conversations</h2>
+          </div>
           <div className="space-y-4">
             {conversations.map((conversation) => {
               const Icon = conversation.partner.icon;

@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 const navigation = [
-  { name: 'Tableau de Bord', href: '/', icon: LayoutDashboard },
+  { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
   { name: 'Transformation', href: '/transformation', icon: Factory },
   { name: 'Messagerie', href: '/messagerie', icon: Users },
@@ -23,26 +23,28 @@ export function MainNav() {
   const { logout, user } = useAuth();
 
   const isLinkActive = (href: string) => {
-    if (href === '/dashboard' && location.pathname === '/') {
+    // Special case for dashboard
+    if (href === '/tableau-de-bord' && (location.pathname === '/' || location.pathname === '/tableau-de-bord')) {
       return true;
     }
-    return location.pathname.startsWith(href);
+    // For other routes
+    return location.pathname.startsWith(href) && href !== '/';
   };
 
   return (
     <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-14">
+        <div className="flex justify-between h-16">
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/dashboard" className="text-xl font-bold text-gray-900">
+              <Link to="/tableau-de-bord" className="text-xl font-bold text-gray-900">
                 Ekumen
               </Link>
             </div>
 
             {/* Navigation Links */}
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden sm:ml-8 sm:flex sm:items-center">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = isLinkActive(item.href);
@@ -51,10 +53,10 @@ export function MainNav() {
                     key={item.name}
                     to={item.href}
                     className={`
-                      inline-flex items-center px-1 pt-1 text-sm font-medium
+                      relative flex items-center px-4 h-16 text-sm font-medium
                       ${isActive 
-                        ? 'border-b-2 border-black text-gray-900' 
-                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'text-gray-900 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-black' 
+                        : 'text-gray-500 hover:text-gray-700'
                       }
                     `}
                   >
