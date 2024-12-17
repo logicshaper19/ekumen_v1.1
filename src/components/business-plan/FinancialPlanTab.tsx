@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
+import { Euro, TrendingUp, ArrowUpDown, Wallet } from 'lucide-react';
+import { AnalyticsCard } from '@/components/ui/analytics-card';
 
 interface CropData {
   name: string;
@@ -100,19 +102,40 @@ const structuralCosts = [
 
 export function FinancialPlanTab() {
   const navigate = useNavigate();
+
+  // Calculate totals
   const totalSurface = crops.reduce((sum, crop) => sum + crop.surface, 0);
-  
+  const totalMargin = crops.reduce((sum, crop) => sum + crop.marginTotal, 0);
+  const totalCharges = crops.reduce((sum, crop) => sum + crop.chargesTotal, 0);
+  const totalProduct = crops.reduce((sum, crop) => sum + crop.productTotal, 0);
+
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Plan Financier</h2>
-        <Button
-          variant="outline"
-          onClick={() => navigate('/business-plan/financial-plan-details')}
-        >
-          Voir plus de détails
-        </Button>
+    <div className="space-y-6">
+      {/* Analytics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <AnalyticsCard
+          title="Marge Brute"
+          value={`${totalMargin}k €`}
+          subtitle="Total cultures"
+          change={{ value: "+8%", trend: "up" }}
+          icon={Euro}
+        />
+        <AnalyticsCard
+          title="Charges"
+          value={`${totalCharges}k €`}
+          subtitle="Intrants et services"
+          change={{ value: "-5%", trend: "down" }}
+          icon={Wallet}
+        />
+        <AnalyticsCard
+          title="Produit"
+          value={`${totalProduct}k €`}
+          subtitle="Ventes et aides"
+          change={{ value: "+3%", trend: "up" }}
+          icon={TrendingUp}
+        />
       </div>
+
       {/* Crops and Margins Section */}
       <div className="bg-white p-6 rounded-lg shadow-sm">
         <h2 className="text-2xl font-semibold mb-6">Marges Brutes par Culture</h2>

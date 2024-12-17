@@ -28,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnalyticsCard } from "@/components/ui/analytics-card";
 import { cn } from "@/lib/utils";
 
 // Simplified Select Components
@@ -250,65 +251,33 @@ export function MyData() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card className="!bg-[#F5F5F0]">
-          <CardContent className="pt-6">
-            <div className="flex gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg h-fit">
-                <Files className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Documents par Catégorie</p>
-                <p className="text-2xl font-bold">28</p>
-                <p className="text-sm text-muted-foreground">12 ITK, 8 Analyses, 8 Autres</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AnalyticsCard
+          title="Documents par Catégorie"
+          value="28"
+          subtitle="12 ITK, 8 Analyses, 8 Autres"
+          icon={Files}
+        />
 
-        <Card className="!bg-[#F5F5F0]">
-          <CardContent className="pt-6">
-            <div className="flex gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg h-fit">
-                <Check className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Taux de Complétude</p>
-                <p className="text-2xl font-bold">95%</p>
-                <p className="text-sm text-muted-foreground">1 document manquant</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AnalyticsCard
+          title="Taux de Complétude"
+          value="95%"
+          subtitle="1 document manquant"
+          icon={Check}
+        />
 
-        <Card className="!bg-[#F5F5F0]">
-          <CardContent className="pt-6">
-            <div className="flex gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg h-fit">
-                <HardDrive className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Dernières Activités</p>
-                <p className="text-2xl font-bold">8</p>
-                <p className="text-sm text-muted-foreground">nouveaux documents ce mois</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AnalyticsCard
+          title="Dernières Activités"
+          value="8"
+          subtitle="nouveaux documents ce mois"
+          icon={HardDrive}
+        />
 
-        <Card className="!bg-[#F5F5F0]">
-          <CardContent className="pt-6">
-            <div className="flex gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg h-fit">
-                <ExternalLink className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Outils Connectés</p>
-                <p className="text-2xl font-bold">4/4</p>
-                <p className="text-sm text-muted-foreground">Tous les outils connectés</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AnalyticsCard
+          title="Outils Connectés"
+          value="4/4"
+          subtitle="Tous les outils connectés"
+          icon={ExternalLink}
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-1 gap-6">

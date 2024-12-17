@@ -1,10 +1,37 @@
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator.tsx';
-import { Building2, Wheat, Droplets } from 'lucide-react';
+import { Building2, Wheat, Euro, Scale, Coins, Tractor } from 'lucide-react';
+import { AnalyticsCard } from '@/components/ui/analytics-card';
 
 export function OverviewTab() {
   return (
     <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <AnalyticsCard
+          title="Revenu Mensuel"
+          value="12 500 €"
+          subtitle="par rapport au mois dernier"
+          change={{ value: "+8.2%", trend: "up" }}
+          icon={Euro}
+        />
+
+        <AnalyticsCard
+          title="Rendement Moyen"
+          value="7.2 t/ha"
+          subtitle="toutes cultures confondues"
+          change={{ value: "+2.1%", trend: "up" }}
+          icon={Scale}
+        />
+
+        <AnalyticsCard
+          title="Coûts Opérationnels"
+          value="4 200 €"
+          subtitle="réduction des dépenses"
+          change={{ value: "-3.1%", trend: "down" }}
+          icon={Coins}
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-4">Informations Clés</h3>
@@ -31,7 +58,7 @@ export function OverviewTab() {
             <Separator />
             <div className="flex items-center space-x-4">
               <div className="p-2 bg-primary/10 rounded-lg">
-                <Droplets className="h-5 w-5 text-primary" />
+                <Tractor className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="text-sm font-medium leading-none">Type d'Agriculture</p>

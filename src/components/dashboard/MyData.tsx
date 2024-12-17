@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Files, Upload, Share2, HardDrive, Download, FileText, FolderOpen, ExternalLink, CloudOff } from "lucide-react"
-import { AnalyticsCard } from '../business-plan/AnalyticsCard';
+import { AnalyticsCard } from '@/components/ui/analytics-card';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
 interface StorageProvider {

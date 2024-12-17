@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnalyticsCard } from '../../business-plan/AnalyticsCard';
+import { AnalyticsCard } from '@/components/ui/analytics-card';
 import { Clock, CheckCircle2, AlertTriangle, ListTodo } from 'lucide-react';
 
 interface DeclarationAnalyticsProps {

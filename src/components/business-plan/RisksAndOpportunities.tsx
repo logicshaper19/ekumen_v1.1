@@ -1,7 +1,8 @@
 import React from 'react';
-import { AlertTriangle, TrendingUp } from 'lucide-react';
+import { AlertTriangle, TrendingUp, ShieldAlert, Target, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { AnalyticsCard } from '@/components/ui/analytics-card';
 
 interface RiskOpportunityItem {
   id: string;
@@ -46,57 +47,33 @@ const risks: RiskOpportunityItem[] = [
     title: 'Exigences Contractuelles',
     description: 'Difficultés à respecter les cahiers des charges stricts',
     stakeholder: 'Carrefour'
-  },
-  {
-    id: 'insurance-risk-coverage',
-    title: 'Couverture Inadaptée',
-    description: 'Risque de pertes non couvertes par les contrats actuels',
-    stakeholder: 'Assurance'
   }
 ];
 
 const opportunities: RiskOpportunityItem[] = [
   {
-    id: 'maelab-opp-precision',
+    id: 'market-opp-bio',
+    title: 'Marché Bio',
+    description: 'Forte demande croissante pour les produits biologiques',
+    stakeholder: 'Consommateurs'
+  },
+  {
+    id: 'tech-opp-precision',
     title: 'Agriculture de Précision',
-    description: 'Optimisation des pratiques agricoles grâce aux données et technologies innovantes',
+    description: 'Optimisation des ressources grâce aux nouvelles technologies',
     stakeholder: 'MaeLabs'
   },
   {
-    id: 'ca-opp-green',
-    title: 'Financement Vert',
-    description: 'Accès à des prêts avantageux pour les projets écologiques et durables',
-    stakeholder: 'Crédit Agricole'
+    id: 'local-opp-circuit',
+    title: 'Circuits Courts',
+    description: 'Développement de la vente directe et locale',
+    stakeholder: 'Collectivités'
   },
   {
-    id: 'accountant-opp-tax',
-    title: 'Optimisation Fiscale',
-    description: 'Réduction d\'impôts via des investissements stratégiques et dispositifs fiscaux',
-    stakeholder: 'Comptable'
-  },
-  {
-    id: 'chamber-opp-subsidy',
-    title: 'Aides PAC',
-    description: 'Accès aux nouvelles subventions pour les pratiques agricoles durables',
-    stakeholder: 'Chambre d\'Agriculture'
-  },
-  {
-    id: 'coop-opp-mutualisation',
-    title: 'Mutualisation',
-    description: 'Partage des ressources et équipements pour réduire les coûts',
-    stakeholder: 'Coopérative'
-  },
-  {
-    id: 'carrefour-opp-bio',
-    title: 'Premium Bio',
-    description: 'Valorisation supérieure des produits via la filière bio',
-    stakeholder: 'Carrefour'
-  },
-  {
-    id: 'insurance-opp-products',
-    title: 'Nouveaux Produits',
-    description: 'Solutions d\'assurance innovantes pour les risques climatiques',
-    stakeholder: 'Assurance'
+    id: 'subsidy-opp-green',
+    title: 'Aides Écologiques',
+    description: 'Subventions pour la transition écologique',
+    stakeholder: 'État'
   }
 ];
 
@@ -109,57 +86,84 @@ export function RisksAndOpportunities() {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Analyse des Risques et Opportunités</CardTitle>
-          <p className="text-gray-600">
-            {risks.length} risques et {opportunities.length} opportunités identifiés par vos parties prenantes
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Risks Section */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <AlertTriangle className="w-5 h-5 text-red-500" />
-                <h3 className="text-lg font-medium">Risques Principaux</h3>
-              </div>
-              <div className="space-y-4">
-                {risks.map((risk) => (
-                  <div 
-                    key={risk.id}
-                    onClick={() => handleItemClick(risk.id)}
-                    className="cursor-pointer p-3 rounded-md transition-colors bg-white hover:bg-accent/50"
-                  >
-                    <dt className="text-sm text-gray-500 mb-1">{risk.title} ({risk.stakeholder})</dt>
-                    <dd className="text-sm font-medium text-gray-900">{risk.description}</dd>
+      {/* Analytics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <AnalyticsCard
+          title="Risques Identifiés"
+          value="6"
+          subtitle="Risques actifs"
+          change={{ value: "-2", trend: "down" }}
+          icon={ShieldAlert}
+        />
+        <AnalyticsCard
+          title="Opportunités"
+          value="4"
+          subtitle="Opportunités actives"
+          change={{ value: "+1", trend: "up" }}
+          icon={ArrowUpRight}
+        />
+        <AnalyticsCard
+          title="Actions Préventives"
+          value="8"
+          subtitle="Actions en cours"
+          change={{ value: "+3", trend: "up" }}
+          icon={Target}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-lg font-medium">
+              Risques Identifiés
+            </CardTitle>
+            <AlertTriangle className="h-4 w-4 text-red-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {risks.map((risk) => (
+                <div 
+                  key={risk.id}
+                  onClick={() => handleItemClick(risk.id)}
+                  className="cursor-pointer bg-white p-4 rounded-lg border border-gray-200"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-medium">{risk.title}</h4>
+                    <span className="text-xs text-gray-500">{risk.stakeholder}</span>
                   </div>
-                ))}
-              </div>
+                  <p className="text-sm text-gray-600">{risk.description}</p>
+                </div>
+              ))}
             </div>
-            
-            {/* Opportunities Section */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <TrendingUp className="w-5 h-5 text-green-500" />
-                <h3 className="text-lg font-medium">Opportunités Clés</h3>
-              </div>
-              <div className="space-y-4">
-                {opportunities.map((opportunity) => (
-                  <div 
-                    key={opportunity.id}
-                    onClick={() => handleItemClick(opportunity.id)}
-                    className="cursor-pointer p-3 rounded-md transition-colors bg-white hover:bg-accent/50"
-                  >
-                    <dt className="text-sm text-gray-500 mb-1">{opportunity.title} ({opportunity.stakeholder})</dt>
-                    <dd className="text-sm font-medium text-gray-900">{opportunity.description}</dd>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-lg font-medium">
+              Opportunités
+            </CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {opportunities.map((opportunity) => (
+                <div 
+                  key={opportunity.id}
+                  onClick={() => handleItemClick(opportunity.id)}
+                  className="cursor-pointer bg-white p-4 rounded-lg border border-gray-200"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-medium">{opportunity.title}</h4>
+                    <span className="text-xs text-gray-500">{opportunity.stakeholder}</span>
                   </div>
-                ))}
-              </div>
+                  <p className="text-sm text-gray-600">{opportunity.description}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
