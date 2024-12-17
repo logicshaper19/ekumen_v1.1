@@ -191,6 +191,12 @@ export function BusinessPlan() {
 
   return (
     <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight">Plan d'Affaires</h2>
+        <p className="text-muted-foreground">
+          Suivez et gérez votre plan d'affaires, incluant vos objectifs stratégiques et indicateurs de performance clés pour optimiser la performance de votre exploitation.
+        </p>
+      </div>
       <div className="flex justify-end space-x-4 border-b">
         {tabs.map((tab) => (
           <button
@@ -210,7 +216,7 @@ export function BusinessPlan() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {currentKPIs.map((kpi, index) => (
-          <Card key={index} className="bg-[#F5F5F0]">
+          <Card key={index}>
             <CardContent className="pt-6">
               <AnalyticsCard
                 title={kpi.title}
