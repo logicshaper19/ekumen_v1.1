@@ -21,7 +21,8 @@ import { CategoryDeclarationsPage } from './pages/CategoryDeclarationsPage';
 import { PublicDeclarations } from './components/dashboard/declarations/PublicDeclarations';
 import { AddObjective } from './components/business-plan/AddObjective';
 import { FinancialPlanDetailsPage } from './pages/FinancialPlanDetailsPage';
-import { CropDetailsPage } from './pages/CropDetailsPage';
+import { FinancialDetailsPage } from './components/business-plan/FinancialDetailsPage';
+import { CropDetailsPage } from './components/business-plan/CropDetailsPage';
 import { RiskOpportunityEvolution } from './components/business-plan/RiskOpportunityEvolution';
 import { DiscussionDetails } from './components/dashboard/DiscussionDetails';
 import { TableauDeBord } from './pages/TableauDeBord';
@@ -74,8 +75,9 @@ function App() {
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
           <Route path="business-plan" element={<BusinessPlan />} />
           <Route path="business-plan/add-objective" element={<AddObjective />} />
+          <Route path="business-plan/financial-details" element={<FinancialDetailsPage />} />
+          <Route path="business-plan/financial-details/crop/:cropName" element={<CropDetailsPage />} />
           <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
-          <Route path="business-plan/financial-plan-details/crop/:cropName" element={<CropDetailsPage />} />
           <Route path="business-plan/risks-opportunities/:id" element={<RiskOpportunityEvolution />} />
           <Route path="transformation" element={<Transformation />} />
           <Route path="transformation/:id" element={<TransformationView />} />

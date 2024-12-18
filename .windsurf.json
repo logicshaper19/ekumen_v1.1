@@ -1,0 +1,83 @@
+{
+  "version": "1.0",
+  "rules": {
+    "requireClarification": {
+      "required": true,
+      "steps": [
+        "Ask specific questions about unclear requirements",
+        "Confirm understanding before proposing solutions",
+        "Verify assumptions with user",
+        "Get detailed context when needed",
+        "Ensure edge cases are addressed"
+      ]
+    },
+    "preImplementation": {
+      "required": true,
+      "steps": [
+        "Identify and list all files that will be modified",
+        "Explain the purpose of each change",
+        "Get user confirmation before proceeding"
+      ]
+    },
+    "codeQuality": {
+      "required": true,
+      "principles": [
+        "Ensure backward compatibility",
+        "Maintain existing functionality",
+        "Test changes before implementation",
+        "Follow progressive enhancement",
+        "Use defensive programming"
+      ]
+    }
+  },
+  "editor": {
+    "formatOnSave": true,
+    "defaultFormatter": "prettier",
+    "tabSize": 2,
+    "rulers": [80, 100],
+    "wordWrap": "on"
+  },
+  "typescript": {
+    "compilerOptions": {
+      "strict": true,
+      "target": "ES2020",
+      "module": "ESNext",
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 100,
+    "tabWidth": 2
+  },
+  "eslint": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended"
+    ]
+  },
+  "autoRun": {
+    "safeCommands": [
+      "npm run dev",
+      "npm run build",
+      "npm run test"
+    ]
+  },
+  "git": {
+    "autoPush": false,
+    "autoCommit": false,
+    "conventionalCommits": true
+  },
+  "ai": {
+    "model": "default",
+    "temperature": 0.7,
+    "contextWindow": 4000
+  }
+}

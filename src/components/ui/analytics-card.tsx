@@ -8,8 +8,8 @@ interface AnalyticsCardProps {
   value: string;
   subtitle?: string;
   change?: {
-    value: string;
-    trend: 'up' | 'down';
+    value: number;
+    trend: 'up' | 'down' | 'neutral';
   };
   icon: React.ElementType;
   className?: string;
@@ -34,25 +34,23 @@ export function AnalyticsCard({
             <p className="text-sm text-muted-foreground">{title}</p>
             <div className="flex items-baseline gap-2">
               <p className="text-2xl font-bold">{value}</p>
+              {change && (
+                <span className={cn(
+                  "text-sm",
+                  change.trend === 'up' && "text-green-600",
+                  change.trend === 'down' && "text-red-600",
+                  change.trend === 'neutral' && "text-gray-600"
+                )}>
+                  {change.trend === 'up' && <TrendingUp className="h-4 w-4 mr-1" />}
+                  {change.trend === 'down' && <TrendingDown className="h-4 w-4 mr-1" />}
+                  {change.value > 0 && '+'}
+                  {change.value}%
+                </span>
+              )}
               {subtitle && (
                 <p className="text-sm text-muted-foreground">{subtitle}</p>
               )}
             </div>
-            {change && (
-              <div className="flex items-center gap-1 mt-1">
-                <div className={cn(
-                  "flex items-center text-sm",
-                  change.trend === 'up' ? "text-green-600" : "text-red-600"
-                )}>
-                  {change.trend === 'up' ? (
-                    <TrendingUp className="h-4 w-4 mr-1" />
-                  ) : (
-                    <TrendingDown className="h-4 w-4 mr-1" />
-                  )}
-                  {change.value}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </CardContent>
