@@ -6,7 +6,7 @@ const declarationTypeData = [
   { name: 'Déclarations Privées', value: 4 }
 ];
 
-const COLORS = ['#005E5D', '#d9b99b'];
+const COLORS = ['#00A9A3', '#005A5F'];
 
 const CustomPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
   const RADIAN = Math.PI / 180;
@@ -60,8 +60,8 @@ const CustomLegend = ({ payload }: any) => {
 
 export function FilingRequirementsChart() {
   return (
-    <div className="space-y-2">
-      <h3 className="text-lg font-semibold">Répartition des Déclarations</h3>
+    <div className="space-y-2 rounded-lg p-4" style={{ backgroundColor: '#F7F7F5' }}>
+      <h3 className="text-lg font-semibold text-gray-900">Répartition des Déclarations</h3>
       <div className="w-full h-80">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>

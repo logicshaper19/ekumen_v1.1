@@ -10,24 +10,27 @@ export function FinancesTab() {
         <AnalyticsCard
           title="Chiffre d'Affaires"
           value="450 000 €"
-          subtitle="Année en cours"
-          change={{ value: "+12%", trend: "up" }}
+          description="Année en cours"
+          change="+12%"
+          trend="up"
           icon={Euro}
         />
 
         <AnalyticsCard
           title="Marge Brute"
           value="180 000 €"
-          subtitle="40% du CA"
-          change={{ value: "+5%", trend: "up" }}
+          description="40% du CA"
+          change="+5%"
+          trend="up"
           icon={PiggyBank}
         />
 
         <AnalyticsCard
           title="Objectif 2024"
           value="500 000 €"
-          subtitle="de chiffre d'affaires"
-          change={{ value: "+11%", trend: "up" }}
+          description="de chiffre d'affaires"
+          change="+11%"
+          trend="up"
           icon={Target}
         />
       </div>

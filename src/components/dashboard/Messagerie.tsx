@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ChatThread as ChatThreadType, Message, ChatUser, Attachment } from '@/types/chat';
+import { ChatThread, Message, ChatUser, Attachment } from '@/types/chat';
 import { Contact } from '../messaging/types';
 import { MessagesTab } from '../messaging/MessagesTab';
 import { PartnersTab } from '../messaging/PartnersTab';
@@ -142,9 +142,19 @@ const mockThreads = mockContacts.map(contact => ({
   unreadCount: mockMessages[contact.id]?.filter(m => !m.read && m.senderId !== 'current-user-id').length || 0,
 })).filter(thread => thread.lastMessage);
 
+interface PartnersTabProps {
+  contacts: Contact[];
+  messages: { [key: string]: Message[] };
+  onMessagePartner: (partnerId: string) => void;
+  threads: ChatThread[];
+  onThreadSelect: (threadId: string) => void;
+  onSendMessage: (content: string, threadId: string, files?: File[]) => void;
+  currentUser: ChatUser;
+}
+
 export function Messagerie() {
   const [activeTab, setActiveTab] = useState('messages');
-  const [selectedThread, setSelectedThread] = useState<ChatThreadType | null>(null);
+  const [selectedThread, setSelectedThread] = useState<ChatThread | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handleThreadSelect = (threadId: string) => {

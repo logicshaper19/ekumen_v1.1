@@ -31,10 +31,16 @@ interface TransformationData {
   description: string
   benefits: string[]
   kpis: {
-    title: string
-    value: string
-    icon: any
-  }[]
+    yield: number
+    margin: number
+    workingTime: number
+    gesEmissions: number
+    lixiviation: number
+    n2oEmissions: number
+    soilQuality: number
+    organicMatter: number
+    biodiversity: number
+  }
   steps: string[]
 }
 
@@ -42,79 +48,63 @@ export const strategicTransformations: TransformationData[] = [
   {
     id: 1,
     icon: Sprout,
-    title: "Agriculture régénératrice",
+    title: "Agriculture régénérative",
     shortDesc: "Améliorer la santé des sols et la biodiversité",
     description:
-      "L'agriculture régénératrice est une approche qui vise à restaurer la santé des sols tout en maintenant une production rentable. Elle combine plusieurs pratiques comme la rotation des cultures, la couverture permanente des sols et la réduction du travail du sol.",
+      "L'agriculture régénérative vise à restaurer la santé des sols tout en augmentant la rentabilité.",
     benefits: [
-      "Amélioration de la structure et fertilité du sol",
-      "Réduction des coûts en intrants",
-      "Meilleure rétention d'eau",
+      "Amélioration de la structure du sol",
       "Augmentation de la biodiversité",
-      "Plus grande résilience aux aléas climatiques"
+      "Réduction des intrants",
+      "Meilleure rétention d'eau"
     ],
-    kpis: [
-      {
-        title: "Économie d'intrants",
-        value: "80€/ha",
-        icon: Coins
-      },
-      {
-        title: "Gain matière organique",
-        value: "+6%",
-        icon: Sprout
-      },
-      {
-        title: "Rétention d'eau",
-        value: "12mm",
-        icon: Droplets
-      }
-    ],
+    kpis: {
+      yield: 15,
+      margin: 250,
+      workingTime: 8.5,
+      gesEmissions: 2.3,
+      lixiviation: 15,
+      n2oEmissions: 3.2,
+      soilQuality: 8.5,
+      organicMatter: 3.2,
+      biodiversity: 75
+    },
     steps: [
-      "Réaliser un diagnostic initial des sols",
-      "Planifier la rotation des cultures",
-      "Introduire des couverts végétaux",
-      "Réduire progressivement le travail du sol",
-      "Suivre l'évolution des indicateurs"
+      "Analyse initiale des sols",
+      "Formation aux pratiques régénératives",
+      "Mise en place des couverts végétaux",
+      "Suivi et ajustements"
     ]
   },
   {
     id: 2,
-    icon: Leaf,
-    title: "Certification Bio",
-    shortDesc: "Transition vers l'agriculture biologique",
+    icon: Wheat,
+    title: "Diversification des cultures",
+    shortDesc: "Optimiser la rotation des cultures",
     description:
-      "La certification biologique permet de valoriser une production respectueuse de l'environnement. Elle implique l'abandon des pesticides et engrais de synthèse au profit de méthodes naturelles.",
+      "Une approche stratégique pour améliorer la santé des sols et réduire les risques.",
     benefits: [
-      "Prix de vente plus élevés",
-      "Accès à de nouveaux marchés",
-      "Impact environnemental réduit",
-      "Meilleure image auprès des consommateurs",
-      "Indépendance vis-à-vis des intrants chimiques"
+      "Réduction des risques",
+      "Amélioration de la fertilité",
+      "Contrôle naturel des ravageurs",
+      "Nouvelles sources de revenus"
     ],
-    kpis: [
-      {
-        title: "Prime de vente",
-        value: "+7%",
-        icon: Coins
-      },
-      {
-        title: "Score biodiversité",
-        value: "8/10",
-        icon: Sprout
-      },
-      {
-        title: "Retour sur invest.",
-        value: "2 ans",
-        icon: Clock
-      }
-    ],
+    kpis: {
+      yield: 12,
+      margin: 180,
+      workingTime: 7.2,
+      gesEmissions: 1.8,
+      lixiviation: 12,
+      n2oEmissions: 2.8,
+      soilQuality: 7.8,
+      organicMatter: 2.8,
+      biodiversity: 65
+    },
     steps: [
-      "Étudier le cahier des charges bio",
-      "Contacter un organisme certificateur",
-      "Planifier la période de conversion",
-      "Adapter ses pratiques culturales",
-      "Développer ses débouchés commerciaux"
+      "Étude de marché",
+      "Sélection des cultures",
+      "Plan de rotation",
+      "Mise en œuvre progressive"
     ]
   },
   {
@@ -131,23 +121,17 @@ export const strategicTransformations: TransformationData[] = [
       "Accès à de nouveaux marchés",
       "Réduction des risques"
     ],
-    kpis: [
-      {
-        title: "Réduction coûts",
-        value: "25%",
-        icon: Coins
-      },
-      {
-        title: "Réseau",
-        value: "50+",
-        icon: Users
-      },
-      {
-        title: "ROI estimé",
-        value: "1 an",
-        icon: Clock
-      }
-    ],
+    kpis: {
+      yield: 0,
+      margin: 0,
+      workingTime: 0,
+      gesEmissions: 0,
+      lixiviation: 0,
+      n2oEmissions: 0,
+      soilQuality: 0,
+      organicMatter: 0,
+      biodiversity: 0
+    },
     steps: [
       "Identifier les partenaires potentiels",
       "Définir le modèle de gouvernance",
@@ -163,39 +147,31 @@ export const nonStrategicTransformations: TransformationData[] = [
     id: 3,
     icon: Tractor,
     title: "Agriculture de précision",
-    shortDesc: "Optimisation des ressources par la technologie",
+    shortDesc: "Optimiser l'utilisation des ressources",
     description:
-      "L'agriculture de précision utilise les technologies modernes pour optimiser l'utilisation des ressources. Elle permet une gestion plus fine des parcelles grâce aux données collectées.",
+      "Utilisation de technologies avancées pour une agriculture plus précise et efficace.",
     benefits: [
+      "Réduction des coûts",
       "Optimisation des intrants",
-      "Réduction des coûts opérationnels",
       "Meilleure traçabilité",
-      "Gestion précise des parcelles",
-      "Amélioration des rendements"
+      "Données précises pour la prise de décision"
     ],
-    kpis: [
-      {
-        title: "Économie d'intrants",
-        value: "15%",
-        icon: Coins
-      },
-      {
-        title: "Gain productivité",
-        value: "+10%",
-        icon: TrendingUp
-      },
-      {
-        title: "ROI estimé",
-        value: "3 ans",
-        icon: Clock
-      }
-    ],
+    kpis: {
+      yield: 8,
+      margin: 0,
+      workingTime: 0,
+      gesEmissions: 0,
+      lixiviation: 0,
+      n2oEmissions: 0,
+      soilQuality: 7.2,
+      organicMatter: 0,
+      biodiversity: 0
+    },
     steps: [
-      "Cartographier les parcelles",
-      "Installer les capteurs",
-      "Former les équipes",
-      "Mettre en place le suivi",
-      "Analyser les données"
+      "Cartographie des parcelles",
+      "Installation des capteurs",
+      "Formation aux outils",
+      "Analyse et optimisation"
     ]
   },
   {
@@ -212,23 +188,17 @@ export const nonStrategicTransformations: TransformationData[] = [
       "Revenus complémentaires possibles",
       "Image positive"
     ],
-    kpis: [
-      {
-        title: "Économie énergie",
-        value: "40%",
-        icon: Zap
-      },
-      {
-        title: "Production solaire",
-        value: "50kW",
-        icon: Sun
-      },
-      {
-        title: "Amortissement",
-        value: "8 ans",
-        icon: Clock
-      }
-    ],
+    kpis: {
+      yield: 0,
+      margin: 0,
+      workingTime: 0,
+      gesEmissions: 0,
+      lixiviation: 0,
+      n2oEmissions: 0,
+      soilQuality: 0,
+      organicMatter: 0,
+      biodiversity: 0
+    },
     steps: [
       "Audit énergétique",
       "Étude de faisabilité",
@@ -251,23 +221,17 @@ export const nonStrategicTransformations: TransformationData[] = [
       "Réduction du gaspillage",
       "Traçabilité améliorée"
     ],
-    kpis: [
-      {
-        title: "Productivité",
-        value: "+20%",
-        icon: TrendingUp
-      },
-      {
-        title: "Précision",
-        value: "95%",
-        icon: Target
-      },
-      {
-        title: "Données/jour",
-        value: "2.5GB",
-        icon: Cloud
-      }
-    ],
+    kpis: {
+      yield: 0,
+      margin: 0,
+      workingTime: 0,
+      gesEmissions: 0,
+      lixiviation: 0,
+      n2oEmissions: 0,
+      soilQuality: 0,
+      organicMatter: 0,
+      biodiversity: 0
+    },
     steps: [
       "Déployer les capteurs IoT",
       "Configurer la plateforme cloud",
@@ -368,10 +332,10 @@ export function Transformation() {
                     <div className="flex items-center gap-6">
                       <div className="text-right">
                         <p className="text-2xl font-bold text-primary">
-                          {transform.kpis[0].value}
+                          {transform.kpis.margin} €/ha
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {transform.kpis[0].title}
+                          Marge semi-nette
                         </p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -409,10 +373,10 @@ export function Transformation() {
                     <div className="flex items-center gap-6">
                       <div className="text-right">
                         <p className="text-2xl font-bold text-primary">
-                          {transform.kpis[0].value}
+                          {transform.kpis.margin} €/ha
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {transform.kpis[0].title}
+                          Marge semi-nette
                         </p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />

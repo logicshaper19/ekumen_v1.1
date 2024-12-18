@@ -2,14 +2,15 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import { transformations } from './Transformation';
+import { ArrowLeft, ChevronRight, ArrowRight, TrendingUp, Clock, Leaf, Sprout } from 'lucide-react';
+import { strategicTransformations, nonStrategicTransformations } from './Transformation';
 
 export function TransformationDetails() {
-  const { id } = useParams();
+  const params = useParams();
   const navigate = useNavigate();
   
-  const transformation = transformations.find(t => t.id === Number(id));
+  const id = Number(params.id);
+  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === id);
   
   if (!transformation) {
     return <div>Transformation non trouvée</div>;
@@ -42,7 +43,7 @@ export function TransformationDetails() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
-                {transformation.benefits.map((benefit, index) => (
+                {transformation.benefits.map((benefit: string, index: number) => (
                   <li key={index} className="flex items-start gap-2">
                     <ChevronRight className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                     <span>{benefit}</span>
@@ -58,18 +59,88 @@ export function TransformationDetails() {
               <CardTitle>Indicateurs clés</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4">
-                {transformation.kpis.map((kpi, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <kpi.icon className="h-5 w-5 text-primary" />
+              <div className="space-y-6">
+                {/* Economic Performance */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/10 rounded-lg">
+                      <TrendingUp className="h-4 w-4 text-primary" />
                     </div>
-                    <div>
-                      <div className="font-medium">{kpi.title}</div>
-                      <div className="text-2xl font-bold">{kpi.value}</div>
+                    Performance économique
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Rendement</span>
+                      <span className="font-medium">+{transformation.kpis.yield}%</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Marge semi-nette</span>
+                      <span className="font-medium">{transformation.kpis.margin} €/ha</span>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Working Time */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/10 rounded-lg">
+                      <Clock className="h-4 w-4 text-primary" />
+                    </div>
+                    Temps de travail
+                  </h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Heures/ha</span>
+                    <span className="font-medium">{transformation.kpis.workingTime} h/ha</span>
+                  </div>
+                </div>
+
+                {/* Environmental Impact */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/10 rounded-lg">
+                      <Leaf className="h-4 w-4 text-primary" />
+                    </div>
+                    Impact environnemental
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Émissions GES</span>
+                      <span className="font-medium">{transformation.kpis.gesEmissions} CO²e/ha</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Lixiviation</span>
+                      <span className="font-medium">{transformation.kpis.lixiviation} kg N/ha</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Émissions N₂O</span>
+                      <span className="font-medium">{transformation.kpis.n2oEmissions} kg N₂O/ha</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Soil Quality */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/10 rounded-lg">
+                      <Sprout className="h-4 w-4 text-primary" />
+                    </div>
+                    Qualité du sol
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Indice de qualité</span>
+                      <span className="font-medium">{transformation.kpis.soilQuality}/10</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Matière organique</span>
+                      <span className="font-medium">{transformation.kpis.organicMatter}%</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Biodiversité</span>
+                      <span className="font-medium">{transformation.kpis.biodiversity}/100</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -79,32 +150,26 @@ export function TransformationDetails() {
         <Card>
           <CardHeader>
             <CardTitle>Étapes de mise en œuvre</CardTitle>
+            <p className="text-muted-foreground">
+              La transition vers {transformation.title.toLowerCase()} nécessite une approche structurée. 
+              Voici les étapes clés pour assurer une mise en œuvre réussie de cette transformation.
+            </p>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {transformation.steps.map((step, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-sm shrink-0 mt-0.5">
+            <div className="grid gap-4">
+              {transformation.steps.map((step: string, index: number) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium">
                     {index + 1}
                   </div>
-                  <span>{step}</span>
+                  <div className="flex-1 pt-1">
+                    <p className="font-medium">{step}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
-
-        {/* Explore Button */}
-        <div className="flex justify-end">
-          <Button 
-            size="lg"
-            onClick={() => navigate(`/transformation/${transformation.id}/explore`)}
-            className="gap-2"
-          >
-            Explorer cette transformation
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </div>
       </div>
     </div>
   );

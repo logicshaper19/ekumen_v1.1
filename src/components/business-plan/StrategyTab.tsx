@@ -94,27 +94,33 @@ export function StrategyTab() {
 
   return (
     <div className="space-y-6">
+      <p className="text-muted-foreground">
+        Définissez et suivez vos objectifs stratégiques pour transformer votre exploitation et améliorer sa performance globale.
+      </p>
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
           title="Objectifs Atteints"
           value="75%"
-          subtitle="8 sur 12 objectifs"
-          change={{ value: "+25%", trend: "up" }}
+          description="8 sur 12 objectifs"
+          change="+25%"
+          trend="up"
           icon={Target}
         />
         <AnalyticsCard
           title="Impact Environnemental"
           value="-30%"
-          subtitle="Réduction des intrants"
-          change={{ value: "-10%", trend: "down" }}
+          description="Réduction des intrants"
+          change="-10%"
+          trend="down"
           icon={Leaf}
         />
         <AnalyticsCard
           title="Innovations"
           value="5"
-          subtitle="Nouvelles technologies"
-          change={{ value: "+2", trend: "up" }}
+          description="Nouvelles technologies"
+          change="+2"
+          trend="up"
           icon={Lightbulb}
         />
       </div>

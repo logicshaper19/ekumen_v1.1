@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, TrendingUp, ShieldAlert, Target, ArrowUpRight } from 'lucide-react';
+import { AlertTriangle, TrendingUp, ShieldAlert, Target, ArrowUpRight, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { AnalyticsCard } from '@/components/ui/analytics-card';
@@ -86,28 +86,34 @@ export function RisksAndOpportunities() {
 
   return (
     <div className="space-y-6">
+      <p className="text-muted-foreground">
+        Identifiez et gérez les risques potentiels tout en saisissant les opportunités de développement pour votre exploitation.
+      </p>
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
-          title="Risques Identifiés"
-          value="6"
-          subtitle="Risques actifs"
-          change={{ value: "-2", trend: "down" }}
-          icon={ShieldAlert}
-        />
-        <AnalyticsCard
           title="Opportunités"
-          value="4"
-          subtitle="Opportunités actives"
-          change={{ value: "+1", trend: "up" }}
-          icon={ArrowUpRight}
+          value="12"
+          description="nouvelles opportunités"
+          change="+3"
+          trend="up"
+          icon={Target}
         />
         <AnalyticsCard
-          title="Actions Préventives"
+          title="Risques"
+          value="5"
+          description="risques identifiés"
+          change="-2"
+          trend="down"
+          icon={AlertTriangle}
+        />
+        <AnalyticsCard
+          title="Actions"
           value="8"
-          subtitle="Actions en cours"
-          change={{ value: "+3", trend: "up" }}
-          icon={Target}
+          description="en cours"
+          change="+4"
+          trend="up"
+          icon={Play}
         />
       </div>
 

@@ -35,11 +35,13 @@ export function OverviewTab({
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
           title="Messages"
           value={totalMessages.toString()}
           description={`${unreadMessages} messages non lus`}
+          change={unreadMessages > 0 ? `+${unreadMessages}%` : '0%'}
+          trend={unreadMessages > 0 ? 'up' : 'down'}
           icon={MessageSquare}
           onClick={onNavigateToMessages}
         />
@@ -47,6 +49,8 @@ export function OverviewTab({
           title="Partenaires"
           value={totalPartners.toString()}
           description="Partenaires actifs"
+          change={totalPartners > 0 ? `+${totalPartners}%` : '0%'}
+          trend={totalPartners > 0 ? 'up' : 'down'}
           icon={Users}
           onClick={onNavigateToPartners}
         />
@@ -54,6 +58,8 @@ export function OverviewTab({
           title="Dernière activité"
           value={recentActivity[0]?.timestamp ? formatTimestamp(recentActivity[0].timestamp) : '-'}
           description="Dernier message reçu"
+          change={recentActivity.length > 0 ? `+${recentActivity.length}%` : '0%'}
+          trend={recentActivity.length > 0 ? 'up' : 'down'}
           icon={Clock}
         />
       </div>

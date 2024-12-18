@@ -82,6 +82,9 @@ export function FinancialPlanTab() {
 
   return (
     <div className="space-y-6">
+      <p className="text-muted-foreground">
+        Planifiez et gérez vos investissements, suivez vos rendements et anticipez les besoins financiers de votre exploitation.
+      </p>
       <div className="flex justify-end">
         <Button 
           variant="outline" 
@@ -97,32 +100,26 @@ export function FinancialPlanTab() {
         <AnalyticsCard
           title="Surface Totale"
           value={`95 ha`}
-          subtitle="Surface exploitée"
+          description="Surface exploitée"
+          change="0"
+          trend="neutral"
           icon={ArrowUpDown}
-          change={{
-            value: 0,
-            trend: 'neutral'
-          }}
         />
         <AnalyticsCard
           title="Marge Brute"
           value={`119 k€`}
-          subtitle="Toutes cultures"
+          description="Toutes cultures"
+          change="3.5%"
+          trend="up"
           icon={Euro}
-          change={{
-            value: 3.5,
-            trend: 'up'
-          }}
         />
         <AnalyticsCard
           title="Charges de Structure"
           value={`127 k€`}
-          subtitle="Total annuel"
+          description="Total annuel"
+          change="2.8%"
+          trend="up"
           icon={Wallet}
-          change={{
-            value: 2.8,
-            trend: 'up'
-          }}
         />
       </div>
 

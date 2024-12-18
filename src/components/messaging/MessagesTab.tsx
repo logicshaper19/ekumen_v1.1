@@ -1,13 +1,12 @@
-import React from 'react';
 import { ChatList } from '../chat/ChatList';
-import { ChatThread } from '../chat/ChatThread';
-import { ChatThreadType, Message, ChatUser } from '@/types/chat';
+import { ChatThread as ChatThreadComponent } from '../chat/ChatThread';
+import { ChatThread, Message, ChatUser } from '@/types/chat';
 import { FileText } from 'lucide-react';
 
 interface MessagesTabProps {
-  threads: ChatThreadType[];
+  threads: ChatThread[];
   currentUser: ChatUser;
-  selectedThread: ChatThreadType | null;
+  selectedThread: ChatThread | null;
   messages: Message[];
   onThreadSelect: (threadId: string) => void;
   onSendMessage?: (content: string, threadId: string) => void;
@@ -25,7 +24,7 @@ export function MessagesTab({
   const validThreads = threads.filter(thread => 
     thread.participants && 
     thread.participants.length > 0 && 
-    thread.participants.every(p => p.name && p.id)
+    thread.participants.every((participant: ChatUser) => participant.name && participant.id)
   );
 
   return (
@@ -41,7 +40,7 @@ export function MessagesTab({
       <div className="flex-1 flex">
         <div className="flex-1 border-r border-gray-200">
           {selectedThread ? (
-            <ChatThread
+            <ChatThreadComponent
               thread={selectedThread}
               messages={messages}
               currentUser={currentUser}
@@ -58,7 +57,7 @@ export function MessagesTab({
             <h3 className="font-semibold text-lg mb-4">Documents échangés</h3>
             <div className="space-y-3">
               {messages
-                .filter(msg => msg.attachments?.length > 0)
+                .filter(msg => msg.attachments && msg.attachments.length > 0)
                 .map(msg => (
                   <div key={msg.id} className="bg-white rounded-lg p-3 shadow-sm">
                     <div className="text-sm text-gray-500 mb-2">
@@ -88,7 +87,7 @@ export function MessagesTab({
                             {attachment.name}
                           </div>
                           <div className="text-xs text-gray-500">
-                            {Math.round(attachment.size / 1024)}KB
+                            {attachment.size ? `${Math.round(attachment.size / 1024)}KB` : 'Unknown size'}
                           </div>
                         </div>
                       </a>

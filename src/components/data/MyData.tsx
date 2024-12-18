@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { 
-  Files, 
-  Upload, 
-  Share2, 
-  HardDrive, 
-  Download, 
-  FileText, 
-  FolderOpen, 
-  ExternalLink, 
-  CloudOff,
-  AlertCircle,
+import {
+  Files,
   Plus,
   Search,
   Check,
-  ChevronDown
+  ChevronDown,
+  Database,
+  Users,
+  Link,
+  ClipboardCheck,
+  AlertCircle,
+  Share2,
+  Upload,
+  HardDrive,
+  Download,
+  FileText,
+  FolderOpen,
+  ExternalLink,
+  CloudOff
 } from "lucide-react";
 import {
   Dialog,
@@ -252,31 +256,36 @@ export function MyData() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <AnalyticsCard
-          title="Documents par Catégorie"
+          title="Documents"
           value="28"
-          subtitle="12 ITK, 8 Analyses, 8 Autres"
+          description="12 ITK, 8 Analyses, 8 Autres"
+          change="+4"
+          trend="up"
           icon={Files}
         />
-
         <AnalyticsCard
-          title="Taux de Complétude"
+          title="Outils Intégrés"
+          value="4/5"
+          description="Systèmes connectés"
+          change="+1"
+          trend="up"
+          icon={Link}
+        />
+        <AnalyticsCard
+          title="Audits"
           value="95%"
-          subtitle="1 document manquant"
-          icon={Check}
+          description="Score de conformité"
+          change="+5%"
+          trend="up"
+          icon={ClipboardCheck}
         />
-
         <AnalyticsCard
-          title="Dernières Activités"
-          value="8"
-          subtitle="nouveaux documents ce mois"
-          icon={HardDrive}
-        />
-
-        <AnalyticsCard
-          title="Outils Connectés"
-          value="4/4"
-          subtitle="Tous les outils connectés"
-          icon={ExternalLink}
+          title="Documents Manquants"
+          value="2"
+          description="À compléter"
+          change="-1"
+          trend="down"
+          icon={AlertCircle}
         />
       </div>
 
