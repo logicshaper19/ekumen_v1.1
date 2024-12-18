@@ -44,7 +44,7 @@ export function PrivateDeclarations() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDeclarationClick = (id: string) => {
-    navigate(`/declarations/${id}/overview`);
+    navigate(`/declarations/${id}`);
   };
 
   const handleNewDeclaration = (declaration: {

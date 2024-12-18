@@ -384,7 +384,111 @@ const data: { [key: string]: RiskOpportunityData } = {
       { date: '2033', value: 7.5, probability: 65 }
     ],
     ctaLink: 'https://www.assurance.fr/actualites/nouveaux-produits/'
-  }
+  },
+  'market-opp-bio': {
+    id: 'market-opp-bio',
+    type: 'opportunity',
+    title: 'Marché Bio',
+    stakeholder: 'Consommateurs',
+    description: 'Forte demande croissante pour les produits biologiques',
+    impact: 'Augmentation des marges et diversification des revenus',
+    recommendations: [
+      'Étudier les certifications bio',
+      'Planifier la conversion progressive',
+      'Identifier les circuits de distribution'
+    ],
+    evolution: [
+      { date: '2024', value: 5, probability: 60 },
+      { date: '2025', value: 5.5, probability: 65 },
+      { date: '2026', value: 6, probability: 70 },
+      { date: '2027', value: 6.5, probability: 75 },
+      { date: '2028', value: 7, probability: 80 },
+      { date: '2029', value: 7.5, probability: 85 },
+      { date: '2030', value: 8, probability: 90 },
+      { date: '2031', value: 8.5, probability: 92 },
+      { date: '2032', value: 9, probability: 95 },
+      { date: '2033', value: 9.5, probability: 97 }
+    ],
+    ctaLink: 'https://www.agencebio.org'
+  },
+  'tech-opp-precision': {
+    id: 'tech-opp-precision',
+    type: 'opportunity',
+    title: 'Agriculture de Précision',
+    stakeholder: 'MaeLabs',
+    description: 'Optimisation des ressources grâce aux nouvelles technologies',
+    impact: 'Réduction des coûts et amélioration des rendements',
+    recommendations: [
+      'Former les équipes aux nouvelles technologies',
+      'Investir dans des outils connectés',
+      'Analyser les données collectées'
+    ],
+    evolution: [
+      { date: '2024', value: 4, probability: 50 },
+      { date: '2025', value: 4.5, probability: 55 },
+      { date: '2026', value: 5, probability: 60 },
+      { date: '2027', value: 5.5, probability: 65 },
+      { date: '2028', value: 6, probability: 70 },
+      { date: '2029', value: 6.5, probability: 75 },
+      { date: '2030', value: 7, probability: 80 },
+      { date: '2031', value: 7.5, probability: 85 },
+      { date: '2032', value: 8, probability: 90 },
+      { date: '2033', value: 8.5, probability: 95 }
+    ],
+    ctaLink: 'https://www.mae-labs.fr/precision-farming'
+  },
+  'local-opp-circuit': {
+    id: 'local-opp-circuit',
+    type: 'opportunity',
+    title: 'Circuits Courts',
+    stakeholder: 'Collectivités',
+    description: 'Développement de la vente directe et locale',
+    impact: 'Meilleure valorisation des produits',
+    recommendations: [
+      'Étudier la demande locale',
+      'Développer des partenariats',
+      'Adapter la production'
+    ],
+    evolution: [
+      { date: '2024', value: 3, probability: 40 },
+      { date: '2025', value: 3.5, probability: 45 },
+      { date: '2026', value: 4, probability: 50 },
+      { date: '2027', value: 4.5, probability: 55 },
+      { date: '2028', value: 5, probability: 60 },
+      { date: '2029', value: 5.5, probability: 65 },
+      { date: '2030', value: 6, probability: 70 },
+      { date: '2031', value: 6.5, probability: 75 },
+      { date: '2032', value: 7, probability: 80 },
+      { date: '2033', value: 7.5, probability: 85 }
+    ],
+    ctaLink: 'https://www.collectivites-locales.gouv.fr/circuits-courts'
+  },
+  'subsidy-opp-green': {
+    id: 'subsidy-opp-green',
+    type: 'opportunity',
+    title: 'Aides Écologiques',
+    stakeholder: 'État',
+    description: 'Subventions pour la transition écologique',
+    impact: 'Financement de la transition et réduction des coûts',
+    recommendations: [
+      'Identifier les aides disponibles',
+      'Préparer les dossiers de demande',
+      'Suivre les nouvelles mesures'
+    ],
+    evolution: [
+      { date: '2024', value: 6, probability: 70 },
+      { date: '2025', value: 6.5, probability: 75 },
+      { date: '2026', value: 7, probability: 80 },
+      { date: '2027', value: 7.5, probability: 85 },
+      { date: '2028', value: 8, probability: 90 },
+      { date: '2029', value: 8.5, probability: 92 },
+      { date: '2030', value: 9, probability: 95 },
+      { date: '2031', value: 9.5, probability: 97 },
+      { date: '2032', value: 10, probability: 98 },
+      { date: '2033', value: 10, probability: 99 }
+    ],
+    ctaLink: 'https://www.economie.gouv.fr/plan-de-relance/profils/entreprises/aides-transition-ecologique'
+  },
 };
 
 const CustomTooltip = ({ active, payload, label }: any) => {

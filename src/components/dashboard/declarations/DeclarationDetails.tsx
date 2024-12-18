@@ -1,17 +1,10 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon, Users, Building2, Mail, Phone, Loader2, Send } from 'lucide-react';
-import { FormLayout } from '@/components/ui/form-layout';
+import { ArrowLeft, Clock, AlertTriangle, CheckCircle2, InfoIcon, Users, Building2, Mail, Phone, Loader2, Send, HelpCircle, FileText, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ListTodo, HelpCircle } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ComplianceChart, TrendChart, DistributionChart } from '@/components/charts/DeclarationCharts';
+import { chartData, defaultChartData } from '@/data/declarationChartData';
 import {
   Dialog,
   DialogContent,
@@ -20,7 +13,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { DeclarationAnalytics } from './DeclarationAnalytics';
+import { Textarea } from "@/components/ui/textarea";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface CapturedInfo {
   label: string;
@@ -371,97 +370,142 @@ const declarations: Record<string, DeclarationData> = {
   },
   'certification-qualite': {
     id: 'certification-qualite',
-    title: 'Certification Qualité',
-    description: 'Déclaration des pratiques agricoles pour la certification qualité Carrefour',
+    title: "Certification Qualité",
+    description: "Déclaration des pratiques agricoles pour la certification qualité Carrefour",
     frequency: 'Annuel',
-    dueDate: '31 Décembre 2024',
-    progress: 0,
-    isRegulated: false,
+    dueDate: '31 Mars 2025',
+    progress: 45,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Certification Qualité Carrefour',
+        description: 'Standards de qualité pour les produits agricoles',
+        effectiveDate: '2024-01-01',
+        source: 'Carrefour'
+      }
+    },
     capturedInfo: [
       { label: 'Acheteur', value: 'Carrefour' },
-      { label: 'Type de certification', value: 'Qualité' }
+      { label: 'Type de certification', value: 'Qualité produit' },
+      { label: 'Fréquence', value: 'Annuel' }
     ],
     pendingInfo: [
-      { label: 'Documentation requise', description: 'Préparation des documents pour la certification' }
+      { label: 'Documentation des pratiques', description: 'Mise à jour des procédures' },
+      { label: 'Audit qualité', description: 'Préparation pour l\'audit annuel' }
     ],
     resolutionSteps: [
       {
-        title: 'Audit initial',
-        description: 'Préparation et réalisation de l\'audit de certification',
-        dueDate: '2024-11-30',
+        title: 'Préparation documentation',
+        description: 'Rassembler tous les documents requis',
+        dueDate: '2025-02-15',
         priority: 'Important'
+      },
+      {
+        title: 'Audit interne',
+        description: 'Réaliser un audit interne préparatoire',
+        dueDate: '2025-03-01',
+        priority: 'Urgent'
       }
     ]
   },
   'certification-agriculture-durable': {
     id: 'certification-agriculture-durable',
-    title: 'Certification Agriculture Durable',
-    description: 'Documentation des pratiques durables pour l\'assurance agricole',
+    title: "Certification Agriculture Durable",
+    description: "Documentation des pratiques durables pour l'assurance agricole",
     frequency: 'Annuel',
-    dueDate: '31 Décembre 2024',
-    progress: 0,
-    isRegulated: false,
+    dueDate: '30 Juin 2025',
+    progress: 20,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Standards Agriculture Durable',
+        description: 'Critères de durabilité pour l\'assurance agricole',
+        effectiveDate: '2024-01-01',
+        source: 'Groupama'
+      }
+    },
     capturedInfo: [
       { label: 'Assureur', value: 'Groupama' },
-      { label: 'Type de certification', value: 'Agriculture Durable' }
+      { label: 'Type de certification', value: 'Agriculture durable' },
+      { label: 'Fréquence', value: 'Annuel' }
     ],
     pendingInfo: [
-      { label: 'Évaluation', description: 'Évaluation des pratiques agricoles durables' }
+      { label: 'Évaluation des pratiques', description: 'Analyse des pratiques durables' }
     ],
     resolutionSteps: [
       {
-        title: 'Documentation',
-        description: 'Compilation des preuves de pratiques durables',
-        dueDate: '2024-11-30',
+        title: 'Évaluation initiale',
+        description: 'Évaluer les pratiques actuelles',
+        dueDate: '2025-04-15',
         priority: 'Normal'
       }
     ]
   },
   'label-rouge': {
     id: 'label-rouge',
-    title: 'Label Rouge',
-    description: 'Certification pour le Label Rouge - qualité supérieure',
+    title: "Label Rouge",
+    description: "Certification pour le Label Rouge - qualité supérieure",
     frequency: 'Annuel',
-    dueDate: '31 Décembre 2024',
+    dueDate: '30 Septembre 2025',
     progress: 0,
-    isRegulated: false,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Cahier des charges Label Rouge',
+        description: 'Exigences pour la certification Label Rouge',
+        effectiveDate: '2024-01-01',
+        source: 'INAO'
+      }
+    },
     capturedInfo: [
       { label: 'Organisme', value: 'Label Rouge' },
-      { label: 'Type de label', value: 'Qualité Supérieure' }
+      { label: 'Type de certification', value: 'Qualité supérieure' },
+      { label: 'Fréquence', value: 'Annuel' }
     ],
     pendingInfo: [
-      { label: 'Cahier des charges', description: 'Vérification de la conformité au cahier des charges' }
+      { label: 'Cahier des charges', description: 'Étude du cahier des charges' },
+      { label: 'Plan de contrôle', description: 'Élaboration du plan de contrôle' }
     ],
     resolutionSteps: [
       {
-        title: 'Audit de conformité',
-        description: 'Vérification des critères Label Rouge',
-        dueDate: '2024-11-30',
+        title: 'Analyse des exigences',
+        description: 'Étudier les exigences Label Rouge',
+        dueDate: '2025-07-01',
         priority: 'Important'
       }
     ]
   },
   'certification-bio': {
     id: 'certification-bio',
-    title: 'Certification Bio',
-    description: 'Documentation pour la certification agriculture biologique',
+    title: "Certification Bio",
+    description: "Documentation pour la certification agriculture biologique",
     frequency: 'Annuel',
-    dueDate: '31 Décembre 2024',
-    progress: 0,
-    isRegulated: false,
+    dueDate: '31 Octobre 2025',
+    progress: 10,
+    isRegulated: true,
+    regulationInfo: {
+      currentRegulation: {
+        title: 'Réglementation Bio UE',
+        description: 'Règlement européen sur l\'agriculture biologique',
+        effectiveDate: '2024-01-01',
+        source: 'Union Européenne'
+      }
+    },
     capturedInfo: [
       { label: 'Distributeur', value: 'Biocoop' },
-      { label: 'Type de certification', value: 'Agriculture Biologique' }
+      { label: 'Type de certification', value: 'Agriculture biologique' },
+      { label: 'Fréquence', value: 'Annuel' }
     ],
     pendingInfo: [
-      { label: 'Conversion', description: 'Suivi du processus de conversion bio' }
+      { label: 'Plan de conversion', description: 'Élaboration du plan de conversion' },
+      { label: 'Contrôle initial', description: 'Préparation au contrôle initial' }
     ],
     resolutionSteps: [
       {
-        title: 'Audit bio',
-        description: 'Préparation à l\'audit de certification bio',
-        dueDate: '2024-11-30',
-        priority: 'Important'
+        title: 'Plan de conversion',
+        description: 'Élaborer le plan de conversion bio',
+        dueDate: '2025-08-15',
+        priority: 'Urgent'
       }
     ]
   },
@@ -470,23 +514,39 @@ const declarations: Record<string, DeclarationData> = {
 export function DeclarationDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  console.log('Declaration ID:', id);
-  const declaration = id ? declarations[id] : null;
-  console.log('Found declaration:', declaration);
-
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedHelper, setSelectedHelper] = React.useState<'chambre' | 'ekumen' | null>(null);
+  const [helpDialogOpen, setHelpDialogOpen] = React.useState(false);
+  const [selectedHelper, setSelectedHelper] = React.useState<string | null>(null);
   const [message, setMessage] = React.useState('');
-  const [sending, setSending] = React.useState(false);
-  const [isSent, setIsSent] = React.useState(false);
+
+  const helpers = [
+    { id: 'chambre', name: 'Chambre d\'Agriculture', icon: Building2 },
+    { id: 'bank', name: 'Ekumen Bank', icon: Building },
+    { id: 'coop', name: 'Coopérative', icon: Users },
+  ];
 
   const handleBack = () => {
     navigate('/reglementations');
   };
 
+  const handleHelperSelect = (helperId: string) => {
+    setSelectedHelper(helperId);
+    setHelpDialogOpen(true);
+  };
+
+  const handleSendMessage = () => {
+    // Here we would handle sending the message
+    console.log('Sending message to:', selectedHelper);
+    console.log('Message:', message);
+    setHelpDialogOpen(false);
+    setMessage('');
+    setSelectedHelper(null);
+  };
+
+  const declaration = id ? declarations[id] : null;
+
   if (!declaration) {
     return (
-      <div className="p-8">
+      <div className="container mx-auto py-6">
         <Button 
           variant="ghost" 
           className="mb-4"
@@ -502,364 +562,248 @@ export function DeclarationDetails() {
     );
   }
 
-  const handleHelperSelect = (helper: 'chambre' | 'ekumen') => {
-    setSelectedHelper(helper);
-    setDialogOpen(true);
-    setMessage('');
-    setIsSent(false);
-  };
-
-  const handleSendMessage = async () => {
-    if (!message.trim()) return;
-    
-    setSending(true);
-    // Simulate sending message
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setSending(false);
-    setIsSent(true);
-    
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setDialogOpen(false);
-      setMessage('');
-      setIsSent(false);
-    }, 3000);
-  };
-
-  const renderHelpButton = () => {
-    return (
-      <>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button 
-              variant="default"
-              className="bg-teal-700 text-white hover:bg-teal-800"
-            >
-              <HelpCircle className="w-4 h-4 mr-2" />
-              Obtenir de l'aide
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => handleHelperSelect('chambre')}>
-              <Building2 className="mr-2 h-4 w-4" />
-              <span>Chambre d'agriculture</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleHelperSelect('ekumen')}>
-              <Users className="mr-2 h-4 w-4" />
-              <span>Équipe Ekumen</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Dialog open={dialogOpen} onOpenChange={(open) => {
-          if (!open) {
-            setMessage('');
-            setIsSent(false);
-          }
-          setDialogOpen(open);
-        }}>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>
-                {selectedHelper === 'chambre' ? 'Chambre d\'agriculture' : 'Équipe Ekumen'}
-              </DialogTitle>
-              <DialogDescription>
-                {selectedHelper === 'chambre' ? (
-                  <div className="space-y-4">
-                    <p>La Chambre d'agriculture vous accompagne dans vos démarches administratives et réglementaires.</p>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4" />
-                      <span>01 23 45 67 89</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
-                      <span>contact@chambre-agriculture.fr</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <p>Notre équipe technique est là pour vous aider avec l'utilisation de la plateforme et répondre à vos questions.</p>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4" />
-                      <span>01 98 76 54 32</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
-                      <span>support@ekumen.fr</span>
-                    </div>
-                  </div>
-                )}
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="mt-4 space-y-4">
-              <div>
-                <h4 className="mb-2 text-sm font-medium">Votre message</h4>
-                <Textarea
-                  placeholder={`Décrivez votre question concernant ${declaration.title}...`}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="min-h-[100px]"
-                  disabled={sending || isSent}
-                />
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button
-                onClick={handleSendMessage}
-                disabled={!message.trim() || sending || isSent}
-                className={`w-full ${isSent ? 'bg-green-600 hover:bg-green-700' : 'bg-teal-700 hover:bg-teal-800'}`}
-              >
-                {sending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Envoi en cours...
-                  </>
-                ) : isSent ? (
-                  <>
-                    <CheckCircle2 className="mr-2 h-4 w-4" />
-                    Message envoyé !
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Envoyer
-                  </>
-                )}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </>
-    );
-  };
-
-  const renderRegulationInfo = () => {
-    if (!declaration.regulationInfo) return null;
-
-    return (
-      <div className="space-y-8">
-        <div className="flex items-center gap-2 text-orange-600">
-          <InfoIcon className="h-5 w-5" />
-          <h2 className="text-lg font-medium">Réglementation</h2>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8">
-          {/* Current Regulation */}
-          <div className="space-y-2">
-            <h3 className="text-lg font-medium">Réglementation Actuelle</h3>
-            <h4 className="text-base font-medium">{declaration.regulationInfo.currentRegulation.title}</h4>
-            <p className="text-gray-600">{declaration.regulationInfo.currentRegulation.description}</p>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Clock className="h-4 w-4" />
-              <span>En vigueur depuis le {declaration.regulationInfo.currentRegulation.effectiveDate}</span>
-            </div>
-            {declaration.regulationInfo.currentRegulation.source && (
-              <p className="text-sm text-gray-500">
-                Source: {declaration.regulationInfo.currentRegulation.source}
-              </p>
-            )}
-          </div>
-
-          {/* Upcoming Regulation */}
-          {declaration.regulationInfo.upcomingRegulation && (
-            <div className="space-y-2 bg-orange-50/50 p-6 rounded-lg">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Évolution de la Réglementation</h3>
-                <span className="text-sm text-orange-600">
-                  (À partir du {declaration.regulationInfo.upcomingRegulation.effectiveDate})
-                </span>
-              </div>
-              <h4 className="text-base font-medium">{declaration.regulationInfo.upcomingRegulation.title}</h4>
-              <p className="text-gray-600">{declaration.regulationInfo.upcomingRegulation.description}</p>
-
-              {declaration.regulationInfo.upcomingRegulation.changes && (
-                <div className="mt-4">
-                  <h4 className="font-medium mb-2">Principaux changements:</h4>
-                  <ul className="space-y-2 text-gray-600">
-                    {declaration.regulationInfo.upcomingRegulation.changes.map((change, index) => (
-                      <li key={index} className="flex gap-2">
-                        <span>•</span>
-                        <span>{change}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {declaration.regulationInfo.upcomingRegulation.source && (
-                <p className="text-sm text-gray-500">
-                  Source: {declaration.regulationInfo.upcomingRegulation.source}
-                </p>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const calculateDaysLeft = (steps: ResolutionStep[]) => {
-    if (steps.length === 0) return 30;
-    const lastDueDate = new Date(steps[steps.length - 1].dueDate);
-    const today = new Date();
-    const diffTime = Math.abs(lastDueDate.getTime() - today.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
-
-  const completedSteps = declaration.resolutionSteps.filter(
-    () => declaration.progress >= 100
-  ).length;
+  const charts = chartData[id as keyof typeof chartData] || defaultChartData;
 
   return (
-    <div className="p-8">
-      <Button 
-        variant="ghost" 
-        className="mb-4"
-        onClick={handleBack}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Retour aux réglementations
-      </Button>
-      <DeclarationAnalytics
-        progress={declaration.progress}
-        daysLeft={calculateDaysLeft(declaration.resolutionSteps)}
-        totalSteps={declaration.resolutionSteps.length}
-        completedSteps={completedSteps}
-        pendingItems={declaration.pendingInfo.length}
-      />
-
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">{declaration.title}</h1>
-        {declaration.isRegulated && (
-          <span className="inline-flex px-3 py-1 rounded-full text-orange-600 bg-orange-100/80 text-sm">
-            Réglementation évolutive
-          </span>
-        )}
+    <div className="container mx-auto py-6 space-y-6">
+      <div className="flex items-center gap-4 mb-6">
+        <Button 
+          variant="ghost" 
+          onClick={handleBack}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Retour aux réglementaires
+        </Button>
       </div>
-      <p className="mt-2 text-gray-600">{declaration.description}</p>
 
-      {declaration.isRegulated ? (
-        <div className="space-y-6">
-          <FormLayout
-            progress={declaration.progress}
-            capturedInfo={declaration.capturedInfo}
-            pendingInfo={declaration.pendingInfo}
-          />
-          <Card>
-            <CardHeader>
-              <CardTitle>Plan de Résolution</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {declaration.resolutionSteps.map((step, index) => (
-                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-gray-900">{step.title}</h4>
-                      <p className="mt-1 text-sm text-gray-600">{step.description}</p>
-                      <div className="flex items-center gap-4 mt-2">
-                        <div className="flex items-center gap-1 text-sm text-gray-500">
-                          <Clock className="w-4 h-4" />
-                          <span>Échéance: {step.dueDate}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {step.priority === 'Urgent' && (
-                            <AlertTriangle className="w-4 h-4 text-red-500" />
-                          )}
-                          {step.priority === 'Important' && (
-                            <AlertTriangle className="w-4 h-4 text-orange-500" />
-                          )}
-                          {step.priority === 'Normal' && (
-                            <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                          )}
-                          <span className="text-sm text-gray-500">{step.priority}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      {renderHelpButton()}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
-                        onClick={() => {}}
-                      >
-                        <ListTodo className="w-4 h-4 mr-2" />
-                        Ajouter à mes tâches
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+      <h1 className="text-2xl font-bold mb-6">{declaration.title}</h1>
+
+      {/* Top row: Description and Summary side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Description</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600">{declaration.description}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Notes de synthèse</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600 mb-2">Points clés à retenir:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+              {declaration.capturedInfo.map((info, index) => (
+                <li key={index}>{info.label}: {info.value}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>État de Conformité</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ComplianceChart data={charts.compliance} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Évolution Mensuelle</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TrendChart data={charts.usage || charts.monthly} />
+          </CardContent>
+        </Card>
+        <Card className="md:col-span-2 bg-[#F5F5F0]">
+          <CardHeader>
+            <CardTitle>Répartition par Type</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DistributionChart data={charts.distribution} />
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Evolution and Risks side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Évolutions et changements</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {declaration.regulationInfo?.currentRegulation && (
+              <div className="space-y-2">
+                <h3 className="font-medium">{declaration.regulationInfo.currentRegulation.title}</h3>
+                <p className="text-gray-600">{declaration.regulationInfo.currentRegulation.description}</p>
+                {declaration.regulationInfo.currentRegulation.changes && (
+                  <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                    {declaration.regulationInfo.currentRegulation.changes.map((change, index) => (
+                      <li key={index}>{change}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            </CardContent>
-          </Card>
-          {renderRegulationInfo()}
-          <div className="flex justify-end gap-4 mt-8">
-            {renderHelpButton()}
-          </div>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          <FormLayout
-            progress={declaration.progress}
-            capturedInfo={declaration.capturedInfo}
-            pendingInfo={declaration.pendingInfo}
-          />
-          <Card>
-            <CardHeader>
-              <CardTitle>Plan de Résolution</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {declaration.resolutionSteps.map((step, index) => (
-                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-gray-900">{step.title}</h4>
-                      <p className="mt-1 text-sm text-gray-600">{step.description}</p>
-                      <div className="flex items-center gap-4 mt-2">
-                        <div className="flex items-center gap-1 text-sm text-gray-500">
-                          <Clock className="w-4 h-4" />
-                          <span>Échéance: {step.dueDate}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {step.priority === 'Urgent' && (
-                            <AlertTriangle className="w-4 h-4 text-red-500" />
-                          )}
-                          {step.priority === 'Important' && (
-                            <AlertTriangle className="w-4 h-4 text-orange-500" />
-                          )}
-                          {step.priority === 'Normal' && (
-                            <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                          )}
-                          <span className="text-sm text-gray-500">{step.priority}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      {renderHelpButton()}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-white text-gray-900 border-gray-200 hover:bg-gray-50"
-                        onClick={() => {}}
-                      >
-                        <ListTodo className="w-4 h-4 mr-2" />
-                        Ajouter à mes tâches
-                      </Button>
-                    </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="bg-red-50">
+          <CardHeader>
+            <CardTitle className="text-red-800">Risques pour mon exploitation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {declaration.resolutionSteps.map((step, index) => (
+                <div key={index} className="flex items-start gap-2">
+                  {step.priority === 'Urgent' ? (
+                    <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  ) : step.priority === 'Important' ? (
+                    <InfoIcon className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <Clock className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                  )}
+                  <div>
+                    <h4 className="font-medium">{step.title}</h4>
+                    <p className="text-sm text-gray-600">{step.description}</p>
+                    <p className="text-sm text-gray-500">Échéance: {step.dueDate}</p>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-          {declaration.isRegulated && (
-            <div className="flex justify-end mt-8">
-              {renderHelpButton()}
+                </div>
+              ))}
             </div>
-          )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Action Section */}
+      <div className="grid grid-cols-2 gap-6">
+        <div className="text-center p-6 bg-gray-50 rounded-lg">
+          <div className="mb-2">
+            <HelpCircle className="w-8 h-8 mx-auto text-teal-600 mb-2" />
+            <h3 className="text-lg font-medium">Besoin d'aide?</h3>
+            <p className="text-sm text-gray-600 mb-4">Obtenez de l'aide d'un conseiller expert</p>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="outline" 
+                className="w-full bg-white hover:bg-teal-700 hover:text-white transition-colors"
+              >
+                Besoin d'aide
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[240px]">
+              {helpers.map((helper) => (
+                <DropdownMenuItem 
+                  key={helper.id} 
+                  onClick={() => handleHelperSelect(helper.id)}
+                  className="flex items-center py-2"
+                >
+                  <helper.icon className="mr-2 h-4 w-4" />
+                  <span>{helper.name}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-      )}
+
+        <div className="text-center p-6 bg-gray-50 rounded-lg">
+          <div className="mb-2">
+            <FileText className="w-8 h-8 mx-auto text-teal-600 mb-2" />
+            <h3 className="text-lg font-medium">Remplir un formulaire?</h3>
+            <p className="text-sm text-gray-600 mb-4">Accédez au formulaire détaillé et à l'aide au remplissage</p>
+          </div>
+          <Button 
+            variant="outline"
+            onClick={() => navigate(`/declarations/${id}/form`)}
+            className="w-full bg-white hover:bg-teal-700 hover:text-white transition-colors"
+          >
+            Accéder au formulaire
+          </Button>
+        </div>
+      </div>
+
+      {/* Help Dialog */}
+      <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedHelper === 'chambre' ? 'Chambre d\'agriculture' : 
+               selectedHelper === 'bank' ? 'Ekumen Bank' : 'Coopérative'}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedHelper === 'chambre' ? (
+                <div className="space-y-4">
+                  <p>La Chambre d'agriculture vous accompagne dans vos démarches administratives et réglementaires.</p>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span>01 23 45 67 89</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span>contact@chambre-agriculture.fr</span>
+                  </div>
+                </div>
+              ) : selectedHelper === 'bank' ? (
+                <div className="space-y-4">
+                  <p>Notre équipe de conseillers financiers est là pour vous accompagner dans vos projets.</p>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span>01 98 76 54 32</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span>contact@ekumen-bank.fr</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <p>Votre coopérative vous accompagne au quotidien dans vos activités.</p>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span>01 45 67 89 10</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span>contact@cooperative.fr</span>
+                  </div>
+                </div>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="mt-4 space-y-4">
+            <div>
+              <h4 className="mb-2 text-sm font-medium">Votre message</h4>
+              <Textarea
+                placeholder={`Décrivez votre question concernant ${declaration.title}...`}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="min-h-[100px]"
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              onClick={handleSendMessage}
+              disabled={!message.trim()}
+              className="w-full bg-teal-700 hover:bg-teal-800 text-white"
+            >
+              <Send className="w-4 h-4 mr-2" />
+              Envoyer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

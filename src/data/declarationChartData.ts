@@ -353,6 +353,35 @@ export const chartData = {
   }
 };
 
+// Default chart data for any declaration type
+export const defaultChartData = {
+  compliance: [
+    { name: 'Conforme', value: 75 },
+    { name: 'En cours', value: 20 },
+    { name: 'Non conforme', value: 5 }
+  ],
+  monthly: [
+    { name: 'Jan', value: 30 },
+    { name: 'Fév', value: 35 },
+    { name: 'Mar', value: 40 },
+    { name: 'Avr', value: 45 },
+    { name: 'Mai', value: 50 },
+    { name: 'Juin', value: 55 },
+    { name: 'Juil', value: 60 },
+    { name: 'Août', value: 65 },
+    { name: 'Sept', value: 70 },
+    { name: 'Oct', value: 75 },
+    { name: 'Nov', value: 80 },
+    { name: 'Déc', value: 85 }
+  ],
+  distribution: [
+    { name: 'Type A', value: 35 },
+    { name: 'Type B', value: 25 },
+    { name: 'Type C', value: 20 },
+    { name: 'Type D', value: 20 }
+  ]
+};
+
 // Public Declarations Chart Data
 export const publicDeclarationCharts = {
   submissionStatus: [
