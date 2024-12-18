@@ -281,12 +281,6 @@ export const nonStrategicTransformations: TransformationData[] = [
 // Farm-wide KPIs
 const farmKPIs = [
   {
-    title: "Mise en œuvre",
-    value: "2-3 ans",
-    icon: Clock,
-    description: "Pour une transformation complète"
-  },
-  {
     title: "Rendement",
     value: "+12%",
     icon: TrendingUp,
@@ -320,7 +314,7 @@ export function Transformation() {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {farmKPIs.map((kpi, i) => (
           <Card key={i} className="bg-[#F5F5F0]">
             <CardContent className="pt-6">

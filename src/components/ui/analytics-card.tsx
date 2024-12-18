@@ -13,6 +13,7 @@ interface AnalyticsCardProps {
   };
   icon: React.ElementType;
   className?: string;
+  crossedOut?: boolean;
 }
 
 export function AnalyticsCard({
@@ -21,8 +22,13 @@ export function AnalyticsCard({
   subtitle,
   change,
   icon: Icon,
-  className
+  className,
+  crossedOut = false
 }: AnalyticsCardProps) {
+  if (crossedOut) {
+    return null;
+  }
+
   return (
     <Card className={cn("bg-[#F5F5F0]", className)}>
       <CardContent className="pt-6">
