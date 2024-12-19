@@ -4,6 +4,7 @@ import { Hero } from './components/landing/Hero';
 import { Benefits } from './components/landing/Benefits';
 import { HowItWorks } from './components/landing/HowItWorks';
 import { UseCases } from './pages/UseCases';
+import { Results } from './pages/Results';
 import { Signup } from './components/Signup';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { Messagerie } from './components/dashboard/Messagerie';
@@ -29,15 +30,17 @@ import { DiscussionDetails } from './components/dashboard/DiscussionDetails';
 import { TableauDeBord } from './pages/TableauDeBord';
 import { Reglementations } from './pages/Reglementations';
 import { Declarations } from './components/dashboard/Declarations';
+import { Equipe } from './pages/Equipe';
 
 function App() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   
-  // Only consider landing page as public route
-  const isPublicRoute = location.pathname === '/';
+  // Public routes that don't require authentication
+  const publicPaths = ['/', '/use-cases', '/results', '/equipe'];
+  const isPublicRoute = publicPaths.includes(location.pathname);
 
-  // If on landing page, show landing layout
+  // If on public route, show landing layout
   if (isPublicRoute) {
     return (
       <div className="min-h-screen bg-white">
@@ -46,13 +49,26 @@ function App() {
           <Route path="/" element={
             <>
               <Hero />
-              <HowItWorks />
               <Benefits />
+              <HowItWorks />
             </>
           } />
           <Route path="/use-cases" element={<UseCases />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/equipe" element={<Equipe />} />
         </Routes>
       </div>
+    );
+  }
+
+  // Auth routes
+  if (['/login', '/signup', '/auth/signup-flow'].includes(location.pathname)) {
+    return (
+      <Routes>
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/tableau-de-bord" />} />
+        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/tableau-de-bord" />} />
+        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/tableau-de-bord" />} />
+      </Routes>
     );
   }
 
@@ -60,10 +76,6 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
-        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/tableau-de-bord" />} />
-        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/tableau-de-bord" />} />
-        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/tableau-de-bord" />} />
-        
         {/* Protected Routes */}
         <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
           <Route index element={<Navigate to="/tableau-de-bord" replace />} />

@@ -21,14 +21,14 @@ const features = [
 
 export function HowItWorks() {
   return (
-    <div className="py-24 sm:py-32">
+    <section id="how-it-works" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-black">Comment ça marche</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Une solution complète pour votre exploitation
+          <h2 className="text-base font-semibold leading-7 text-[#004D40]">Comment ça marche</h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-[#004D40] sm:text-4xl">
+            Une approche simple et efficace
           </p>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-[#004D40]">
             Notre plateforme vous accompagne dans la gestion quotidienne de votre exploitation agricole.
           </p>
         </div>
@@ -41,14 +41,14 @@ export function HowItWorks() {
                   <div className="rounded-lg bg-gray-50 p-2 ring-1 ring-gray-900/10">
                     <Icon className="h-6 w-6 text-gray-600" />
                   </div>
-                  <dt className="mt-4 font-semibold text-gray-900">{feature.name}</dt>
-                  <dd className="mt-2 leading-7 text-gray-600">{feature.description}</dd>
+                  <dt className="mt-4 text-base font-semibold leading-7 text-[#004D40]">{feature.name}</dt>
+                  <dd className="mt-2 leading-7 text-[#004D40]">{feature.description}</dd>
                 </div>
               );
             })}
           </dl>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

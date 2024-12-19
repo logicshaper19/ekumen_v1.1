@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { LoginCredentials } from '../types/auth';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export function Login() {
   const { login } = useAuth();
@@ -16,35 +20,41 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-16 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col py-16 sm:px-6 lg:px-8">
+      {/* Logo */}
+      <div className="fixed top-8 left-8">
+        <Link to="/" className="flex items-center">
+          <span className="text-2xl font-bold text-[#004D40]">Ekumen</span>
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900">
+        <h2 className="text-center text-4xl font-bold tracking-tight text-[#004D40]">
           Bon retour sur Ekumen
         </h2>
-        <p className="mt-4 text-center text-lg text-gray-600">
+        <p className="mt-4 text-center text-lg text-[#004D40]/80">
           Accédez à votre tableau de bord
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-10 px-8 shadow-lg sm:rounded-xl">
-          {/* Email/Password Form */}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="email" className="text-[#004D40]">
                 Adresse Email
-              </label>
+              </Label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-5 w-5 text-[#004D40]/40" />
                 </div>
-                <input
+                <Input
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-black focus:border-black"
+                  className="pl-10 border-[#004D40]/20 focus:border-[#004D40] focus:ring-[#004D40]"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                 />
@@ -52,44 +62,42 @@ export function Login() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="password" className="text-[#004D40]">
                 Mot de passe
-              </label>
+              </Label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-[#004D40]/40" />
                 </div>
-                <input
+                <Input
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-black focus:border-black"
+                  className="pl-10 border-[#004D40]/20 focus:border-[#004D40] focus:ring-[#004D40]"
                   value={credentials.password}
                   onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                 />
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-black hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors"
-              >
-                Se Connecter
-              </button>
-            </div>
+            <Button
+              type="submit"
+              className="w-full bg-[#004D40] hover:bg-[#003D33] text-white transition-colors"
+            >
+              Se Connecter
+            </Button>
           </form>
 
           <div className="mt-6">
             <div className="relative">
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
+                <span className="px-2 bg-white text-[#004D40]/80">
                   Pas encore de compte ?{' '}
-                  <a href="/signup" className="font-medium text-black hover:text-black/80">
+                  <Link to="/signup" className="font-medium text-[#004D40] hover:text-[#003D33]">
                     S'inscrire
-                  </a>
+                  </Link>
                 </span>
               </div>
             </div>

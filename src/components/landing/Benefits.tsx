@@ -15,11 +15,11 @@ export function Benefits() {
     <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Les avantages de notre plateforme
+          <h2 className="text-3xl font-bold tracking-tight text-[#004D40] sm:text-4xl">
+            Pourquoi choisir notre solution ?
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Découvrez pourquoi des milliers d'agriculteurs nous font confiance pour la gestion de leur exploitation.
+          <p className="mt-6 text-lg leading-8 text-[#004D40]">
+            Notre plateforme vous accompagne dans l'optimisation de votre exploitation agricole.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
@@ -27,8 +27,8 @@ export function Benefits() {
             <ul role="list" className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
               {benefits.map((feature) => (
                 <li key={feature} className="flex gap-x-3">
-                  <Check className="h-6 w-5 flex-none text-black" />
-                  <span>{feature}</span>
+                  <Check className="h-6 w-5 flex-none text-[#004D40]" />
+                  <span className="text-[#004D40]">{feature}</span>
                 </li>
               ))}
             </ul>

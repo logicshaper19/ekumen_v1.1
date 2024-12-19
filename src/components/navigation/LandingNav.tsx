@@ -1,46 +1,88 @@
-import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { scrollToSection } from '../../utils/scroll';
 
 export function LandingNav() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, to: string) => {
+    e.preventDefault();
+    if (to.startsWith('#')) {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => scrollToSection(to.substring(1)), 100);
+      } else {
+        scrollToSection(to.substring(1));
+      }
+    } else {
+      navigate(to);
+    }
+  };
+
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
-      <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5 font-bold text-xl">
-            Ekumen
+    <header className="fixed w-full bg-white z-50 border-b border-gray-100">
+      <div className="max-w-[1440px] mx-auto">
+        <nav className="flex items-center justify-between px-8 py-4">
+          {/* Logo */}
+          <Link to="/" className="flex-shrink-0">
+            <span className="text-[22px] font-semibold text-[#004D40]">
+              Ekumen
+            </span>
           </Link>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-          </button>
-        </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          <Link to="#features" className="text-sm font-semibold leading-6 text-gray-900">
-            Fonctionnalités
-          </Link>
-          <Link to="#how-it-works" className="text-sm font-semibold leading-6 text-gray-900">
-            Comment ça marche
-          </Link>
-          <Link to="/use-cases" className="text-sm font-semibold leading-6 text-gray-900">
-            Cas d'Usage
-          </Link>
-          <Link to="#benefits" className="text-sm font-semibold leading-6 text-gray-900">
-            Avantages
-          </Link>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Button variant="outline" asChild>
-            <Link to="/login">Se connecter</Link>
-          </Button>
-          <Button asChild>
-            <Link to="/signup">S'inscrire</Link>
-          </Button>
-        </div>
-      </nav>
+
+          {/* Main Navigation */}
+          <div className="flex items-center gap-x-12">
+            <Link
+              to="/equipe"
+              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
+            >
+              Équipe
+            </Link>
+            <a
+              href="#how-it-works"
+              onClick={(e) => handleNavigation(e, '#how-it-works')}
+              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
+            >
+              Comment ça marche
+            </a>
+            <Link
+              to="/use-cases"
+              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
+            >
+              Cas d'Usage
+            </Link>
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="flex items-center gap-x-4">
+            <Link
+              to="/login"
+              className="inline-flex items-center text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors px-4 py-2 rounded-full border border-[#004D40] hover:bg-[#004D40] hover:text-white"
+            >
+              Connexion
+              <svg
+                className="ml-2 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
+            <Link
+              to="/signup"
+              className="inline-flex items-center text-[15px] font-medium text-white bg-[#004D40] hover:bg-[#003D33] transition-colors px-6 py-2 rounded-full"
+            >
+              S'inscrire
+            </Link>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
