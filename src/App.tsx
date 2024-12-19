@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Hero } from './components/landing/Hero';
 import { Benefits } from './components/landing/Benefits';
 import { HowItWorks } from './components/landing/HowItWorks';
+import { UseCases } from './pages/UseCases';
 import { Signup } from './components/Signup';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { Messagerie } from './components/dashboard/Messagerie';
@@ -49,6 +50,7 @@ function App() {
               <Benefits />
             </>
           } />
+          <Route path="/use-cases" element={<UseCases />} />
         </Routes>
       </div>
     );

@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   LayoutDashboard, 
-  Users, 
   TrendingUp, 
+  Users, 
   Factory, 
   Database,
   LogOut,
