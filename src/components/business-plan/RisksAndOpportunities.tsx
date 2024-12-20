@@ -9,71 +9,54 @@ interface RiskOpportunityItem {
   title: string;
   description: string;
   stakeholder: string;
+  source: 'Chambre d\'Agriculture Bretagne' | 'Crédit Agricole' | 'Groupama' | 'MaeLabs';
 }
 
 const risks: RiskOpportunityItem[] = [
   {
     id: 'maelab-risk-soil',
-    title: 'Dégradation des Sols',
-    description: 'Risque de perte de fertilité et de structure des sols due aux pratiques agricoles intensives',
-    stakeholder: 'MaeLabs'
+    title: 'Dégradation des sols',
+    description: 'Risque de perte de fertilité des sols dû aux pratiques intensives',
+    stakeholder: 'Exploitation',
+    source: 'Chambre d\'Agriculture Bretagne'
+  },
+  {
+    id: 'insurance-risk-coverage',
+    title: 'Changement climatique',
+    description: 'Impact des conditions météorologiques extrêmes sur les cultures',
+    stakeholder: 'Environnement',
+    source: 'Groupama'
   },
   {
     id: 'ca-risk-debt',
-    title: 'Endettement Excessif',
-    description: 'Risque de surendettement lié aux investissements matériels et fonciers',
-    stakeholder: 'Crédit Agricole'
-  },
-  {
-    id: 'accountant-risk-cash',
-    title: 'Trésorerie Tendue',
-    description: 'Difficultés de trésorerie saisonnières impactant la gestion quotidienne',
-    stakeholder: 'Comptable'
-  },
-  {
-    id: 'chamber-risk-compliance',
-    title: 'Non-Conformité Réglementaire',
-    description: 'Risque de non-respect des nouvelles normes environnementales',
-    stakeholder: 'Chambre d\'Agriculture'
-  },
-  {
-    id: 'coop-risk-quality',
-    title: 'Qualité des Produits',
-    description: 'Non-respect des standards de qualité requis par la coopérative',
-    stakeholder: 'Coopérative'
-  },
-  {
-    id: 'carrefour-risk-contract',
-    title: 'Exigences Contractuelles',
-    description: 'Difficultés à respecter les cahiers des charges stricts',
-    stakeholder: 'Carrefour'
+    title: 'Volatilité des prix',
+    description: 'Fluctuations importantes des prix des produits agricoles',
+    stakeholder: 'Marché',
+    source: 'Crédit Agricole'
   }
 ];
 
 const opportunities: RiskOpportunityItem[] = [
   {
-    id: 'market-opp-bio',
-    title: 'Marché Bio',
-    description: 'Forte demande croissante pour les produits biologiques',
-    stakeholder: 'Consommateurs'
+    id: 'maelab-opp-innovation',
+    title: 'Marché bio',
+    description: 'Forte croissance du marché des produits biologiques',
+    stakeholder: 'Marché',
+    source: 'MaeLabs'
   },
   {
-    id: 'tech-opp-precision',
-    title: 'Agriculture de Précision',
-    description: 'Optimisation des ressources grâce aux nouvelles technologies',
-    stakeholder: 'MaeLabs'
+    id: 'chamber-opp-tech',
+    title: 'Nouvelles technologies',
+    description: 'Opportunités d\'amélioration via l\'agriculture de précision',
+    stakeholder: 'Innovation',
+    source: 'Chambre d\'Agriculture Bretagne'
   },
   {
-    id: 'local-opp-circuit',
-    title: 'Circuits Courts',
-    description: 'Développement de la vente directe et locale',
-    stakeholder: 'Collectivités'
-  },
-  {
-    id: 'subsidy-opp-green',
-    title: 'Aides Écologiques',
-    description: 'Subventions pour la transition écologique',
-    stakeholder: 'État'
+    id: 'ca-opp-local',
+    title: 'Circuit court',
+    description: 'Développement des circuits de distribution locaux',
+    stakeholder: 'Distribution',
+    source: 'Crédit Agricole'
   }
 ];
 
@@ -86,58 +69,63 @@ export function RisksAndOpportunities() {
 
   return (
     <div className="space-y-6">
-      <p className="text-muted-foreground">
-        Identifiez et gérez les risques potentiels tout en saisissant les opportunités de développement pour votre exploitation.
-      </p>
-      {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
-          title="Opportunités"
-          value="12"
-          description="nouvelles opportunités"
-          change="+3"
+          title="Risques Identifiés"
+          value={risks.length.toString()}
+          description="risques majeurs"
+          change="+2"
           trend="up"
-          icon={Target}
-        />
-        <AnalyticsCard
-          title="Risques"
-          value="5"
-          description="risques identifiés"
-          change="-2"
-          trend="down"
           icon={AlertTriangle}
         />
+
         <AnalyticsCard
-          title="Actions"
-          value="8"
-          description="en cours"
-          change="+4"
+          title="Opportunités"
+          value={opportunities.length.toString()}
+          description="opportunités identifiées"
+          change="+1"
           trend="up"
-          icon={Play}
+          icon={TrendingUp}
+        />
+
+        <AnalyticsCard
+          title="Score de Résilience"
+          value="72%"
+          description="capacité d'adaptation"
+          change="+5%"
+          trend="up"
+          icon={ShieldAlert}
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-lg font-medium">
-              Risques Identifiés
-            </CardTitle>
-            <AlertTriangle className="h-4 w-4 text-red-500" />
+          <CardHeader>
+            <CardTitle>Risques Majeurs</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {risks.map((risk) => (
-                <div 
+                <div
                   key={risk.id}
+                  className="flex items-center justify-between p-4 bg-background rounded-lg border cursor-pointer hover:bg-accent hover:text-accent-foreground"
                   onClick={() => handleItemClick(risk.id)}
-                  className="cursor-pointer bg-white p-4 rounded-lg border border-gray-200"
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium">{risk.title}</h4>
-                    <span className="text-xs text-gray-500">{risk.stakeholder}</span>
+                  <div className="space-y-1">
+                    <div className="font-medium">{risk.title}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {risk.description}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-muted-foreground">
+                        {risk.stakeholder}
+                      </div>
+                      <div className="text-sm font-bold text-primary">
+                        {risk.source}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-600">{risk.description}</p>
+                  <ArrowUpRight className="h-5 w-5" />
                 </div>
               ))}
             </div>
@@ -145,25 +133,32 @@ export function RisksAndOpportunities() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-lg font-medium">
-              Opportunités
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-green-500" />
+          <CardHeader>
+            <CardTitle>Opportunités</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {opportunities.map((opportunity) => (
-                <div 
+                <div
                   key={opportunity.id}
+                  className="flex items-center justify-between p-4 bg-background rounded-lg border cursor-pointer hover:bg-accent hover:text-accent-foreground"
                   onClick={() => handleItemClick(opportunity.id)}
-                  className="cursor-pointer bg-white p-4 rounded-lg border border-gray-200"
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium">{opportunity.title}</h4>
-                    <span className="text-xs text-gray-500">{opportunity.stakeholder}</span>
+                  <div className="space-y-1">
+                    <div className="font-medium">{opportunity.title}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {opportunity.description}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-muted-foreground">
+                        {opportunity.stakeholder}
+                      </div>
+                      <div className="text-sm font-bold text-primary">
+                        {opportunity.source}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-600">{opportunity.description}</p>
+                  <ArrowUpRight className="h-5 w-5" />
                 </div>
               ))}
             </div>

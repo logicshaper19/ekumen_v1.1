@@ -1,8 +1,10 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Share2, BookmarkPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 interface RiskOpportunityData {
   id: string;
@@ -25,7 +27,7 @@ const data: { [key: string]: RiskOpportunityData } = {
     id: 'maelab-risk-soil',
     type: 'risk',
     title: 'Dégradation des Sols',
-    stakeholder: 'MaeLabs',
+    stakeholder: 'Exploitation',
     description: 'Perte de fertilité des sols due aux pratiques intensives',
     impact: 'Baisse des rendements et hausse des coûts',
     recommendations: [
@@ -47,31 +49,135 @@ const data: { [key: string]: RiskOpportunityData } = {
     ],
     ctaLink: 'https://agriculture.gouv.fr/sols'
   },
+  'insurance-risk-coverage': {
+    id: 'insurance-risk-coverage',
+    type: 'risk',
+    title: 'Changement climatique',
+    stakeholder: 'Environnement',
+    description: 'Impact des conditions météorologiques extrêmes sur les cultures',
+    impact: 'Pertes de récoltes et instabilité',
+    recommendations: [
+      'Diversifier les cultures',
+      'Installer des systèmes d\'irrigation efficaces',
+      'Souscrire à une assurance climatique'
+    ],
+    evolution: [
+      { date: '2024', value: 7, probability: 70 },
+      { date: '2025', value: 6.5, probability: 65 },
+      { date: '2026', value: 6, probability: 60 },
+      { date: '2027', value: 5.5, probability: 55 },
+      { date: '2028', value: 5, probability: 50 },
+      { date: '2029', value: 4.5, probability: 45 },
+      { date: '2030', value: 4, probability: 40 },
+      { date: '2031', value: 3.5, probability: 35 },
+      { date: '2032', value: 3, probability: 30 },
+      { date: '2033', value: 2.5, probability: 25 }
+    ],
+    ctaLink: 'https://www.groupama.fr/assurances-agricoles'
+  },
   'ca-risk-debt': {
     id: 'ca-risk-debt',
     type: 'risk',
-    title: 'Endettement Excessif',
-    stakeholder: 'Crédit Agricole',
-    description: 'Risque de surendettement lié aux investissements',
-    impact: 'Difficultés de remboursement et stress financier',
+    title: 'Volatilité des prix',
+    stakeholder: 'Marché',
+    description: 'Fluctuations importantes des prix des produits agricoles',
+    impact: 'Instabilité des revenus',
     recommendations: [
-      'Planifier les investissements sur le long terme',
-      'Diversifier les sources de financement',
-      'Maintenir une réserve de trésorerie'
+      'Diversifier les cultures',
+      'Établir des contrats à terme',
+      'Constituer une réserve financière'
     ],
     evolution: [
-      { date: '2024', value: 5, probability: 60 },
-      { date: '2025', value: 5.5, probability: 65 },
-      { date: '2026', value: 6, probability: 70 },
-      { date: '2027', value: 5.5, probability: 65 },
-      { date: '2028', value: 5, probability: 60 },
-      { date: '2029', value: 4.5, probability: 55 },
-      { date: '2030', value: 4, probability: 50 },
-      { date: '2031', value: 3.5, probability: 45 },
-      { date: '2032', value: 3, probability: 40 },
-      { date: '2033', value: 2.5, probability: 35 }
+      { date: '2024', value: 6, probability: 65 },
+      { date: '2025', value: 5.5, probability: 60 },
+      { date: '2026', value: 5, probability: 55 },
+      { date: '2027', value: 4.5, probability: 50 },
+      { date: '2028', value: 4, probability: 45 },
+      { date: '2029', value: 3.5, probability: 40 },
+      { date: '2030', value: 3, probability: 35 },
+      { date: '2031', value: 2.5, probability: 30 },
+      { date: '2032', value: 2, probability: 25 },
+      { date: '2033', value: 1.5, probability: 20 }
     ],
-    ctaLink: 'https://www.credit-agricole.fr/particuliers/financer-un-projet'
+    ctaLink: 'https://www.credit-agricole.fr/professionnel/financer-projets'
+  },
+  'maelab-opp-innovation': {
+    id: 'maelab-opp-innovation',
+    type: 'opportunity',
+    title: 'Marché bio',
+    stakeholder: 'Marché',
+    description: 'Forte croissance du marché des produits biologiques',
+    impact: 'Augmentation des marges et diversification',
+    recommendations: [
+      'Planifier la conversion bio',
+      'Développer des partenariats locaux',
+      'Former les équipes aux pratiques bio'
+    ],
+    evolution: [
+      { date: '2024', value: 3, probability: 40 },
+      { date: '2025', value: 3.5, probability: 45 },
+      { date: '2026', value: 4, probability: 50 },
+      { date: '2027', value: 4.5, probability: 55 },
+      { date: '2028', value: 5, probability: 60 },
+      { date: '2029', value: 5.5, probability: 65 },
+      { date: '2030', value: 6, probability: 70 },
+      { date: '2031', value: 6.5, probability: 75 },
+      { date: '2032', value: 7, probability: 80 },
+      { date: '2033', value: 7.5, probability: 85 }
+    ],
+    ctaLink: 'https://www.agencebio.org'
+  },
+  'chamber-opp-tech': {
+    id: 'chamber-opp-tech',
+    type: 'opportunity',
+    title: 'Nouvelles technologies',
+    stakeholder: 'Innovation',
+    description: 'Opportunités d\'amélioration via l\'agriculture de précision',
+    impact: 'Optimisation des ressources et productivité',
+    recommendations: [
+      'Investir dans des outils connectés',
+      'Former les équipes aux nouvelles technologies',
+      'Participer à des projets pilotes'
+    ],
+    evolution: [
+      { date: '2024', value: 2, probability: 30 },
+      { date: '2025', value: 2.5, probability: 35 },
+      { date: '2026', value: 3, probability: 40 },
+      { date: '2027', value: 3.5, probability: 45 },
+      { date: '2028', value: 4, probability: 50 },
+      { date: '2029', value: 4.5, probability: 55 },
+      { date: '2030', value: 5, probability: 60 },
+      { date: '2031', value: 5.5, probability: 65 },
+      { date: '2032', value: 6, probability: 70 },
+      { date: '2033', value: 6.5, probability: 75 }
+    ],
+    ctaLink: 'https://chambres-agriculture.fr/innovations-agricoles'
+  },
+  'ca-opp-local': {
+    id: 'ca-opp-local',
+    type: 'opportunity',
+    title: 'Circuit court',
+    stakeholder: 'Distribution',
+    description: 'Développement des circuits de distribution locaux',
+    impact: 'Meilleure valorisation des produits',
+    recommendations: [
+      'Développer une stratégie de vente directe',
+      'Créer des partenariats locaux',
+      'Investir dans la transformation'
+    ],
+    evolution: [
+      { date: '2024', value: 2.5, probability: 35 },
+      { date: '2025', value: 3, probability: 40 },
+      { date: '2026', value: 3.5, probability: 45 },
+      { date: '2027', value: 4, probability: 50 },
+      { date: '2028', value: 4.5, probability: 55 },
+      { date: '2029', value: 5, probability: 60 },
+      { date: '2030', value: 5.5, probability: 65 },
+      { date: '2031', value: 6, probability: 70 },
+      { date: '2032', value: 6.5, probability: 75 },
+      { date: '2033', value: 7, probability: 80 }
+    ],
+    ctaLink: 'https://www.credit-agricole.fr/professionnel/agriculture/circuit-court'
   },
   'accountant-risk-cash': {
     id: 'accountant-risk-cash',
@@ -518,192 +624,217 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export function RiskOpportunityEvolution() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
   const item = data[id || ''];
 
+  const handleBack = () => {
+    navigate('/business-plan', { state: { activeTab: 'risks' } });
+  };
+
   if (!item) {
-    return <div>Item not found</div>;
+    return (
+      <div className="p-4">
+        <Button variant="ghost" onClick={handleBack}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Retour aux Risques Principaux
+        </Button>
+        <div className="text-center py-8">
+          Élément non trouvé
+        </div>
+      </div>
+    );
   }
 
-  const currentProbability = item.evolution[0].probability;
-  
-  const handleBack = () => {
-    navigate('/business-plan');
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: "Lien copié",
+      description: "Le lien a été copié dans votre presse-papiers",
+    });
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <button 
-          onClick={handleBack}
-          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4"
-        >
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Retour aux {item.type === 'risk' ? 'Risques Principaux' : 'Opportunités Clés'}
-        </button>
+    <div className="p-4 space-y-6">
+      <div className="flex justify-between items-center">
+        <Button variant="ghost" onClick={handleBack}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Retour aux Risques Principaux
+        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleShare}>
+            <Share2 className="mr-2 h-4 w-4" />
+            Partager
+          </Button>
+          <Button variant="outline">
+            <BookmarkPlus className="mr-2 h-4 w-4" />
+            Sauvegarder
+          </Button>
+        </div>
+      </div>
 
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <h2 className="text-2xl font-semibold">{item.title}</h2>
-            <p className="text-gray-500">Identifié par {item.stakeholder}</p>
+      <div className="space-y-8">
+        {/* Header */}
+        <div>
+          <h2 className="text-2xl font-semibold">{item.title}</h2>
+          <p className="text-gray-500">Identifié par {item.stakeholder}</p>
+        </div>
+
+        {/* Overview Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-sm font-medium text-gray-500 mb-2">Description</h3>
+            <p className="text-gray-900">{item.description}</p>
           </div>
+          
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-sm font-medium text-gray-500 mb-2">Impact</h3>
+            <p className="text-gray-900">{item.impact}</p>
+          </div>
+        </div>
 
-          {/* Overview Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">Description</h3>
-              <p className="text-gray-900">{item.description}</p>
+        {/* Evolution Chart */}
+        <div>
+          <h3 className="text-lg font-medium mb-4">Évolution 2024-2033</h3>
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart 
+                  data={item.evolution}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="date" 
+                    tickFormatter={(value) => value}
+                    ticks={item.evolution.map(e => e.date)}
+                  />
+                  <YAxis 
+                    yAxisId="left" 
+                    domain={[0, 10]} 
+                    tickFormatter={(value) => value.toFixed(1)}
+                    label={{ 
+                      value: item.type === 'risk' ? 'Niveau de Risque' : 'Potentiel',
+                      angle: -90,
+                      position: 'insideLeft'
+                    }}
+                    reversed={item.type === 'risk'}
+                  />
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right" 
+                    domain={[0, 100]}
+                    tickFormatter={(value) => `${value}%`}
+                    label={{ 
+                      value: 'Probabilité',
+                      angle: 90,
+                      position: 'insideRight'
+                    }}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend />
+                  <Line 
+                    yAxisId="left"
+                    type="monotone" 
+                    dataKey="value" 
+                    name={item.type === 'risk' ? 'Niveau de Risque' : 'Potentiel'}
+                    stroke={item.type === 'risk' ? '#ef4444' : '#22c55e'}
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                  <Line 
+                    yAxisId="right"
+                    type="monotone" 
+                    dataKey="probability" 
+                    name="Probabilité"
+                    stroke="#6366f1"
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">Impact</h3>
-              <p className="text-gray-900">{item.impact}</p>
+            <div className="mt-4 text-sm text-gray-500">
+              {item.type === 'risk' ? (
+                <p>Note: Une tendance à la baisse indique une réduction du risque (amélioration)</p>
+              ) : (
+                <p>Note: Une tendance à la hausse indique une augmentation du potentiel (amélioration)</p>
+              )}
             </div>
           </div>
+        </div>
 
-          {/* Evolution Chart */}
-          <div>
-            <h3 className="text-lg font-medium mb-4">Évolution 2024-2033</h3>
-            <div className="bg-gray-50 rounded-lg p-6">
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart 
-                    data={item.evolution}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="date" 
-                      tickFormatter={(value) => value}
-                      ticks={item.evolution.map(e => e.date)}
-                    />
-                    <YAxis 
-                      yAxisId="left" 
-                      domain={[0, 10]} 
-                      tickFormatter={(value) => value.toFixed(1)}
-                      label={{ 
-                        value: item.type === 'risk' ? 'Niveau de Risque' : 'Potentiel',
-                        angle: -90,
-                        position: 'insideLeft'
-                      }}
-                      reversed={item.type === 'risk'}
-                    />
-                    <YAxis 
-                      yAxisId="right" 
-                      orientation="right" 
-                      domain={[0, 100]}
-                      tickFormatter={(value) => `${value}%`}
-                      label={{ 
-                        value: 'Probabilité',
-                        angle: 90,
-                        position: 'insideRight'
-                      }}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Line 
-                      yAxisId="left"
-                      type="monotone" 
-                      dataKey="value" 
-                      name={item.type === 'risk' ? 'Niveau de Risque' : 'Potentiel'}
-                      stroke={item.type === 'risk' ? '#ef4444' : '#22c55e'}
-                      strokeWidth={2}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                    <Line 
-                      yAxisId="right"
-                      type="monotone" 
-                      dataKey="probability" 
-                      name="Probabilité"
-                      stroke="#6366f1"
-                      strokeWidth={2}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-4 text-sm text-gray-500">
-                {item.type === 'risk' ? (
-                  <p>Note: Une tendance à la baisse indique une réduction du risque (amélioration)</p>
-                ) : (
-                  <p>Note: Une tendance à la hausse indique une augmentation du potentiel (amélioration)</p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Info and Actions Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Calculation Method */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Comment calculons-nous ?</h3>
-              <div className="text-gray-700">
-                {item.id === 'maelab-risk-soil' ? (
-                  <div>
-                    <p>Notre évaluation de la dégradation des sols est basée sur trois facteurs clés :</p>
-                    <ul className="list-disc pl-5 mt-2 space-y-1">
-                      <li>Analyses de sol annuelles (taux de matière organique, pH, structure)</li>
-                      <li>Historique des rendements sur les 5 dernières années</li>
-                      <li>Indicateurs biologiques (présence de vers de terre, activité microbienne)</li>
-                    </ul>
-                    <p className="mt-2">La probabilité est calculée en fonction des pratiques culturales actuelles et des conditions climatiques prévues.</p>
-                  </div>
-                ) : item.id === 'ca-risk-debt' ? (
-                  <div>
-                    <p>L'évaluation du risque d'endettement est calculée selon :</p>
-                    <ul className="list-disc pl-5 mt-2 space-y-1">
-                      <li>Ratio d'endettement (dettes totales/chiffre d'affaires)</li>
-                      <li>Capacité de remboursement mensuelle</li>
-                      <li>Évolution de la trésorerie sur 12 mois</li>
-                    </ul>
-                    <p className="mt-2">La probabilité évolue en fonction des projections financières et des conditions du marché.</p>
-                  </div>
-                ) : (
-                  <div>
-                    <p>Notre évaluation de la trésorerie est basée sur :</p>
-                    <ul className="list-disc pl-5 mt-2 space-y-1">
-                      <li>Cycle de trésorerie mensuel (entrées/sorties)</li>
-                      <li>Délais moyens de paiement clients/fournisseurs</li>
-                      <li>Saisonnalité des revenus agricoles</li>
-                    </ul>
-                    <p className="mt-2">La probabilité reflète les variations saisonnières et les tendances historiques.</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Recommendations Section */}
-            <div className="bg-gray-50 rounded-lg p-6 flex flex-col h-full">
-              <h3 className="text-lg font-medium mb-4">Que dois-je faire ?</h3>
-              <ul className="space-y-2 flex-grow">
-                {item.recommendations.map((recommendation, index) => (
-                  <li 
-                    key={index}
-                    className="flex items-start gap-2 text-gray-700"
-                  >
-                    <span className="text-gray-400 mt-1">•</span>
-                    <span>{recommendation}</span>
-                  </li>
-                ))}
-              </ul>
-              {item.ctaLink && (
-                <div className="flex justify-end mt-4">
-                  <a 
-                    href={item.ctaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-800 transition-colors"
-                  >
-                    Explorer
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </a>
+        {/* Info and Actions Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Calculation Method */}
+          <div className="bg-gray-50 rounded-lg p-6">
+            <h3 className="text-lg font-medium mb-4">Comment calculons-nous ?</h3>
+            <div className="text-gray-700">
+              {item.id === 'maelab-risk-soil' ? (
+                <div>
+                  <p>Notre évaluation de la dégradation des sols est basée sur trois facteurs clés :</p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Analyses de sol annuelles (taux de matière organique, pH, structure)</li>
+                    <li>Historique des rendements sur les 5 dernières années</li>
+                    <li>Indicateurs biologiques (présence de vers de terre, activité microbienne)</li>
+                  </ul>
+                  <p className="mt-2">La probabilité est calculée en fonction des pratiques culturales actuelles et des conditions climatiques prévues.</p>
+                </div>
+              ) : item.id === 'ca-risk-debt' ? (
+                <div>
+                  <p>L'évaluation du risque d'endettement est calculée selon :</p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Ratio d'endettement (dettes totales/chiffre d'affaires)</li>
+                    <li>Capacité de remboursement mensuelle</li>
+                    <li>Évolution de la trésorerie sur 12 mois</li>
+                  </ul>
+                  <p className="mt-2">La probabilité évolue en fonction des projections financières et des conditions du marché.</p>
+                </div>
+              ) : (
+                <div>
+                  <p>Notre évaluation de la trésorerie est basée sur :</p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Cycle de trésorerie mensuel (entrées/sorties)</li>
+                    <li>Délais moyens de paiement clients/fournisseurs</li>
+                    <li>Saisonnalité des revenus agricoles</li>
+                  </ul>
+                  <p className="mt-2">La probabilité reflète les variations saisonnières et les tendances historiques.</p>
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Recommendations Section */}
+          <div className="bg-gray-50 rounded-lg p-6 flex flex-col h-full">
+            <h3 className="text-lg font-medium mb-4">Que dois-je faire ?</h3>
+            <ul className="space-y-2 flex-grow">
+              {item.recommendations.map((recommendation, index) => (
+                <li 
+                  key={index}
+                  className="flex items-start gap-2 text-gray-700"
+                >
+                  <span className="text-gray-400 mt-1">•</span>
+                  <span>{recommendation}</span>
+                </li>
+              ))}
+            </ul>
+            {item.ctaLink && (
+              <div className="flex justify-end mt-4">
+                <a 
+                  href={item.ctaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-800 transition-colors"
+                >
+                  Explorer
+                  <ExternalLink className="w-4 h-4 ml-2" />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

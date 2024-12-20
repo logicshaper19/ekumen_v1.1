@@ -31,6 +31,7 @@ import { TableauDeBord } from './pages/TableauDeBord';
 import { Reglementations } from './pages/Reglementations';
 import { Declarations } from './components/dashboard/Declarations';
 import { Equipe } from './pages/Equipe';
+import { RisksAndOpportunities } from './components/business-plan/RisksAndOpportunities';
 
 function App() {
   const location = useLocation();
