@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Building2, MapPin, Phone, Mail, FileText, AlertTriangle, Lightbulb, MessageSquare } from 'lucide-react';
 import { ESGMetrics } from '@/components/dashboard/ESGMetrics';
 import { RecentChats } from '@/components/dashboard/RecentChats';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Mock data for the farmer profile
 const farmerData = {
@@ -27,7 +28,17 @@ const farmerData = {
       duration: "5 ans",
       status: "En cours",
       nextPayment: "2024-01-15",
-      interestRate: "2.5%"
+      interestRate: "2.5%",
+      evolution: [
+        { date: '2023-03', remaining: 150000, paid: 0 },
+        { date: '2023-06', remaining: 142500, paid: 7500 },
+        { date: '2023-09', remaining: 135000, paid: 15000 },
+        { date: '2023-12', remaining: 127500, paid: 22500 },
+        { date: '2024-03', remaining: 120000, paid: 30000 },
+        { date: '2024-06', remaining: 112500, paid: 37500 },
+        { date: '2024-09', remaining: 105000, paid: 45000 },
+        { date: '2024-12', remaining: 97500, paid: 52500 },
+      ]
     },
     {
       id: "CR002",
@@ -37,7 +48,15 @@ const farmerData = {
       duration: "15 ans",
       status: "En cours",
       nextPayment: "2024-01-01",
-      interestRate: "1.8%"
+      interestRate: "1.8%",
+      evolution: [
+        { date: '2022-06', remaining: 300000, paid: 0 },
+        { date: '2022-12', remaining: 290000, paid: 10000 },
+        { date: '2023-06', remaining: 280000, paid: 20000 },
+        { date: '2023-12', remaining: 270000, paid: 30000 },
+        { date: '2024-06', remaining: 260000, paid: 40000 },
+        { date: '2024-12', remaining: 250000, paid: 50000 },
+      ]
     }
   ],
   esgMetrics: {
@@ -70,6 +89,8 @@ const farmerData = {
 
 export function AgriculteurProfile() {
   const { id } = useParams();
+
+  const formatEuro = (value: number) => `${value.toLocaleString()}€`;
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -140,22 +161,58 @@ export function AgriculteurProfile() {
           {farmerData.credits.map((credit) => (
             <Card key={credit.id}>
               <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{credit.type}</h3>
-                    <div className="space-y-2">
-                      <p className="text-sm text-gray-600">Montant: {credit.amount}</p>
-                      <p className="text-sm text-gray-600">Durée: {credit.duration}</p>
-                      <p className="text-sm text-gray-600">Taux: {credit.interestRate}</p>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">{credit.type}</h3>
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-600">Montant: {credit.amount}</p>
+                        <p className="text-sm text-gray-600">Durée: {credit.duration}</p>
+                        <p className="text-sm text-gray-600">Taux: {credit.interestRate}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                        {credit.status}
+                      </span>
+                      <p className="text-sm text-gray-500 mt-2">
+                        Prochain paiement: {credit.nextPayment}
+                      </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                      {credit.status}
-                    </span>
-                    <p className="text-sm text-gray-500 mt-2">
-                      Prochain paiement: {credit.nextPayment}
-                    </p>
+
+                  <div className="h-[200px] mt-4">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={credit.evolution}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="date" 
+                          tick={{ fontSize: 12 }}
+                        />
+                        <YAxis 
+                          tick={{ fontSize: 12 }}
+                          tickFormatter={formatEuro}
+                        />
+                        <Tooltip 
+                          formatter={(value: number) => formatEuro(value)}
+                          labelFormatter={(label) => `Date: ${label}`}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="remaining" 
+                          stroke="#ef4444" 
+                          name="Restant à payer"
+                          strokeWidth={2}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="paid" 
+                          stroke="#22c55e" 
+                          name="Montant remboursé"
+                          strokeWidth={2}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
               </CardContent>

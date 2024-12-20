@@ -12,7 +12,7 @@ export function BankDashboard() {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="space-y-3">
-        <h1 className="text-2xl font-bold">Tableau de Bord Bancaire</h1>
+        <h1 className="text-2xl font-bold">Tableau de Bord</h1>
         <p className="text-gray-600">
           Bonjour Guillaume
         </p>
