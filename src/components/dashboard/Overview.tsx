@@ -18,12 +18,148 @@ import {
   Users,
   ChevronRight,
   CalendarClock,
-  FileText
+  FileText,
+  TrendingDown,
+  Target
 } from 'lucide-react';
 import { PlotsMap } from "@/components/maps/PlotsMap";
 import cn from 'classnames';
+import { Card, CardContent } from "@/components/ui/card";
 
 // Mock data - Replace with real data from your backend
+const kpis = [
+  {
+    id: 1,
+    name: "Revenu",
+    value: "75.2K",
+    unit: "€",
+    target: "80K",
+    trend: "+2.5%",
+    trendDirection: 'up',
+    status: 'warning',
+    icon: Euro,
+    description: "Revenu annuel",
+    progress: 94,
+    projectedValue: "78K",
+    lastPeriod: "72K"
+  },
+  {
+    id: 2,
+    name: "Émissions CO²",
+    value: "12.5",
+    unit: "t/ha",
+    target: "10",
+    trend: "-5%",
+    trendDirection: 'down',
+    status: 'success',
+    icon: Factory,
+    description: "Émissions par hectare",
+    progress: 80,
+    projectedValue: "11",
+    lastPeriod: "13.2"
+  },
+  {
+    id: 3,
+    name: "Consommation d'eau",
+    value: "850",
+    unit: "m³/ha",
+    target: "800",
+    trend: "-3%",
+    trendDirection: 'down',
+    status: 'warning',
+    icon: Droplets,
+    description: "Consommation par hectare",
+    progress: 85,
+    projectedValue: "820",
+    lastPeriod: "875"
+  }
+];
+
+interface KPICardProps {
+  kpi: {
+    name: string;
+    value: string;
+    unit: string;
+    target: string;
+    trend: string;
+    trendDirection: 'up' | 'down';
+    status: 'success' | 'warning';
+    icon: any;
+    description: string;
+    progress: number;
+    projectedValue: string;
+    lastPeriod: string;
+  };
+}
+
+function KPICard({ kpi }: KPICardProps) {
+  const Icon = kpi.icon;
+  const TrendIcon = kpi.trendDirection === 'up' ? TrendingUp : TrendingDown;
+  const isPositiveTrend = 
+    (kpi.name === "Revenu" && kpi.trendDirection === 'up') ||
+    ((kpi.name === "Émissions CO²" || kpi.name === "Consommation d'eau") && kpi.trendDirection === 'down');
+
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <Icon className="h-5 w-5 text-gray-500" />
+              <h3 className="font-medium">{kpi.name}</h3>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold">
+                {kpi.value}
+                <span className="text-sm font-normal text-gray-500 ml-1">
+                  {kpi.unit}
+                </span>
+              </span>
+            </div>
+          </div>
+          <div className={cn(
+            "flex items-center gap-1 text-sm rounded-full px-2 py-1",
+            isPositiveTrend ? "bg-green-50 text-green-700" : "bg-orange-50 text-orange-700"
+          )}>
+            <TrendIcon className="h-4 w-4" />
+            {kpi.trend}
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-1">
+            <span>Progression</span>
+            <div className="flex items-center gap-2">
+              <Target className="h-4 w-4" />
+              <span>Objectif: {kpi.target}{kpi.unit}</span>
+            </div>
+          </div>
+          <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+            <div 
+              className={cn(
+                "h-full rounded-full transition-all",
+                isPositiveTrend ? "bg-green-500" : "bg-orange-500"
+              )}
+              style={{ width: `${kpi.progress}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="mt-4 pt-4 border-t grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <div className="text-gray-500">Période précédente</div>
+            <div className="font-medium">{kpi.lastPeriod}{kpi.unit}</div>
+          </div>
+          <div>
+            <div className="text-gray-500">Projection</div>
+            <div className="font-medium">{kpi.projectedValue}{kpi.unit}</div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 const objectives = [
   {
     id: 1,
@@ -126,23 +262,6 @@ const conversations = [
   }
 ];
 
-function GrainIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 2c1.4 3.3 4.6 5.5 8 5.9-3.4.4-6.6 2.6-8 5.9-1.4-3.3-4.6-5.5-8-5.9 3.4-.4 6.6-2.6 8-5.9z" />
-      <path d="M12 12c1.4 3.3 4.6 5.5 8 5.9-3.4.4-6.6 2.6-8 5.9-1.4-3.3-4.6-5.5-8-5.9 3.4-.4 6.6-2.6 8-5.9z" />
-    </svg>
-  );
-}
-
 export function Overview() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -151,7 +270,14 @@ export function Overview() {
         <p className="text-gray-600">Bonjour Guillaume</p>
       </div>
 
-      {/* Top Row: Farm Map (2/3) and Strategic Objectives (1/3) */}
+      {/* KPIs */}
+      <div className="grid grid-cols-3 gap-6 mt-6">
+        {kpis.map((kpi) => (
+          <KPICard key={kpi.id} kpi={kpi} />
+        ))}
+      </div>
+
+      {/* Map and Strategic Objectives */}
       <div className="grid grid-cols-3 gap-6 mt-6">
         {/* Farm Map Section - Takes up 2 columns */}
         <div className="col-span-2">
@@ -201,106 +327,69 @@ export function Overview() {
       <div className="grid grid-cols-2 gap-6 mt-12">
         {/* Risks and Opportunities Section */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <AlertTriangle className="h-5 w-5 text-orange-500" />
-            <h2 className="text-lg font-semibold">Risques et Opportunités</h2>
-          </div>
+          <h2 className="text-lg font-semibold mb-4">Risques & Opportunités</h2>
           <div className="space-y-4">
-            {risksAndOpportunities.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div 
-                  key={item.id} 
-                  className="p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-2 rounded-lg ${
-                      item.type === 'risk' 
-                        ? 'bg-red-50' 
-                        : 'bg-green-50'
-                    }`}>
-                      <Icon className={`h-5 w-5 ${
-                        item.type === 'risk'
-                          ? 'text-red-600'
-                          : 'text-green-600'
-                      }`} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{item.title}</h4>
-                          <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                        </div>
-                        <span 
-                          className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                            item.type === 'risk' 
-                              ? 'bg-red-100 text-red-800' 
-                              : 'bg-green-100 text-green-800'
-                          }`}
-                        >
-                          {item.type === 'risk' ? 'Risque' : 'Opportunité'}
-                        </span>
-                      </div>
-                    </div>
+            {risksAndOpportunities.map((item) => (
+              <div
+                key={item.id}
+                className={cn(
+                  "p-4 rounded-lg",
+                  item.type === 'risk' ? 'bg-red-50' : 'bg-green-50'
+                )}
+              >
+                <div className="flex gap-4">
+                  <div className={cn(
+                    "p-2 rounded-lg",
+                    item.type === 'risk' ? 'bg-red-100' : 'bg-green-100'
+                  )}>
+                    <item.icon className={cn(
+                      "h-5 w-5",
+                      item.type === 'risk' ? 'text-red-600' : 'text-green-600'
+                    )} />
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-1">{item.title}</h3>
+                    <p className="text-sm text-gray-600">{item.description}</p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-          <div className="mt-6 flex justify-end">
-            <Link 
-              to="/business-plan"
-              state={{ activeTab: 'risks' }}
-              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
-            >
-              Voir tous les risques et opportunités
-              <span aria-hidden="true">→</span>
-            </Link>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Recent Conversations Section */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <MessageSquare className="h-5 w-5 text-blue-500" />
-            <h2 className="text-lg font-semibold">Dernières Conversations</h2>
-          </div>
+          <h2 className="text-lg font-semibold mb-4">Conversations Récentes</h2>
           <div className="space-y-4">
-            {conversations.map((conversation) => {
-              const Icon = conversation.partner.icon;
-              return (
-                <div key={conversation.id} className="p-4 bg-white border rounded-lg hover:bg-gray-50">
-                  <div className="flex gap-4">
-                    <div className={`p-2 ${conversation.partner.iconBg} rounded-lg`}>
-                      <Icon className={`h-5 w-5 ${conversation.partner.iconColor}`} />
+            {conversations.map((conversation) => (
+              <div key={conversation.id} className="p-4 rounded-lg border hover:bg-gray-50 transition-colors">
+                <div className="flex gap-4">
+                  <div className={cn(
+                    "p-2 rounded-lg",
+                    conversation.partner.iconBg
+                  )}>
+                    <conversation.partner.icon className={cn(
+                      "h-5 w-5",
+                      conversation.partner.iconColor
+                    )} />
+                  </div>
+                  <div>
+                    <div className="flex items-baseline justify-between">
+                      <h3 className="font-medium">{conversation.partner.name}</h3>
+                      <span className="text-sm text-gray-500">
+                        {new Date(conversation.date).toLocaleDateString()}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{conversation.partner.name}</h4>
-                          <p className="text-sm text-gray-600">
-                            {conversation.partner.role} - {conversation.partner.organization}
-                          </p>
-                        </div>
-                        <span className="text-sm text-gray-500">
-                          {new Date(conversation.date).toLocaleDateString('fr-FR')}
-                        </span>
-                      </div>
-                      <p className="mt-2 text-sm text-gray-600">{conversation.lastMessage}</p>
+                    <p className="text-sm text-gray-600 mt-1">{conversation.lastMessage}</p>
+                    <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                      <span>{conversation.partner.role}</span>
+                      <span>•</span>
+                      <span>{conversation.partner.organization}</span>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-          <div className="mt-6 flex justify-end">
-            <Link 
-              to="/messagerie"
-              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
-            >
-              Voir toutes les conversations
-              <span aria-hidden="true">→</span>
-            </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>

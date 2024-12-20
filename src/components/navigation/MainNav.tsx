@@ -10,12 +10,14 @@ import {
   LogOut,
   ScrollText,
   Sprout,
-  Building2
+  Building2,
+  Wheat
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard, role: 'farmer' },
   { name: 'Tableau de Bord Bancaire', href: '/bank-dashboard', icon: Building2, role: 'bank' },
+  { name: 'Agriculteurs', href: '/agriculteurs', icon: Wheat, role: 'bank' },
   { name: 'Réglementations', href: '/reglementations', icon: ScrollText, role: 'farmer' },
   { name: 'Business Plan', href: '/business-plan', icon: TrendingUp, role: 'farmer' },
   { name: 'Transformations', href: '/transformations', icon: Sprout, role: 'farmer' },

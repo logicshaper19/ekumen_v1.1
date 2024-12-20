@@ -4,10 +4,16 @@ import { MapPin, ArrowRight } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 
+interface RecentChatsProps {
+  maxItems?: number;
+  isBankDashboard?: boolean;
+}
+
 // Mock data for recent chats
 const recentChats = [
   {
     id: 1,
+    farmerId: "f1",
     farmerName: "Jean Dupont",
     location: "Marmande, 47200",
     lastMessage: "D'accord, je vais préparer les documents demandés pour le dossier de financement.",
@@ -16,6 +22,7 @@ const recentChats = [
   },
   {
     id: 2,
+    farmerId: "f2",
     farmerName: "Marie Martin",
     location: "Tonneins, 47400",
     lastMessage: "Merci pour les informations concernant les nouvelles options de crédit.",
@@ -24,6 +31,7 @@ const recentChats = [
   },
   {
     id: 3,
+    farmerId: "f3",
     farmerName: "Pierre Dubois",
     location: "Agen, 47000",
     lastMessage: "Pouvons-nous planifier une visite de l'exploitation la semaine prochaine ?",
@@ -32,6 +40,7 @@ const recentChats = [
   },
   {
     id: 4,
+    farmerId: "f4",
     farmerName: "Sophie Lambert",
     location: "Villeneuve-sur-Lot, 47300",
     lastMessage: "Le rendez-vous de demain à 14h est confirmé.",
@@ -40,35 +49,55 @@ const recentChats = [
   }
 ];
 
-export function RecentChats() {
+export function RecentChats({ maxItems, isBankDashboard = false }: RecentChatsProps) {
+  const displayedChats = maxItems ? recentChats.slice(0, maxItems) : recentChats;
+
   return (
-    <Card className="p-4">
-      <CardContent>
-        <div className="space-y-4">
-          {recentChats.map((chat) => (
-            <Link key={chat.id} to={`/messages/${chat.id}`}>
-              <div className="p-4 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 className="text-base font-semibold">{chat.farmerName}</h3>
-                    <div className="flex items-center text-sm text-gray-600 mt-1">
-                      <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                      {chat.location}
-                    </div>
+    <Card className="h-full flex flex-col">
+      <CardContent className="flex-1 p-6">
+        <div className="space-y-4 h-full flex flex-col">
+          <div className="flex-1">
+            {displayedChats.map((chat) => (
+              <Link
+                key={chat.id}
+                to={isBankDashboard ? `/agriculteurs/${chat.farmerId}` : `/messages/${chat.id}`}
+                className="block"
+              >
+                <div className="p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold">{chat.farmerName}</h3>
+                    <span className="text-sm text-gray-500">{chat.timestamp}</span>
                   </div>
-                  <span className="text-xs text-gray-500">{chat.timestamp}</span>
+                  <div className="flex items-center text-sm text-gray-500 mb-2">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {chat.location}
+                  </div>
+                  <p className="text-sm text-gray-600 line-clamp-2">{chat.lastMessage}</p>
+                  {chat.unread && (
+                    <div className="flex items-center mt-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
+                      <span className="text-sm text-blue-500 font-medium">Nouveau message</span>
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm text-gray-600 line-clamp-2">{chat.lastMessage}</p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+          {maxItems && recentChats.length > maxItems && (
+            <div className="pt-4 border-t mt-auto">
+              <Button
+                variant="outline"
+                className="w-full"
+                asChild
+              >
+                <Link to="/messages" className="flex items-center justify-center">
+                  <span>Voir toutes les conversations</span>
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
-        <Link to="/messages" className="block mt-4">
-          <Button variant="outline" className="w-full">
-            <span>Voir toutes les conversations</span>
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
-        </Link>
       </CardContent>
     </Card>
   );

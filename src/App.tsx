@@ -32,6 +32,8 @@ import { Reglementations } from './pages/Reglementations';
 import { RisksAndOpportunities } from './components/business-plan/RisksAndOpportunities';
 import { Equipe } from './pages/Equipe';
 import { BankDashboard } from './pages/BankDashboard';
+import { Agriculteurs } from './pages/Agriculteurs';
+import { AgriculteurProfile } from './pages/AgriculteurProfile';
 
 function App() {
   const location = useLocation();
@@ -86,6 +88,8 @@ function App() {
           <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
           <Route path="bank-dashboard" element={<BankDashboard />} />
+          <Route path="agriculteurs" element={<Agriculteurs />} />
+          <Route path="agriculteurs/:id" element={<AgriculteurProfile />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="messagerie" element={<Messagerie />} />
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
