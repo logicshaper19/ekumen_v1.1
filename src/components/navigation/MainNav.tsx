@@ -9,16 +9,18 @@ import {
   Database,
   LogOut,
   ScrollText,
-  Sprout
+  Sprout,
+  Building2
 } from 'lucide-react';
 
 const navigation = [
-  { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard },
-  { name: 'Réglementations', href: '/reglementations', icon: ScrollText },
-  { name: 'Business Plan', href: '/business-plan', icon: TrendingUp },
-  { name: 'Transformations', href: '/transformations', icon: Sprout },
-  { name: 'Messagerie', href: '/messagerie', icon: Users },
-  { name: 'Mes Données', href: '/mes-donnees', icon: Database },
+  { name: 'Tableau de Bord', href: '/tableau-de-bord', icon: LayoutDashboard, role: 'farmer' },
+  { name: 'Tableau de Bord Bancaire', href: '/bank-dashboard', icon: Building2, role: 'bank' },
+  { name: 'Réglementations', href: '/reglementations', icon: ScrollText, role: 'farmer' },
+  { name: 'Business Plan', href: '/business-plan', icon: TrendingUp, role: 'farmer' },
+  { name: 'Transformations', href: '/transformations', icon: Sprout, role: 'farmer' },
+  { name: 'Messagerie', href: '/messagerie', icon: Users, role: 'all' },
+  { name: 'Mes Données', href: '/my-data', icon: Database, role: 'farmer' },
 ];
 
 export function MainNav() {
@@ -30,9 +32,20 @@ export function MainNav() {
     if (href === '/tableau-de-bord' && (location.pathname === '/' || location.pathname === '/tableau-de-bord')) {
       return true;
     }
+    if (href === '/bank-dashboard' && location.pathname === '/bank-dashboard') {
+      return true;
+    }
     // For other routes
     return location.pathname.startsWith(href) && href !== '/';
   };
+
+  // Get user role from auth context (you'll need to add this to your user object)
+  const userRole = user?.role || 'farmer';
+
+  // Filter navigation items based on user role
+  const filteredNavigation = navigation.filter(item => 
+    item.role === 'all' || item.role === userRole
+  );
 
   return (
     <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50">
@@ -41,14 +54,14 @@ export function MainNav() {
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/tableau-de-bord" className="text-xl font-bold text-gray-900">
+              <Link to={userRole === 'bank' ? '/bank-dashboard' : '/tableau-de-bord'} className="text-xl font-bold text-gray-900">
                 Ekumen
               </Link>
             </div>
 
             {/* Navigation Links */}
             <div className="hidden sm:ml-8 sm:flex sm:items-center">
-              {navigation.map((item) => {
+              {filteredNavigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = isLinkActive(item.href);
                 return (
@@ -73,9 +86,6 @@ export function MainNav() {
 
           {/* Right side - User Menu */}
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-700">
-              {user?.firstName} {user?.lastName}
-            </span>
             <button
               onClick={logout}
               className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
@@ -90,7 +100,7 @@ export function MainNav() {
       {/* Mobile Navigation */}
       <div className="sm:hidden">
         <div className="pt-2 pb-3 space-y-1">
-          {navigation.map((item) => {
+          {filteredNavigation.map((item) => {
             const Icon = item.icon;
             const isActive = isLinkActive(item.href);
             return (

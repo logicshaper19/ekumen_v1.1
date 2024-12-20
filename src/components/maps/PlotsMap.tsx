@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
-import { MapContainer, TileLayer, Polygon, Marker, Popup, Tooltip, ScaleControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, Marker, Popup, Tooltip, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import L from 'leaflet';
-import 'leaflet-fullscreen/dist/Leaflet.fullscreen.css';
-import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 
 // Fix for default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -78,107 +77,103 @@ const Legend = () => {
 };
 
 export function PlotsMap() {
-  const center = [44.4959, 0.1595]; // Centered between the two plots
-  const [selectedPlot, setSelectedPlot] = useState<number | null>(null);
+  const center = [44.2, 0.6];
+  const zoom = 9;
+  const user = { role: 'bank' };
+  const isBankUser = user?.role === 'bank';
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="h-full">
+      <CardHeader className="py-3">
         <div className="flex items-center gap-2">
           <MapPin className="h-5 w-5" />
-          <CardTitle>Mes Parcelles</CardTitle>
+          <CardTitle className="text-lg">{isBankUser ? 'Mes Agriculteurs' : 'Mes Parcelles'}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="h-[400px] rounded-md overflow-hidden relative">
-          <MapContainer
-            center={center as [number, number]}
-            zoom={12}
-            style={{ height: "100%", width: "100%" }}
-            scrollWheelZoom={true}
-            fullscreenControl={true}
-          >
-            {/* Google Satellite Layer */}
-            <TileLayer
-              url="https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-              maxZoom={20}
-              subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-              attribution="&copy; Google Maps"
-            />
-            <ScaleControl position="bottomleft" />
-            {samplePlots.map((plot) => (
-              <React.Fragment key={plot.id}>
-                <Polygon
-                  positions={plot.coordinates as [number, number][]}
-                  pathOptions={{
-                    color: plot.status === "En préparation" ? '#FF4B4B' : '#005E5D',
-                    fillColor: plot.status === "En préparation" ? '#FF4B4B' : '#005E5D',
-                    fillOpacity: selectedPlot === plot.id ? 0.4 : 0.2,
-                    weight: selectedPlot === plot.id ? 3 : 2
-                  }}
-                  eventHandlers={{
-                    click: () => setSelectedPlot(plot.id)
-                  }}
-                >
-                  <Tooltip sticky>
-                    <div className="text-sm font-medium">{plot.name}</div>
-                    <div className="text-xs">{plot.currentCrop}</div>
-                  </Tooltip>
-                </Polygon>
-                <Marker 
-                  position={plot.center as [number, number]}
-                  eventHandlers={{
-                    click: () => setSelectedPlot(plot.id)
-                  }}
-                >
-                  <Popup className="rounded-lg">
-                    <div className="p-3">
-                      <h3 className="text-lg font-semibold mb-3">{plot.name}</h3>
-                      <div className="space-y-2">
+      <CardContent className="p-0 h-[calc(100%-3.5rem)]">
+        <MapContainer
+          center={center as [number, number]}
+          zoom={zoom}
+          className="h-full w-full"
+          zoomControl={false}
+        >
+          <TileLayer
+            url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+            attribution="&copy; Google Maps"
+          />
+          <ZoomControl position="bottomright" />
+          {samplePlots.map((plot) => (
+            <React.Fragment key={plot.id}>
+              <Polygon
+                positions={plot.coordinates as [number, number][]}
+                pathOptions={{
+                  color: plot.status === "En préparation" ? '#FF4B4B' : '#005E5D',
+                  fillColor: plot.status === "En préparation" ? '#FF4B4B' : '#005E5D',
+                  fillOpacity: 0.2,
+                  weight: 2
+                }}
+                eventHandlers={{
+                  click: () => console.log(plot.id)
+                }}
+              >
+                <Tooltip sticky>
+                  <div className="text-sm font-medium">{plot.name}</div>
+                  <div className="text-xs">{plot.currentCrop}</div>
+                </Tooltip>
+              </Polygon>
+              <Marker 
+                position={plot.center as [number, number]}
+                eventHandlers={{
+                  click: () => console.log(plot.id)
+                }}
+              >
+                <Popup className="rounded-lg">
+                  <div className="p-3">
+                    <h3 className="text-lg font-semibold mb-3">{plot.name}</h3>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Surface:</span>
+                        <span className="text-sm font-medium">{plot.area}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Code Postal:</span>
+                        <span className="text-sm font-medium">{plot.zipCode}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Culture actuelle:</span>
+                        <span className="text-sm font-medium">{plot.currentCrop}</span>
+                      </div>
+                      <div className="mt-3">
+                        <p className="text-sm font-semibold mb-2">Rotation de l'assolement:</p>
+                        <div className="space-y-1">
+                          {plot.cropRotation.map((rotation) => (
+                            <div key={rotation.year} className="flex items-center justify-between">
+                              <span className="text-sm text-gray-600">{rotation.year}:</span>
+                              <span className="text-sm font-medium">{rotation.crop}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-2 border-t">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Surface:</span>
-                          <span className="text-sm font-medium">{plot.area}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Code Postal:</span>
-                          <span className="text-sm font-medium">{plot.zipCode}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Culture actuelle:</span>
-                          <span className="text-sm font-medium">{plot.currentCrop}</span>
-                        </div>
-                        <div className="mt-3">
-                          <p className="text-sm font-semibold mb-2">Rotation de l'assolement:</p>
-                          <div className="space-y-1">
-                            {plot.cropRotation.map((rotation) => (
-                              <div key={rotation.year} className="flex items-center justify-between">
-                                <span className="text-sm text-gray-600">{rotation.year}:</span>
-                                <span className="text-sm font-medium">{rotation.crop}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="mt-3 pt-2 border-t">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600">Statut:</span>
-                            <span className={`text-sm font-medium px-2 py-1 rounded-full ${
-                              plot.status === "En préparation" 
-                                ? "bg-red-100 text-red-800" 
-                                : "bg-green-100 text-green-800"
-                            }`}>
-                              {plot.status}
-                            </span>
-                          </div>
+                          <span className="text-sm text-gray-600">Statut:</span>
+                          <span className={`text-sm font-medium px-2 py-1 rounded-full ${
+                            plot.status === "En préparation" 
+                              ? "bg-red-100 text-red-800" 
+                              : "bg-green-100 text-green-800"
+                          }`}>
+                            {plot.status}
+                          </span>
                         </div>
                       </div>
                     </div>
-                  </Popup>
-                </Marker>
-              </React.Fragment>
-            ))}
-            <Legend />
-          </MapContainer>
-        </div>
+                  </div>
+                </Popup>
+              </Marker>
+            </React.Fragment>
+          ))}
+          <Legend />
+        </MapContainer>
       </CardContent>
     </Card>
   );

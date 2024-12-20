@@ -21,7 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: true,
       user,
     });
-    navigate('/tableau-de-bord');
+    // Redirect based on user role
+    navigate(user.role === 'bank' ? '/bank-dashboard' : '/tableau-de-bord');
   };
 
   const logout = () => {

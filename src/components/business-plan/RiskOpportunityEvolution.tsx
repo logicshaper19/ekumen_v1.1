@@ -283,8 +283,8 @@ const data: { [key: string]: RiskOpportunityData } = {
     ],
     ctaLink: 'https://www.carrefour.fr/actualites/les-exigences-contractuelles/'
   },
-  'insurance-risk-coverage': {
-    id: 'insurance-risk-coverage',
+  'insurance-coverage': {
+    id: 'insurance-coverage',
     type: 'risk',
     title: 'Couverture Inadaptée',
     stakeholder: 'Assurance',

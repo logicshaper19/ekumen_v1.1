@@ -12,7 +12,18 @@ export function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(credentials);
+    // Determine role based on email
+    const isBankUser = credentials.email === 'gr@bank.com';
+    
+    // Mock user data - in a real app, this would come from your backend
+    const mockUser = {
+      id: '1',
+      firstName: isBankUser ? 'Groupe' : 'Marie',
+      lastName: isBankUser ? 'Régional' : 'Martin',
+      email: credentials.email,
+      role: isBankUser ? 'bank' : 'farmer'
+    };
+    login(mockUser);
   };
 
   return (
@@ -77,19 +88,24 @@ export function Login() {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#004D40] hover:bg-[#003D33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#004D40]"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#004D40] hover:bg-[#00695C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#004D40]"
                 >
-                  Se Connecter
+                  Se connecter
                 </button>
               </div>
             </form>
 
-            <div className="mt-6 text-center text-sm">
-              <span className="text-gray-600">Pas encore de compte ?</span>
-              {' '}
-              <Link to="/signup" className="font-medium text-[#004D40] hover:text-[#003D33]">
-                S'inscrire
-              </Link>
+            <div className="mt-6">
+              <div className="relative">
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">
+                    Vous n'avez pas de compte ?{' '}
+                    <Link to="/signup" className="font-medium text-[#004D40] hover:text-[#00695C]">
+                      Inscrivez-vous
+                    </Link>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

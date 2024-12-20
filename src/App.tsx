@@ -31,6 +31,7 @@ import { TableauDeBord } from './pages/TableauDeBord';
 import { Reglementations } from './pages/Reglementations';
 import { RisksAndOpportunities } from './components/business-plan/RisksAndOpportunities';
 import { Equipe } from './pages/Equipe';
+import { BankDashboard } from './pages/BankDashboard';
 
 function App() {
   const location = useLocation();
@@ -84,6 +85,7 @@ function App() {
           <Route path="categories/:categoryId/declarations/:declarationId/overview" element={<DeclarationOverview />} />
           <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
+          <Route path="bank-dashboard" element={<BankDashboard />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="messagerie" element={<Messagerie />} />
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
