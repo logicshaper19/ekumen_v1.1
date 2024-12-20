@@ -18,49 +18,64 @@ import {
   ArrowLeft,
   Tractor,
   Wheat,
-  Sun
+  Sun,
+  LineChart
 } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 interface TransformationData {
-  id: number
-  icon: any
+  id: string
   title: string
   shortDesc: string
   description: string
+  icon: any
+  source: 'Chambre d\'Agriculture' | 'MaeLabs' | 'INRAE' | 'ADEME'
+  type: 'Stratégique' | 'Opérationnel'
+  impact: 'Fort' | 'Moyen' | 'Faible'
+  status: 'new' | 'ongoing' | 'under-review' | 'under-consideration'
+  reviewer?: {
+    name: string
+    organization: string
+    since: string
+  }
   benefits: string[]
   kpis: {
-    yield: number
     margin: number
-    workingTime: number
-    gesEmissions: number
-    lixiviation: number
-    n2oEmissions: number
-    soilQuality: number
-    organicMatter: number
-    biodiversity: number
+    yield?: number
+    carbon?: number
+    workingTime?: number
+    gesEmissions?: number
+    lixiviation?: number
+    n2oEmissions?: number
+    soilQuality?: number
+    organicMatter?: number
+    biodiversity?: number
   }
   steps: string[]
 }
 
 export const strategicTransformations: TransformationData[] = [
   {
-    id: 1,
+    id: 'regenerative-ag',
+    title: 'Agriculture régénérative',
+    shortDesc: 'Restaurer la santé des sols',
+    description: 'Adoption de pratiques agricoles régénératives pour améliorer la santé des sols et la biodiversité.',
     icon: Sprout,
-    title: "Agriculture régénérative",
-    shortDesc: "Améliorer la santé des sols et la biodiversité",
-    description:
-      "L'agriculture régénérative vise à restaurer la santé des sols tout en augmentant la rentabilité.",
+    source: 'INRAE',
+    type: 'Stratégique',
+    impact: 'Fort',
+    status: 'new',
     benefits: [
-      "Amélioration de la structure du sol",
-      "Augmentation de la biodiversité",
-      "Réduction des intrants",
-      "Meilleure rétention d'eau"
+      'Amélioration de la structure du sol',
+      'Augmentation de la biodiversité',
+      'Réduction des intrants',
+      'Meilleure rétention d\'eau'
     ],
     kpis: {
-      yield: 15,
       margin: 250,
+      yield: 15,
+      carbon: -30,
       workingTime: 8.5,
       gesEmissions: 2.3,
       lixiviation: 15,
@@ -70,28 +85,36 @@ export const strategicTransformations: TransformationData[] = [
       biodiversity: 75
     },
     steps: [
-      "Analyse initiale des sols",
-      "Formation aux pratiques régénératives",
-      "Mise en place des couverts végétaux",
-      "Suivi et ajustements"
+      'Analyse initiale des sols',
+      'Formation aux pratiques régénératives',
+      'Mise en place des couverts végétaux',
+      'Suivi et ajustements'
     ]
   },
   {
-    id: 2,
-    icon: Wheat,
-    title: "Diversification des cultures",
-    shortDesc: "Optimiser la rotation des cultures",
-    description:
-      "Une approche stratégique pour améliorer la santé des sols et réduire les risques.",
+    id: 'crop-diversification',
+    title: 'Diversification des cultures',
+    shortDesc: 'Optimiser la rotation des cultures',
+    description: 'Diversifier les cultures pour optimiser l\'utilisation des ressources et réduire les risques.',
+    icon: Leaf,
+    source: 'Chambre d\'Agriculture',
+    type: 'Stratégique',
+    impact: 'Moyen',
+    status: 'ongoing',
+    reviewer: {
+      name: 'Jean Dupont',
+      organization: 'INRAE',
+      since: '2022-01-01'
+    },
     benefits: [
-      "Réduction des risques",
-      "Amélioration de la fertilité",
-      "Contrôle naturel des ravageurs",
-      "Nouvelles sources de revenus"
+      'Réduction des risques',
+      'Amélioration de la fertilité',
+      'Contrôle naturel des ravageurs',
+      'Nouvelles sources de revenus'
     ],
     kpis: {
-      yield: 12,
       margin: 180,
+      yield: 10,
       workingTime: 7.2,
       gesEmissions: 1.8,
       lixiviation: 12,
@@ -101,29 +124,36 @@ export const strategicTransformations: TransformationData[] = [
       biodiversity: 65
     },
     steps: [
-      "Étude de marché",
-      "Sélection des cultures",
-      "Plan de rotation",
-      "Mise en œuvre progressive"
+      'Étude de marché',
+      'Sélection des cultures',
+      'Plan de rotation',
+      'Mise en œuvre progressive'
     ]
   },
   {
-    id: 5,
+    id: 'cooperative',
+    title: 'Coopérative agricole',
+    shortDesc: 'Mutualiser les ressources',
+    description: 'Création d\'une coopérative pour mutualiser les ressources et réduire les coûts.',
     icon: Users,
-    title: "Coopérative agricole",
-    shortDesc: "Mutualisation des ressources et savoirs",
-    description:
-      "La création ou l'intégration d'une coopérative agricole permet de mutualiser les ressources, partager les connaissances et renforcer le pouvoir de négociation.",
+    source: 'MaeLabs',
+    type: 'Stratégique',
+    impact: 'Fort',
+    status: 'under-review',
+    reviewer: {
+      name: 'Marie Laurent',
+      organization: 'Crédit Agricole',
+      since: '2023-11-15'
+    },
     benefits: [
-      "Économies d'échelle sur les achats",
-      "Meilleur pouvoir de négociation",
-      "Partage d'expérience et de matériel",
-      "Accès à de nouveaux marchés",
-      "Réduction des risques"
+      'Économies d\'échelle sur les achats',
+      'Meilleur pouvoir de négociation',
+      'Partage d\'expérience et de matériel',
+      'Accès à de nouveaux marchés',
+      'Réduction des risques'
     ],
     kpis: {
-      yield: 0,
-      margin: 0,
+      margin: 120,
       workingTime: 0,
       gesEmissions: 0,
       lixiviation: 0,
@@ -133,32 +163,40 @@ export const strategicTransformations: TransformationData[] = [
       biodiversity: 0
     },
     steps: [
-      "Identifier les partenaires potentiels",
-      "Définir le modèle de gouvernance",
-      "Établir les statuts",
-      "Mettre en place la structure",
-      "Développer les services communs"
+      'Identifier les partenaires potentiels',
+      'Définir le modèle de gouvernance',
+      'Établir les statuts',
+      'Mettre en place la structure',
+      'Développer les services communs'
     ]
   }
 ];
 
 export const nonStrategicTransformations: TransformationData[] = [
   {
-    id: 3,
-    icon: Tractor,
-    title: "Agriculture de précision",
-    shortDesc: "Optimiser l'utilisation des ressources",
-    description:
-      "Utilisation de technologies avancées pour une agriculture plus précise et efficace.",
+    id: 'precision-ag',
+    title: 'Agriculture de précision',
+    shortDesc: 'Optimiser l\'utilisation des intrants',
+    description: 'Utilisation de technologies de précision pour optimiser l\'application d\'intrants.',
+    icon: LineChart,
+    source: 'ADEME',
+    type: 'Opérationnel',
+    impact: 'Moyen',
+    status: 'under-review',
+    reviewer: {
+      name: 'Thomas Dubois',
+      organization: 'Chambre d\'Agriculture',
+      since: '2023-12-01'
+    },
     benefits: [
-      "Réduction des coûts",
-      "Optimisation des intrants",
-      "Meilleure traçabilité",
-      "Données précises pour la prise de décision"
+      'Réduction des coûts',
+      'Optimisation des intrants',
+      'Meilleure traçabilité',
+      'Données précises pour la prise de décision'
     ],
     kpis: {
+      margin: 150,
       yield: 8,
-      margin: 0,
       workingTime: 0,
       gesEmissions: 0,
       lixiviation: 0,
@@ -168,28 +206,35 @@ export const nonStrategicTransformations: TransformationData[] = [
       biodiversity: 0
     },
     steps: [
-      "Cartographie des parcelles",
-      "Installation des capteurs",
-      "Formation aux outils",
-      "Analyse et optimisation"
+      'Cartographie des parcelles',
+      'Installation des capteurs',
+      'Formation aux outils',
+      'Analyse et optimisation'
     ]
   },
   {
-    id: 4,
+    id: 'energy-transition',
+    title: 'Transition énergétique',
+    shortDesc: 'Vers l\'autonomie énergétique',
+    description: 'Installation de panneaux solaires et optimisation de la consommation d\'énergie.',
     icon: Sun,
-    title: "Transition énergétique",
-    shortDesc: "Vers l'autonomie énergétique",
-    description:
-      "La transition énergétique vise à réduire la dépendance aux énergies fossiles en favorisant les énergies renouvelables et l'efficacité énergétique sur l'exploitation.",
+    source: 'ADEME',
+    type: 'Opérationnel',
+    impact: 'Moyen',
+    status: 'ongoing',
+    reviewer: {
+      name: 'Pierre Martin',
+      organization: 'ADEME',
+      since: '2022-06-01'
+    },
     benefits: [
-      "Réduction des coûts énergétiques",
-      "Indépendance énergétique",
-      "Impact environnemental réduit",
-      "Revenus complémentaires possibles",
-      "Image positive"
+      'Réduction des coûts énergétiques',
+      'Indépendance énergétique',
+      'Impact environnemental réduit',
+      'Revenus complémentaires possibles',
+      'Image positive'
     ],
     kpis: {
-      yield: 0,
       margin: 0,
       workingTime: 0,
       gesEmissions: 0,
@@ -200,30 +245,37 @@ export const nonStrategicTransformations: TransformationData[] = [
       biodiversity: 0
     },
     steps: [
-      "Audit énergétique",
-      "Étude de faisabilité",
-      "Installation des équipements",
-      "Raccordement au réseau",
-      "Suivi de la production"
+      'Audit énergétique',
+      'Étude de faisabilité',
+      'Installation des équipements',
+      'Raccordement au réseau',
+      'Suivi de la production'
     ]
   },
   {
-    id: 6,
-    icon: Cloud,
-    title: "Smart Farming",
-    shortDesc: "Agriculture connectée et données",
-    description:
-      "Le Smart Farming utilise l'IoT, l'intelligence artificielle et le cloud computing pour optimiser la production agricole grâce à une prise de décision basée sur les données.",
+    id: 'smart-farming',
+    title: 'Smart Farming',
+    shortDesc: 'Digitalisation des opérations',
+    description: 'Adoption d\'outils numériques pour la gestion quotidienne de l\'exploitation.',
+    icon: Tractor,
+    source: 'MaeLabs',
+    type: 'Opérationnel',
+    impact: 'Faible',
+    status: 'under-review',
+    reviewer: {
+      name: 'Sophie Martin',
+      organization: 'Groupama',
+      since: '2023-10-20'
+    },
     benefits: [
-      "Optimisation des processus",
-      "Prédiction des rendements",
-      "Détection précoce des problèmes",
-      "Réduction du gaspillage",
-      "Traçabilité améliorée"
+      'Optimisation des processus',
+      'Prédiction des rendements',
+      'Détection précoce des problèmes',
+      'Réduction du gaspillage',
+      'Traçabilité améliorée'
     ],
     kpis: {
-      yield: 0,
-      margin: 0,
+      margin: 90,
       workingTime: 0,
       gesEmissions: 0,
       lixiviation: 0,
@@ -233,11 +285,11 @@ export const nonStrategicTransformations: TransformationData[] = [
       biodiversity: 0
     },
     steps: [
-      "Déployer les capteurs IoT",
-      "Configurer la plateforme cloud",
-      "Former les équipes aux outils",
-      "Intégrer les systèmes existants",
-      "Mettre en place le monitoring"
+      'Déployer les capteurs IoT',
+      'Configurer la plateforme cloud',
+      'Former les équipes aux outils',
+      'Intégrer les systèmes existants',
+      'Mettre en place le monitoring'
     ]
   }
 ];

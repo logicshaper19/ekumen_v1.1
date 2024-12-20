@@ -91,10 +91,18 @@ export function TransformationView() {
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = React.useState("overview");
   
-  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === Number(id));
+  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === id);
   
   if (!transformation) {
-    return <div>Transformation non trouvée</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-[50vh] space-y-4">
+        <div className="text-xl font-medium text-muted-foreground">Transformation non trouvée</div>
+        <Button variant="outline" onClick={() => navigate(-1)}>
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Retour aux transformations
+        </Button>
+      </div>
+    );
   }
 
   const handleAnalysisClick = () => {
@@ -110,13 +118,46 @@ export function TransformationView() {
       </Button>
 
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <transformation.icon className="h-8 w-8 text-primary" />
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <transformation.icon className="h-8 w-8 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold">{transformation.title}</h1>
+            <p className="text-muted-foreground mt-1">{transformation.description}</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-3xl font-bold">{transformation.title}</h1>
-          <p className="text-muted-foreground mt-1">{transformation.description}</p>
+        
+        {/* Status-specific actions */}
+        <div className="flex items-center gap-4">
+          {transformation.status === 'new' && (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={() => {}}>
+                <Users className="h-4 w-4 mr-2" />
+                Partager
+              </Button>
+              <Button variant="default" onClick={() => {}}>
+                Sauvegarder
+              </Button>
+            </div>
+          )}
+          
+          {transformation.status === 'under-review' && (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-100 text-yellow-800 rounded-full text-sm">
+                <span className="font-medium">En revue par:</span>
+                <span>{transformation.reviewer?.name} ({transformation.reviewer?.organization})</span>
+              </div>
+            </div>
+          )}
+          
+          {transformation.status === 'under-consideration' && (
+            <Button variant="outline" onClick={() => {}}>
+              <Users className="h-4 w-4 mr-2" />
+              Partager avec partenaires
+            </Button>
+          )}
         </div>
       </div>
 
