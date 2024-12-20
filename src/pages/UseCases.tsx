@@ -121,7 +121,15 @@ export const UseCases = () => {
           <h2 className="text-2xl font-bold mb-6 text-[#004D40]">Prêt à explorer les possibilités ?</h2>
           <Button 
             size="lg"
-            onClick={() => setShowForm(true)}
+            onClick={() => {
+              setShowForm(true);
+              setTimeout(() => {
+                document.getElementById('simulation-section')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }, 100);
+            }}
             className="bg-[#004D40] hover:bg-[#003D33] text-white px-8 py-3 text-lg font-semibold"
           >
             Commencer la simulation

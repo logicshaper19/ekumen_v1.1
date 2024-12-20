@@ -1,14 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Hero() {
-  const scrollToSimulation = () => {
-    const element = document.querySelector('#simulation-section');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/use-cases#simulation-section';
-    }
+  const navigate = useNavigate();
+
+  const handleSimulationClick = () => {
+    navigate('/use-cases');
+    setTimeout(() => {
+      document.getElementById('simulation-section')?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
   };
 
   return (
@@ -33,7 +36,7 @@ export function Hero() {
                   Découvrir
                 </Link>
                 <button
-                  onClick={scrollToSimulation}
+                  onClick={handleSimulationClick}
                   className="text-sm font-semibold leading-6 text-[#004D40] hover:text-[#003D33]"
                 >
                   Commencer la simulation <span aria-hidden="true">→</span>
