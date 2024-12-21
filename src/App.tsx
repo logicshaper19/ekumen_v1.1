@@ -89,10 +89,10 @@ function App() {
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
           <Route path="bank-dashboard" element={<BankDashboard />} />
           <Route path="agriculteurs" element={<Agriculteurs />} />
-          <Route path="agriculteurs/:id" element={<AgriculteurProfile />} />
-          <Route path="agriculteurs/:id/risks/:riskId" element={<RiskOpportunityEvolution />} />
-          <Route path="agriculteurs/:id/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
-          <Route path="agriculteurs/:id/business-plan" element={<BusinessPlan />} />
+          <Route path="agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
+          <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
+          <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
+          <Route path="agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="messagerie" element={<Messagerie />} />
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
@@ -109,6 +109,13 @@ function App() {
           <Route path="declarations/public" element={<PublicDeclarations />} />
           <Route path="declarations/:id/details" element={<DeclarationDetails />} />
         </Route>
+        
+        {/* Bank routes */}
+        <Route path="/bank" element={<BankDashboard />} />
+        <Route path="/agriculteurs" element={<Agriculteurs />} />
+        <Route path="/agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
+        <Route path="/agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
+        <Route path="/agriculteurs/:agriculteurId/transformations/:transformationId" element={<TransformationView />} />
         
         {/* Catch all route */}
         <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />

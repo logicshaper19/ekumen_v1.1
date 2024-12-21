@@ -1,13 +1,15 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, MapPin, Phone, Mail, FileText, AlertTriangle, Lightbulb, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Building2, MapPin, Phone, Mail, FileText, AlertTriangle, Lightbulb, MessageSquare, ArrowRight, Target, Users } from 'lucide-react';
 import { ESGMetrics } from '@/components/dashboard/ESGMetrics';
 import { RecentChats } from '@/components/dashboard/RecentChats';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Link } from 'react-router-dom';
+import { strategicTransformations } from '@/components/dashboard/Transformation';
+import { ExternalLink } from 'lucide-react';
 
 // Mock data for the farmer profile
 const farmerData = {
@@ -86,11 +88,12 @@ const farmerData = {
       { id: 'maelab-opp-innovation', title: "Transition bio", potential: "high", description: "Marché local porteur pour les produits bio" },
       { id: 'chamber-opp-tech', title: "Diversification cultures", potential: "medium", description: "Potentiel pour cultures à haute valeur ajoutée" }
     ]
-  }
+  },
+  transformations: strategicTransformations.filter(t => t.status === 'ongoing')
 };
 
 export function AgriculteurProfile() {
-  const { id } = useParams();
+  const { agriculteurId } = useParams();
 
   const formatEuro = (value: number) => `${value.toLocaleString()}€`;
 
@@ -150,11 +153,12 @@ export function AgriculteurProfile() {
 
       {/* Tabs */}
       <Tabs defaultValue="credits" className="space-y-4">
-        <TabsList>
+        <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex">
           <TabsTrigger value="credits">Crédits</TabsTrigger>
           <TabsTrigger value="esg">ESG</TabsTrigger>
           <TabsTrigger value="documents">Documents</TabsTrigger>
           <TabsTrigger value="risks">Risques & Opportunités</TabsTrigger>
+          <TabsTrigger value="transformations">Transformations</TabsTrigger>
           <TabsTrigger value="chat">Historique des échanges</TabsTrigger>
         </TabsList>
 
@@ -369,12 +373,70 @@ export function AgriculteurProfile() {
 
           {/* CTA for Business Plan */}
           <div className="mt-8 flex justify-center">
-            <Link to={`/agriculteurs/${id}/business-plan`} className="inline-flex items-center gap-2">
+            <Link to={`/agriculteurs/${agriculteurId}/business-plan`} className="inline-flex items-center gap-2">
               <Button className="bg-[#005E5D] text-white hover:bg-[#005E5D]/90">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Voir les détails dans le Business Plan
               </Button>
             </Link>
+          </div>
+        </TabsContent>
+
+        {/* Transformations Tab */}
+        <TabsContent value="transformations">
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Transformations en cours</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Suivez les transformations en cours de l'exploitation
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {farmerData.transformations.map((transformation) => (
+                    <Link 
+                      key={transformation.id} 
+                      to={`/agriculteurs/${agriculteurId}/transformations/${transformation.id}`}
+                      className="block"
+                    >
+                      <div className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div className="flex items-center justify-between mb-2">
+                          <div>
+                            <h4 className="font-medium">{transformation.title}</h4>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {transformation.description}
+                            </p>
+                          </div>
+                          <Badge 
+                            variant="secondary"
+                            className="bg-blue-100 text-blue-700 hover:bg-blue-100"
+                          >
+                            En cours
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between mt-4">
+                          <div className="flex items-center gap-4 text-sm text-gray-600">
+                            <div className="flex items-center gap-1">
+                              <Target className="h-4 w-4" />
+                              <span>{transformation.shortDesc}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Users className="h-4 w-4" />
+                              <span>{transformation.source}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <span>Voir les détails</span>
+                            <ArrowRight className="h-4 w-4" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 

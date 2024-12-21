@@ -76,6 +76,7 @@ const resources = [
     title: "Réseau d'agriculteurs",
     type: "Communauté",
     icon: Users,
+    description: "Communauté d'agriculteurs pour partager les meilleures pratiques",
     url: "#"
   },
   {
@@ -87,19 +88,23 @@ const resources = [
 ];
 
 export function TransformationView() {
-  const { id } = useParams();
+  const { id, transformationId } = useParams();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = React.useState("overview");
   
-  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === id);
+  // Use transformationId if available (bank view) or id (farmer view)
+  const transformationIdToUse = transformationId || id;
+  const transformation = [...strategicTransformations, ...nonStrategicTransformations].find(t => t.id === transformationIdToUse);
+  
+  const isBankView = Boolean(transformationId); // If we have a transformation id, we're in bank view
   
   if (!transformation) {
     return (
       <div className="flex flex-col items-center justify-center h-[50vh] space-y-4">
         <div className="text-xl font-medium text-muted-foreground">Transformation non trouvée</div>
-        <Button variant="outline" onClick={() => navigate(-1)}>
+        <Button variant="outline" onClick={() => navigate(isBankView ? `/agriculteurs/${id}` : '/transformations')}>
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Retour aux transformations
+          {isBankView ? "Retour au profil" : "Retour aux transformations"}
         </Button>
       </div>
     );
@@ -112,9 +117,13 @@ export function TransformationView() {
   return (
     <div className="p-8 space-y-8">
       {/* Back button */}
-      <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8">
+      <Button 
+        variant="ghost" 
+        onClick={() => navigate(isBankView ? `/agriculteurs/${id}` : '/transformations')} 
+        className="mb-8"
+      >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Retour
+        {isBankView ? "Retour au profil" : "Retour aux transformations"}
       </Button>
 
       {/* Header */}
