@@ -93,6 +93,7 @@ function App() {
           <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
           <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
           <Route path="agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
+          <Route path="agriculteurs/:agriculteurId/transformations/:transformationId" element={<TransformationView />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="messagerie" element={<Messagerie />} />
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
@@ -101,22 +102,26 @@ function App() {
           <Route path="business-plan/financial-details" element={<FinancialDetailsPage />} />
           <Route path="business-plan/financial-details/crop/:cropName" element={<CropDetailsPage />} />
           <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
-          <Route path="business-plan/risks-opportunities/:id" element={<RiskOpportunityEvolution />} />
+          <Route path="business-plan/risks-opportunities" element={<RisksAndOpportunities />} />
+          <Route path="equipe" element={<Equipe />} />
           <Route path="transformations" element={<TransformationsList />} />
           <Route path="transformations/:id" element={<TransformationView />} />
           <Route path="my-data" element={<MyData />} />
-          <Route path="declarations" element={<PublicDeclarations />} />
-          <Route path="declarations/public" element={<PublicDeclarations />} />
           <Route path="declarations/:id/details" element={<DeclarationDetails />} />
         </Route>
-        
-        {/* Bank routes */}
-        <Route path="/bank" element={<BankDashboard />} />
-        <Route path="/agriculteurs" element={<Agriculteurs />} />
-        <Route path="/agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
-        <Route path="/agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
-        <Route path="/agriculteurs/:agriculteurId/transformations/:transformationId" element={<TransformationView />} />
-        
+
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup-flow" element={<SignupFlow />} />
+        <Route path="/" element={<LandingNav />}>
+          <Route index element={<Hero />} />
+          <Route path="benefits" element={<Benefits />} />
+          <Route path="how-it-works" element={<HowItWorks />} />
+          <Route path="use-cases" element={<UseCases />} />
+          <Route path="results" element={<Results />} />
+        </Route>
+
         {/* Catch all route */}
         <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
       </Routes>

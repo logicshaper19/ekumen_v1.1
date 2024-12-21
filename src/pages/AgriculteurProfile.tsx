@@ -10,6 +10,7 @@ import { RecentChats } from '@/components/dashboard/RecentChats';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { strategicTransformations } from '@/components/dashboard/Transformation';
 import { ExternalLink } from 'lucide-react';
+import { TransformationsList } from '@/components/dashboard/TransformationsList';
 
 // Mock data for the farmer profile
 const farmerData = {
@@ -384,60 +385,21 @@ export function AgriculteurProfile() {
 
         {/* Transformations Tab */}
         <TabsContent value="transformations">
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Transformations en cours</CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Suivez les transformations en cours de l'exploitation
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {farmerData.transformations.map((transformation) => (
-                    <Link 
-                      key={transformation.id} 
-                      to={`/agriculteurs/${agriculteurId}/transformations/${transformation.id}`}
-                      className="block"
-                    >
-                      <div className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div className="flex items-center justify-between mb-2">
-                          <div>
-                            <h4 className="font-medium">{transformation.title}</h4>
-                            <p className="text-sm text-gray-600 mt-1">
-                              {transformation.description}
-                            </p>
-                          </div>
-                          <Badge 
-                            variant="secondary"
-                            className="bg-blue-100 text-blue-700 hover:bg-blue-100"
-                          >
-                            En cours
-                          </Badge>
-                        </div>
-                        <div className="flex items-center justify-between mt-4">
-                          <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <div className="flex items-center gap-1">
-                              <Target className="h-4 w-4" />
-                              <span>{transformation.shortDesc}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />
-                              <span>{transformation.source}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <span>Voir les détails</span>
-                            <ArrowRight className="h-4 w-4" />
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Transformations en cours</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Suivez les transformations en cours de l'exploitation
+              </p>
+            </CardHeader>
+            <CardContent>
+              <TransformationsList 
+                isBankView={true} 
+                farmerId={agriculteurId} 
+                showOnlyOngoing={true}
+              />
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Chat History Tab */}
