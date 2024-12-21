@@ -119,7 +119,7 @@ function KPICard({ kpi }: KPICardProps) {
           </div>
           <div className={cn(
             "flex items-center gap-1 text-sm rounded-full px-2 py-1",
-            isPositiveTrend ? "bg-green-50 text-green-700" : "bg-orange-50 text-orange-700"
+            isPositiveTrend ? "bg-teal-50 text-teal-700" : "bg-orange-50 text-orange-700"
           )}>
             <TrendIcon className="h-4 w-4" />
             {kpi.trend}
@@ -138,7 +138,7 @@ function KPICard({ kpi }: KPICardProps) {
             <div 
               className={cn(
                 "h-full rounded-full transition-all",
-                isPositiveTrend ? "bg-green-500" : "bg-orange-500"
+                isPositiveTrend ? "bg-teal-600" : "bg-orange-500"
               )}
               style={{ width: `${kpi.progress}%` }}
             />
@@ -332,19 +332,16 @@ export function Overview() {
             {risksAndOpportunities.map((item) => (
               <div
                 key={item.id}
-                className={cn(
-                  "p-4 rounded-lg",
-                  item.type === 'risk' ? 'bg-red-50' : 'bg-green-50'
-                )}
+                className="p-4 rounded-lg bg-white border hover:bg-accent/5 transition-colors"
               >
                 <div className="flex gap-4">
                   <div className={cn(
                     "p-2 rounded-lg",
-                    item.type === 'risk' ? 'bg-red-100' : 'bg-green-100'
+                    item.type === 'risk' ? 'bg-red-50' : 'bg-teal-50'
                   )}>
                     <item.icon className={cn(
                       "h-5 w-5",
-                      item.type === 'risk' ? 'text-red-600' : 'text-green-600'
+                      item.type === 'risk' ? 'text-red-600' : 'text-teal-600'
                     )} />
                   </div>
                   <div>
@@ -354,6 +351,14 @@ export function Overview() {
                 </div>
               </div>
             ))}
+            <Link 
+              to="/business-plan"
+              state={{ activeTab: 'risks' }}
+              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
+            >
+              Voir tous les risques
+              <ChevronRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 
@@ -390,6 +395,13 @@ export function Overview() {
                 </div>
               </div>
             ))}
+            <Link 
+              to="/messagerie"
+              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
+            >
+              Voir toutes les conversations
+              <ChevronRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </div>

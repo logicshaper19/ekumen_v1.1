@@ -136,7 +136,7 @@ export function RisksAndOpportunities() {
               {risks.map((risk) => (
                 <div
                   key={risk.id}
-                  className="flex items-center justify-between p-4 bg-background rounded-lg border cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  className="flex items-center justify-between p-4 bg-white rounded-lg border cursor-pointer hover:bg-accent/5 hover:text-accent-foreground transition-colors"
                   onClick={() => handleItemClick(risk.id)}
                 >
                   <div className="space-y-1">
@@ -155,7 +155,7 @@ export function RisksAndOpportunities() {
                     <div className="grid grid-cols-2 gap-4 mt-4">
                       <div>
                         <div className="text-sm font-medium text-gray-500">Avec Action</div>
-                        <div className="text-green-600 font-medium mt-1">{risk.impact.withAction}</div>
+                        <div className="text-teal-600 font-medium mt-1">{risk.impact.withAction}</div>
                       </div>
                       <div>
                         <div className="text-sm font-medium text-gray-500">Sans Action</div>
@@ -163,7 +163,7 @@ export function RisksAndOpportunities() {
                       </div>
                     </div>
                   </div>
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowUpRight className="h-5 w-5 text-gray-400" />
                 </div>
               ))}
             </div>
@@ -179,7 +179,7 @@ export function RisksAndOpportunities() {
               {opportunities.map((opportunity) => (
                 <div
                   key={opportunity.id}
-                  className="flex items-center justify-between p-4 bg-background rounded-lg border cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  className="flex items-center justify-between p-4 bg-white rounded-lg border cursor-pointer hover:bg-accent/5 hover:text-accent-foreground transition-colors"
                   onClick={() => handleItemClick(opportunity.id)}
                 >
                   <div className="space-y-1">
@@ -198,7 +198,7 @@ export function RisksAndOpportunities() {
                     <div className="grid grid-cols-2 gap-4 mt-4">
                       <div>
                         <div className="text-sm font-medium text-gray-500">Avec Action</div>
-                        <div className="text-green-600 font-medium mt-1">{opportunity.impact.withAction}</div>
+                        <div className="text-teal-600 font-medium mt-1">{opportunity.impact.withAction}</div>
                       </div>
                       <div>
                         <div className="text-sm font-medium text-gray-500">Sans Action</div>
@@ -206,7 +206,7 @@ export function RisksAndOpportunities() {
                       </div>
                     </div>
                   </div>
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowUpRight className="h-5 w-5 text-gray-400" />
                 </div>
               ))}
             </div>
