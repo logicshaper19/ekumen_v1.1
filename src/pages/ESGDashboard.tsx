@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Building2, Leaf, TrendingUp, AlertCircle, Search, ArrowRight } from 'lucide-react';
+import { Building2, Leaf, TrendingUp, AlertCircle, ArrowRight, TrendingDown, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 import { AnalyticsCard } from "@/components/ui/analytics-card";
 import { Input } from "@/components/ui/input";
 import { Link } from 'react-router-dom';
@@ -33,11 +33,9 @@ const mockData = {
     { region: 'Grand Est', emissions: 15000 }
   ],
   emissionsTrend: [
-    { year: '2020', emissions: 50000 },
-    { year: '2021', emissions: 48000 },
-    { year: '2022', emissions: 46000 },
-    { year: '2023', emissions: 45000 },
-    { year: '2024', emissions: 43000 }
+    { year: '2021', emissions: 50000 },
+    { year: '2022', emissions: 48000 },
+    { year: '2023', emissions: 45000 }
   ],
   highEmitters: [
     { 
@@ -53,8 +51,8 @@ const mockData = {
         types: ['Équipement', 'Foncier']
       },
       emissionTrend: [
-        { year: '2021', emissions: 750 },
-        { year: '2022', emissions: 780 },
+        { year: '2021', emissions: 700 },
+        { year: '2022', emissions: 750 },
         { year: '2023', emissions: 800 }
       ]
     },
@@ -71,8 +69,8 @@ const mockData = {
         types: ['Équipement', 'Foncier', 'Trésorerie']
       },
       emissionTrend: [
-        { year: '2021', emissions: 780 },
-        { year: '2022', emissions: 760 },
+        { year: '2021', emissions: 850 },
+        { year: '2022', emissions: 800 },
         { year: '2023', emissions: 750 }
       ]
     },
@@ -89,8 +87,8 @@ const mockData = {
         types: ['Équipement', 'Développement']
       },
       emissionTrend: [
-        { year: '2021', emissions: 650 },
-        { year: '2022', emissions: 680 },
+        { year: '2021', emissions: 700 },
+        { year: '2022', emissions: 700 },
         { year: '2023', emissions: 700 }
       ]
     },
@@ -113,6 +111,18 @@ const mockData = {
       ]
     }
   ]
+};
+
+// Calculate year-over-year change
+const calculateYoyChange = (trend) => {
+  if (!trend || trend.length < 2) return { value: 0, direction: 'stable' };
+  const currentYear = trend[trend.length - 1].emissions;
+  const previousYear = trend[trend.length - 2].emissions;
+  const change = ((currentYear - previousYear) / previousYear) * 100;
+  return {
+    value: Math.abs(change).toFixed(1),
+    direction: change > 0 ? 'up' : change < 0 ? 'down' : 'stable'
+  };
 };
 
 export function ESGDashboard() {
@@ -253,6 +263,30 @@ export function ESGDashboard() {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-lg text-[#005E5D]">{emitter.emissions} tCO2e</p>
+                      {(() => {
+                        const yoy = calculateYoyChange(emitter.emissionTrend);
+                        return (
+                          <div className="flex items-center justify-end gap-1 text-sm">
+                            {yoy.direction === 'up' ? (
+                              <>
+                                <ArrowUpRight className="h-4 w-4 text-red-500" />
+                                <span className="text-red-500">+{yoy.value}%</span>
+                              </>
+                            ) : yoy.direction === 'down' ? (
+                              <>
+                                <ArrowDownRight className="h-4 w-4 text-green-500" />
+                                <span className="text-green-500">-{yoy.value}%</span>
+                              </>
+                            ) : (
+                              <>
+                                <Minus className="h-4 w-4 text-gray-500" />
+                                <span className="text-gray-500">0%</span>
+                              </>
+                            )}
+                            <span className="text-muted-foreground ml-1">vs 2022</span>
+                          </div>
+                        );
+                      })()}
                       <p className="text-sm text-muted-foreground">Émissions annuelles</p>
                     </div>
                   </div>
@@ -281,13 +315,13 @@ export function ESGDashboard() {
 
                 <div className="w-1/3">
                   <p className="text-sm text-muted-foreground mb-2">Évolution des émissions</p>
-                  <div className="h-[120px]">
+                  <div className="h-[120px] bg-[#F5F5F0] rounded-lg p-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart 
                         data={emitter.emissionTrend}
                         margin={{ top: 5, right: 5, bottom: 20, left: 25 }}
                       >
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E5E0" />
                         <XAxis 
                           dataKey="year" 
                           tick={{ fontSize: 11 }}
