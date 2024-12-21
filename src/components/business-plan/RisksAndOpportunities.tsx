@@ -10,6 +10,10 @@ interface RiskOpportunityItem {
   description: string;
   stakeholder: string;
   source: 'Chambre d\'Agriculture Bretagne' | 'Crédit Agricole' | 'Groupama' | 'MaeLabs';
+  impact: {
+    withAction: string;
+    withoutAction: string;
+  };
 }
 
 const risks: RiskOpportunityItem[] = [
@@ -18,21 +22,33 @@ const risks: RiskOpportunityItem[] = [
     title: 'Dégradation des sols',
     description: 'Risque de perte de fertilité des sols dû aux pratiques intensives',
     stakeholder: 'Exploitation',
-    source: 'Chambre d\'Agriculture Bretagne'
+    source: 'Chambre d\'Agriculture Bretagne',
+    impact: {
+      withAction: '+5% rendement/an',
+      withoutAction: '-15% rendement/an'
+    }
   },
   {
     id: 'insurance-risk-coverage',
     title: 'Changement climatique',
     description: 'Impact des conditions météorologiques extrêmes sur les cultures',
     stakeholder: 'Environnement',
-    source: 'Groupama'
+    source: 'Groupama',
+    impact: {
+      withAction: '-10% pertes',
+      withoutAction: '+30% pertes'
+    }
   },
   {
     id: 'ca-risk-debt',
     title: 'Volatilité des prix',
     description: 'Fluctuations importantes des prix des produits agricoles',
     stakeholder: 'Marché',
-    source: 'Crédit Agricole'
+    source: 'Crédit Agricole',
+    impact: {
+      withAction: '+20% stabilité',
+      withoutAction: '-25% revenus'
+    }
   }
 ];
 
@@ -42,21 +58,33 @@ const opportunities: RiskOpportunityItem[] = [
     title: 'Marché bio',
     description: 'Forte croissance du marché des produits biologiques',
     stakeholder: 'Marché',
-    source: 'MaeLabs'
+    source: 'MaeLabs',
+    impact: {
+      withAction: '+40% prix vente',
+      withoutAction: '0% croissance'
+    }
   },
   {
     id: 'chamber-opp-tech',
     title: 'Nouvelles technologies',
     description: 'Opportunités d\'amélioration via l\'agriculture de précision',
     stakeholder: 'Innovation',
-    source: 'Chambre d\'Agriculture Bretagne'
+    source: 'Chambre d\'Agriculture Bretagne',
+    impact: {
+      withAction: '-30% intrants',
+      withoutAction: '+10% coûts/an'
+    }
   },
   {
     id: 'ca-opp-local',
     title: 'Circuit court',
     description: 'Développement des circuits de distribution locaux',
     stakeholder: 'Distribution',
-    source: 'Crédit Agricole'
+    source: 'Crédit Agricole',
+    impact: {
+      withAction: '+20% vente locale',
+      withoutAction: '-10% vente locale'
+    }
   }
 ];
 
@@ -124,6 +152,16 @@ export function RisksAndOpportunities() {
                         {risk.source}
                       </div>
                     </div>
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Avec Action</div>
+                        <div className="text-green-600 font-medium mt-1">{risk.impact.withAction}</div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Sans Action</div>
+                        <div className="text-red-600 font-medium mt-1">{risk.impact.withoutAction}</div>
+                      </div>
+                    </div>
                   </div>
                   <ArrowUpRight className="h-5 w-5" />
                 </div>
@@ -155,6 +193,16 @@ export function RisksAndOpportunities() {
                       </div>
                       <div className="text-sm font-bold text-primary">
                         {opportunity.source}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Avec Action</div>
+                        <div className="text-green-600 font-medium mt-1">{opportunity.impact.withAction}</div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Sans Action</div>
+                        <div className="text-red-600 font-medium mt-1">{opportunity.impact.withoutAction}</div>
                       </div>
                     </div>
                   </div>
