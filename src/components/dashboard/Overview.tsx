@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 import { 
   MapPin, 
   TrendingUp, 
@@ -137,7 +138,7 @@ function KPICard({ kpi }: KPICardProps) {
           <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
             <div 
               className={cn(
-                "h-full rounded-full transition-all",
+                "h-full rounded-full",
                 isPositiveTrend ? "bg-teal-600" : "bg-orange-500"
               )}
               style={{ width: `${kpi.progress}%` }}
@@ -159,39 +160,6 @@ function KPICard({ kpi }: KPICardProps) {
     </Card>
   );
 }
-
-const objectives = [
-  {
-    id: 1,
-    name: "Augmenter mon revenu",
-    shortDesc: "+5% sur 5 ans",
-    icon: Euro,
-    target: 5,
-    current: 2,
-    unit: '%',
-    status: 'warning'
-  },
-  {
-    id: 2,
-    name: "Émissions CO²",
-    shortDesc: "-5% sur 5 ans",
-    icon: Factory,
-    target: 5,
-    current: 2,
-    unit: '%',
-    status: 'warning'
-  },
-  {
-    id: 3,
-    name: "Consommation d'eau",
-    shortDesc: "-5% sur 5 ans",
-    icon: Droplets,
-    target: 5,
-    current: 1,
-    unit: '%',
-    status: 'warning'
-  },
-];
 
 const risksAndOpportunities = [
   {
@@ -263,63 +231,36 @@ const conversations = [
 ];
 
 export function Overview() {
+  const { user } = useAuth();
+  const isBankUser = user?.role === 'bank';
+
+  if (isBankUser) {
+    return <Navigate to="/bank-dashboard" />;
+  }
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <div className="space-y-3">
-        <h1 className="text-2xl font-bold">Tableau de Bord</h1>
-        <p className="text-gray-600">Bonjour Guillaume</p>
+      <div className="space-y-6">
+        <h3 className="text-xl font-medium text-gray-800">Bonjour Guillaume,</h3>
+        <h3 className="text-xl font-medium text-gray-800">
+          Voici ce qui se passe dans votre exploitation
+        </h3>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-3 gap-6 mt-6">
-        {kpis.map((kpi) => (
-          <KPICard key={kpi.id} kpi={kpi} />
-        ))}
-      </div>
-
-      {/* Map and Strategic Objectives */}
+      {/* Map and KPIs */}
       <div className="grid grid-cols-3 gap-6 mt-6">
         {/* Farm Map Section - Takes up 2 columns */}
         <div className="col-span-2">
-          <div className="aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden">
+          <div className="h-[calc(3*11rem)] bg-gray-100 rounded-lg overflow-hidden">
             <PlotsMap />
           </div>
         </div>
 
-        {/* Strategic Objectives Section - Takes up 1 column */}
-        <div className="col-span-1">
-          <h2 className="text-lg font-semibold mb-4">Vos objectifs stratégiques</h2>
-          <div className="space-y-6">
-            {objectives.map((objective) => (
-              <div key={objective.id} className="space-y-2">
-                <h3 className="text-base">{objective.name}</h3>
-                <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full rounded-full ${
-                      objective.status === 'success' ? 'bg-green-500' : 'bg-orange-500'
-                    }`}
-                    style={{ width: `${(objective.current / objective.target) * 100}%` }}
-                  />
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  {objective.status === 'success' ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertTriangle className="h-4 w-4 text-orange-500" />
-                  )}
-                  <span>{objective.current} / {objective.target}{objective.unit}</span>
-                </div>
-              </div>
-            ))}
-            <Link 
-              to="/business-plan"
-              state={{ activeTab: 'strategy' }}
-              className="inline-flex items-center gap-2 py-2 px-6 rounded-full bg-[#005E5D] text-sm font-medium text-white hover:bg-[#004948] transition-colors"
-            >
-              Voir les objectifs
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
+        {/* KPIs Section - Takes up 1 column */}
+        <div className="col-span-1 space-y-4">
+          {kpis.map((kpi) => (
+            <KPICard key={kpi.id} kpi={kpi} />
+          ))}
         </div>
       </div>
 

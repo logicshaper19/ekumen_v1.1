@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 import { MapContainer, TileLayer, Polygon, Marker, Popup, Tooltip, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import L from 'leaflet';
+import { useAuth } from '@/context/AuthContext';
 
 // Fix for default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -58,7 +59,7 @@ const samplePlots = [
   }
 ];
 
-const Legend = () => {
+function Legend() {
   return (
     <div className="absolute bottom-5 right-5 z-[1000] bg-white p-3 rounded-lg shadow-md">
       <h4 className="text-sm font-semibold mb-2">Statut des parcelles</h4>
@@ -74,26 +75,27 @@ const Legend = () => {
       </div>
     </div>
   );
-};
+}
 
-export function PlotsMap() {
-  const center = [44.2, 0.6];
-  const zoom = 9;
-  const user = { role: 'bank' };
+interface PlotsMapProps {
+  title?: string;
+}
+
+export function PlotsMap({ title }: PlotsMapProps) {
+  const { user } = useAuth();
   const isBankUser = user?.role === 'bank';
+  const mapTitle = title || (isBankUser ? 'Mes Agriculteurs' : 'Mes Parcelles');
 
   return (
     <Card className="h-full">
-      <CardHeader className="py-3">
-        <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
-          <CardTitle className="text-lg">{isBankUser ? 'Mes Agriculteurs' : 'Mes Parcelles'}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="p-0 h-[calc(100%-3.5rem)]">
+      <div className="flex items-center gap-2 p-4 bg-white border-b">
+        <MapPin className="h-5 w-5 text-gray-500" />
+        <span className="font-medium">{mapTitle}</span>
+      </div>
+      <CardContent className="p-0 h-[calc(100%-4rem)]">
         <MapContainer
-          center={center as [number, number]}
-          zoom={zoom}
+          center={[44.2, 0.6]}
+          zoom={9}
           className="h-full w-full"
           zoomControl={false}
         >
