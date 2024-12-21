@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Droplets, Factory, Zap, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 // Mock data for ESG metrics
 const esgMetrics = [
@@ -48,36 +50,43 @@ const esgMetrics = [
 
 export function ESGMetrics() {
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-[#F5F5F0]">
       <CardHeader className="pb-2">
         <CardTitle>Indicateurs ESG</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <div className="space-y-4">
           {esgMetrics.map((metric) => {
             const Icon = metric.icon;
             return (
               <div
                 key={metric.name}
-                className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                className="p-4 bg-[#F5F5F0] rounded-lg border border-gray-200"
               >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#004D40] bg-opacity-10">
-                    <Icon className="h-5 w-5 text-[#004D40]" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-[#F5F5F0] rounded-lg">
+                      <Icon className="h-5 w-5 text-[#005E5D]" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">{metric.name}</p>
+                      <div className="flex items-baseline gap-1">
+                        <p className="text-lg font-semibold">{metric.value}</p>
+                        <p className="text-sm text-gray-500">{metric.unit}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">{metric.name}</p>
-                    <p className="text-lg font-semibold">
-                      {metric.value} {metric.unit}
-                    </p>
+                  <div className={cn(
+                    "flex items-center gap-1 text-sm",
+                    metric.trend === "up" ? "text-red-500" : "text-green-500"
+                  )}>
+                    {metric.trend === "up" ? (
+                      <TrendingUp className="h-4 w-4" />
+                    ) : (
+                      <TrendingDown className="h-4 w-4" />
+                    )}
+                    <span>{metric.change}</span>
                   </div>
-                </div>
-                <div className={`px-2.5 py-0.5 rounded-full text-sm font-medium ${
-                  metric.trend === 'down' 
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {metric.change}
                 </div>
               </div>
             );

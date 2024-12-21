@@ -35,6 +35,7 @@ import { BankDashboard } from './pages/BankDashboard';
 import { Agriculteurs } from './pages/Agriculteurs';
 import { AgriculteurProfile } from './pages/AgriculteurProfile';
 import { ESGDashboard } from './pages/ESGDashboard';
+import { EmitterProfile } from './pages/EmitterProfile';
 
 function App() {
   const location = useLocation();
@@ -91,6 +92,7 @@ function App() {
           <Route path="bank-dashboard" element={<BankDashboard />} />
           <Route path="agriculteurs" element={<Agriculteurs />} />
           <Route path="esg-dashboard" element={<ESGDashboard />} />
+          <Route path="esg-dashboard/emitter/:id" element={<EmitterProfile />} />
           <Route path="agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
           <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
           <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />

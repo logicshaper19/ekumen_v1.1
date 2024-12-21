@@ -4,7 +4,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Building2, Leaf, TrendingUp, AlertCircle, ArrowRight, TrendingDown, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 import { AnalyticsCard } from "@/components/ui/analytics-card";
 import { Input } from "@/components/ui/input";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Mock data for the dashboard
 const mockData = {
@@ -127,6 +127,7 @@ const calculateYoyChange = (trend) => {
 
 export function ESGDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const filteredEmitters = mockData.highEmitters.filter(emitter => 
     emitter.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -254,7 +255,11 @@ export function ESGDashboard() {
         <CardContent>
           <div className="space-y-4">
             {mockData.highEmitters.map((emitter, index) => (
-              <div key={index} className="flex items-start gap-6 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+              <div 
+                key={index} 
+                className="flex items-start gap-6 p-4 border rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                onClick={() => navigate(`/esg-dashboard/emitter/${emitter.name.toLowerCase().replace(/\s+/g, '-')}`)}
+              >
                 <div className="flex-grow space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
