@@ -12,7 +12,10 @@ interface RiskOpportunityData {
   title: string;
   stakeholder: string;
   description: string;
-  impact: string;
+  impact: {
+    withAction: string;
+    withoutAction: string;
+  };
   evolution: {
     date: string;
     value: number;
@@ -29,7 +32,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Dégradation des Sols',
     stakeholder: 'Exploitation',
     description: 'Perte de fertilité des sols due aux pratiques intensives',
-    impact: 'Baisse des rendements et hausse des coûts',
+    impact: {
+      withAction: '+5% rendement/an\n• Amélioration structure du sol\n• Réduction des intrants\n• Biodiversité enrichie',
+      withoutAction: '-15% rendement/an\n• Erosion continue\n• Coûts croissants des intrants\n• Perte de biodiversité'
+    },
     recommendations: [
       'Mettre en place une rotation des cultures plus diversifiée',
       'Réduire le travail du sol',
@@ -55,7 +61,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Changement climatique',
     stakeholder: 'Environnement',
     description: 'Impact des conditions météorologiques extrêmes sur les cultures',
-    impact: 'Pertes de récoltes et instabilité',
+    impact: {
+      withAction: '-30% pertes climatiques\n• Résilience accrue\n• Protection contre les aléas\n• Couverture assurantielle',
+      withoutAction: '+50% pertes potentielles\n• Vulnérabilité aux événements\n• Dommages aux cultures\n• Risques non couverts'
+    },
     recommendations: [
       'Diversifier les cultures',
       'Installer des systèmes d\'irrigation efficaces',
@@ -81,7 +90,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Volatilité des prix',
     stakeholder: 'Marché',
     description: 'Fluctuations importantes des prix des produits agricoles',
-    impact: 'Instabilité des revenus',
+    impact: {
+      withAction: '+20% stabilité des revenus\n• Prix garantis\n• Trésorerie sécurisée\n• Investissements possibles',
+      withoutAction: '-25% revenus potentiels\n• Prix volatils\n• Trésorerie instable\n• Difficultés d\'investissement'
+    },
     recommendations: [
       'Diversifier les cultures',
       'Établir des contrats à terme',
@@ -107,7 +119,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Marché bio',
     stakeholder: 'Marché',
     description: 'Forte croissance du marché des produits biologiques',
-    impact: 'Augmentation des marges et diversification',
+    impact: {
+      withAction: '+30% augmentation des ventes\n• Diversification des produits\n• Meilleure valorisation\n• Développement durable',
+      withoutAction: '+10% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Planifier la conversion bio',
       'Développer des partenariats locaux',
@@ -133,7 +148,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Nouvelles technologies',
     stakeholder: 'Innovation',
     description: 'Opportunités d\'amélioration via l\'agriculture de précision',
-    impact: 'Optimisation des ressources et productivité',
+    impact: {
+      withAction: '+25% augmentation de la productivité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation de la productivité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Investir dans des outils connectés',
       'Former les équipes aux nouvelles technologies',
@@ -159,7 +177,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Circuit court',
     stakeholder: 'Distribution',
     description: 'Développement des circuits de distribution locaux',
-    impact: 'Meilleure valorisation des produits',
+    impact: {
+      withAction: '+20% augmentation des ventes\n• Meilleure valorisation\n• Développement durable\n• Réduction des coûts',
+      withoutAction: '+5% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Développer une stratégie de vente directe',
       'Créer des partenariats locaux',
@@ -185,7 +206,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Trésorerie Tendue',
     stakeholder: 'Comptable',
     description: 'Difficultés de trésorerie saisonnières',
-    impact: 'Retards de paiement et tension avec les fournisseurs',
+    impact: {
+      withAction: '+15% amélioration de la trésorerie\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '-20% dégradation de la trésorerie\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Négocier des délais de paiement',
       'Mettre en place un prévisionnel de trésorerie',
@@ -211,7 +235,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Non-Conformité Réglementaire',
     stakeholder: 'Chambre d\'Agriculture',
     description: 'Non-respect des nouvelles normes environnementales',
-    impact: 'Pénalités et perte d\'aides PAC',
+    impact: {
+      withAction: '+10% amélioration de la conformité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '-15% dégradation de la conformité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Suivre les formations réglementaires',
       'Réaliser des audits réguliers',
@@ -237,7 +264,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Qualité des Produits',
     stakeholder: 'Coopérative',
     description: 'Non-respect des standards de qualité',
-    impact: 'Déclassement des produits et perte de valeur',
+    impact: {
+      withAction: '+15% amélioration de la qualité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '-20% dégradation de la qualité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Former les équipes aux bonnes pratiques',
       'Mettre en place des contrôles qualité',
@@ -263,7 +293,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Exigences Contractuelles',
     stakeholder: 'Carrefour',
     description: 'Difficultés à respecter les cahiers des charges',
-    impact: 'Rupture de contrat et perte de débouchés',
+    impact: {
+      withAction: '+10% amélioration de la conformité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '-15% dégradation de la conformité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Planifier la production en amont',
       'Communiquer régulièrement avec l\'acheteur',
@@ -289,7 +322,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Couverture Inadaptée',
     stakeholder: 'Assurance',
     description: 'Risque de pertes non couvertes',
-    impact: 'Pertes financières en cas de sinistre',
+    impact: {
+      withAction: '+10% amélioration de la couverture\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '-15% dégradation de la couverture\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Revoir les contrats annuellement',
       'Adapter les garanties aux risques réels',
@@ -315,7 +351,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Agriculture de Précision',
     stakeholder: 'MaeLabs',
     description: 'Optimisation des pratiques avec les technologies',
-    impact: 'Réduction des coûts et meilleurs rendements',
+    impact: {
+      withAction: '+25% augmentation de la productivité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation de la productivité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Investir dans des capteurs',
       'Former les équipes',
@@ -341,7 +380,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Financement Vert',
     stakeholder: 'Crédit Agricole',
     description: 'Accès à des prêts avantageux écologiques',
-    impact: 'Taux préférentiels et image positive',
+    impact: {
+      withAction: '+20% augmentation des financements\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation des financements\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Identifier les projets éligibles',
       'Préparer les dossiers de financement',
@@ -367,7 +409,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Optimisation Fiscale',
     stakeholder: 'Comptable',
     description: 'Réduction d\'impôts via investissements',
-    impact: 'Économies fiscales et modernisation',
+    impact: {
+      withAction: '+15% réduction des impôts\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% réduction des impôts\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Planifier les investissements',
       'Suivre les dispositifs fiscaux',
@@ -393,7 +438,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Aides PAC',
     stakeholder: 'Chambre d\'Agriculture',
     description: 'Nouvelles subventions durables',
-    impact: 'Soutien financier aux pratiques vertueuses',
+    impact: {
+      withAction: '+20% augmentation des aides\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation des aides\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Suivre les évolutions de la PAC',
       'Adapter les pratiques aux critères',
@@ -419,7 +467,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Mutualisation',
     stakeholder: 'Coopérative',
     description: 'Partage des ressources et équipements',
-    impact: 'Réduction des coûts d\'exploitation',
+    impact: {
+      withAction: '+15% réduction des coûts\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% réduction des coûts\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Identifier les besoins mutualisables',
       'Participer aux réunions coopératives',
@@ -445,7 +496,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Premium Bio',
     stakeholder: 'Carrefour',
     description: 'Valorisation via la filière bio',
-    impact: 'Meilleurs prix et débouchés garantis',
+    impact: {
+      withAction: '+20% augmentation des ventes\n• Meilleure valorisation\n• Développement durable\n• Réduction des coûts',
+      withoutAction: '+5% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Planifier la conversion bio',
       'Négocier les contrats long terme',
@@ -471,7 +525,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Nouveaux Produits',
     stakeholder: 'Assurance',
     description: 'Solutions innovantes climatiques',
-    impact: 'Meilleure protection contre les aléas',
+    impact: {
+      withAction: '+15% augmentation des ventes\n• Meilleure valorisation\n• Développement durable\n• Réduction des coûts',
+      withoutAction: '+5% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Évaluer les nouvelles offres',
       'Tester les produits pilotes',
@@ -497,7 +554,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Marché Bio',
     stakeholder: 'Consommateurs',
     description: 'Forte demande croissante pour les produits biologiques',
-    impact: 'Augmentation des marges et diversification des revenus',
+    impact: {
+      withAction: '+25% augmentation des ventes\n• Meilleure valorisation\n• Développement durable\n• Réduction des coûts',
+      withoutAction: '+5% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Étudier les certifications bio',
       'Planifier la conversion progressive',
@@ -523,7 +583,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Agriculture de Précision',
     stakeholder: 'MaeLabs',
     description: 'Optimisation des ressources grâce aux nouvelles technologies',
-    impact: 'Réduction des coûts et amélioration des rendements',
+    impact: {
+      withAction: '+25% augmentation de la productivité\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation de la productivité\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Former les équipes aux nouvelles technologies',
       'Investir dans des outils connectés',
@@ -549,7 +612,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Circuits Courts',
     stakeholder: 'Collectivités',
     description: 'Développement de la vente directe et locale',
-    impact: 'Meilleure valorisation des produits',
+    impact: {
+      withAction: '+20% augmentation des ventes\n• Meilleure valorisation\n• Développement durable\n• Réduction des coûts',
+      withoutAction: '+5% augmentation des ventes\n• Concurrence accrue\n• Prix instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Étudier la demande locale',
       'Développer des partenariats',
@@ -575,7 +641,10 @@ const data: { [key: string]: RiskOpportunityData } = {
     title: 'Aides Écologiques',
     stakeholder: 'État',
     description: 'Subventions pour la transition écologique',
-    impact: 'Financement de la transition et réduction des coûts',
+    impact: {
+      withAction: '+25% augmentation des aides\n• Réduction des coûts\n• Amélioration des rendements\n• Développement durable',
+      withoutAction: '+5% augmentation des aides\n• Coûts élevés\n• Rendements instables\n• Risques de déclassement'
+    },
     recommendations: [
       'Identifier les aides disponibles',
       'Préparer les dossiers de demande',
@@ -691,7 +760,10 @@ export function RiskOpportunityEvolution() {
           
           <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Impact</h3>
-            <p className="text-gray-900">{item.impact}</p>
+            <div className="text-gray-900">
+              <p><strong>Avec action:</strong> {item.impact.withAction}</p>
+              <p><strong>Sans action:</strong> {item.impact.withoutAction}</p>
+            </div>
           </div>
         </div>
 
@@ -739,8 +811,8 @@ export function RiskOpportunityEvolution() {
                     yAxisId="left"
                     type="monotone" 
                     dataKey="value" 
-                    name={item.type === 'risk' ? 'Niveau de Risque' : 'Potentiel'}
-                    stroke={item.type === 'risk' ? '#ef4444' : '#22c55e'}
+                    name={item.type === 'risk' ? 'Sans Action' : 'Sans Action'}
+                    stroke="#ef4444"
                     strokeWidth={2}
                     dot={{ r: 4 }}
                     activeDot={{ r: 6 }}
@@ -749,8 +821,8 @@ export function RiskOpportunityEvolution() {
                     yAxisId="right"
                     type="monotone" 
                     dataKey="probability" 
-                    name="Probabilité"
-                    stroke="#6366f1"
+                    name="Avec Action"
+                    stroke="#22c55e"
                     strokeWidth={2}
                     dot={{ r: 4 }}
                     activeDot={{ r: 6 }}
