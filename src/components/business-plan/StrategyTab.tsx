@@ -14,6 +14,10 @@ interface Objective {
   description: string;
   status: 'completed' | 'in-progress' | 'delayed';
   type: 'percentage' | 'reduction' | 'quantity';
+  objectives: {
+    label: string;
+    color: 'green' | 'blue' | 'yellow' | 'purple';
+  }[];
   timeline: Array<{
     year: number;
     target: number;
@@ -30,6 +34,10 @@ const mockObjectives: Objective[] = [
     description: 'Transition vers une agriculture 100% biologique',
     status: 'in-progress',
     type: 'percentage',
+    objectives: [
+      { label: 'Environnement', color: 'green' },
+      { label: 'Rentabilité', color: 'purple' }
+    ],
     timeline: [
       { year: 2024, target: 40, actual: 40 },
       { year: 2025, target: 60 },
@@ -44,6 +52,10 @@ const mockObjectives: Objective[] = [
     description: 'Réduire l\'utilisation d\'intrants chimiques de 50%',
     status: 'delayed',
     type: 'reduction',
+    objectives: [
+      { label: 'Environnement', color: 'green' },
+      { label: 'Efficacité', color: 'blue' }
+    ],
     baselineValue: 100,
     timeline: [
       { year: 2024, target: 30, actual: 15 },
@@ -59,6 +71,10 @@ const mockObjectives: Objective[] = [
     description: 'Introduire 3 nouvelles cultures à haute valeur ajoutée',
     status: 'completed',
     type: 'quantity',
+    objectives: [
+      { label: 'Résilience', color: 'yellow' },
+      { label: 'Rentabilité', color: 'purple' }
+    ],
     currentCount: 3,
     timeline: [
       { year: 2024, target: 1, actual: 1 },

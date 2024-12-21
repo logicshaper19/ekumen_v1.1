@@ -34,6 +34,10 @@ interface TransformationData {
   type: 'Stratégique' | 'Opérationnel'
   impact: 'Fort' | 'Moyen' | 'Faible'
   status: 'new' | 'ongoing' | 'under-review' | 'under-consideration'
+  objectives: {
+    label: string;
+    color: 'green' | 'blue' | 'yellow' | 'purple';
+  }[];
   reviewer?: {
     name: string
     organization: string
@@ -66,6 +70,11 @@ export const strategicTransformations: TransformationData[] = [
     type: 'Stratégique',
     impact: 'Fort',
     status: 'new',
+    objectives: [
+      { label: 'Environnement', color: 'green' },
+      { label: 'Rendement', color: 'blue' },
+      { label: 'Résilience', color: 'yellow' }
+    ],
     benefits: [
       'Amélioration de la structure du sol',
       'Augmentation de la biodiversité',
@@ -106,6 +115,10 @@ export const strategicTransformations: TransformationData[] = [
       organization: 'INRAE',
       since: '2022-01-01'
     },
+    objectives: [
+      { label: 'Rentabilité', color: 'purple' },
+      { label: 'Résilience', color: 'yellow' }
+    ],
     benefits: [
       'Réduction des risques',
       'Amélioration de la fertilité',
@@ -145,6 +158,10 @@ export const strategicTransformations: TransformationData[] = [
       organization: 'Crédit Agricole',
       since: '2023-11-15'
     },
+    objectives: [
+      { label: 'Rentabilité', color: 'purple' },
+      { label: 'Innovation', color: 'blue' }
+    ],
     benefits: [
       'Économies d\'échelle sur les achats',
       'Meilleur pouvoir de négociation',
@@ -188,6 +205,10 @@ export const nonStrategicTransformations: TransformationData[] = [
       organization: 'Chambre d\'Agriculture',
       since: '2023-12-01'
     },
+    objectives: [
+      { label: 'Efficacité', color: 'blue' },
+      { label: 'Environnement', color: 'green' }
+    ],
     benefits: [
       'Réduction des coûts',
       'Optimisation des intrants',
@@ -227,6 +248,10 @@ export const nonStrategicTransformations: TransformationData[] = [
       organization: 'ADEME',
       since: '2022-06-01'
     },
+    objectives: [
+      { label: 'Environnement', color: 'green' },
+      { label: 'Rentabilité', color: 'purple' }
+    ],
     benefits: [
       'Réduction des coûts énergétiques',
       'Indépendance énergétique',
@@ -267,6 +292,10 @@ export const nonStrategicTransformations: TransformationData[] = [
       organization: 'Groupama',
       since: '2023-10-20'
     },
+    objectives: [
+      { label: 'Innovation', color: 'blue' },
+      { label: 'Efficacité', color: 'yellow' }
+    ],
     benefits: [
       'Optimisation des processus',
       'Prédiction des rendements',

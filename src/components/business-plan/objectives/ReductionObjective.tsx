@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, CheckCircle2, AlertCircle, Pencil, Trash2, TrendingDown } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 interface ReductionObjectiveProps {
   objective: ReductionObjective;
@@ -60,14 +61,48 @@ export function ReductionObjectiveCard({ objective, onEdit, onDelete }: Reductio
 
           {/* Middle - Content */}
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              {getStatusIcon()}
-              <h3 className="text-lg font-medium">{objective.title}</h3>
-              <Badge variant={getStatusBadgeVariant(objective.status)}>
-                {objective.status === 'completed' ? 'Terminé' :
-                 objective.status === 'delayed' ? 'En retard' : 'En cours'}
-              </Badge>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                {getStatusIcon()}
+                <Badge variant={getStatusBadgeVariant(objective.status)}>
+                  {objective.status}
+                </Badge>
+              </div>
+              <div className="flex space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onEdit(objective)}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onDelete(objective.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
+            <div className="flex flex-wrap gap-2 mt-4">
+              {objective.objectives.map((obj, index) => (
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className={cn(
+                    'border-2',
+                    obj.color === 'green' && 'border-green-500 text-green-700',
+                    obj.color === 'blue' && 'border-blue-500 text-blue-700',
+                    obj.color === 'yellow' && 'border-yellow-500 text-yellow-700',
+                    obj.color === 'purple' && 'border-purple-500 text-purple-700'
+                  )}
+                >
+                  {obj.label}
+                </Badge>
+              ))}
+            </div>
+            <h3 className="text-lg font-medium mt-4">{objective.title}</h3>
             <p className="text-sm text-gray-600 mb-4">{objective.description}</p>
 
             {/* Progress Bar */}
@@ -130,22 +165,6 @@ export function ReductionObjectiveCard({ objective, onEdit, onDelete }: Reductio
 
           {/* Right side - Actions */}
           <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onEdit(objective)}
-              className="h-8 w-8"
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onDelete(objective.id)}
-              className="h-8 w-8 text-red-500 hover:text-red-600"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
           </div>
         </div>
       </div>

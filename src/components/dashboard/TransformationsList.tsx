@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AnalyticsCard } from '@/components/ui/analytics-card';
-import { TrendingUp, Sprout, LineChart } from 'lucide-react';
+import { TrendingUp, Sprout, LineChart, Users, Target } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { strategicTransformations, nonStrategicTransformations } from './Transformation';
 
 export function TransformationsList() {
@@ -105,19 +108,37 @@ export function TransformationsList() {
                             </p>
                             <div className="flex items-center justify-between mt-4 pt-4 border-t">
                               <div className="flex items-center space-x-4">
-                                <div className="text-sm">
-                                  <span className="text-muted-foreground">Source: </span>
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                  <Users className="h-4 w-4" />
                                   <span className="font-medium">{transformation.source}</span>
                                 </div>
-                                <div className="text-sm">
-                                  <span className="text-muted-foreground">Type: </span>
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                  <Target className="h-4 w-4" />
                                   <span className="font-medium">{transformation.type}</span>
                                 </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                  <TrendingUp className="h-4 w-4" />
+                                  <span className="font-medium">{transformation.impact}</span>
+                                </div>
                               </div>
-                              <div className="text-sm">
-                                <span className="text-muted-foreground">Impact: </span>
-                                <span className="font-medium">{transformation.impact}</span>
-                              </div>
+                            </div>
+                            {/* Objectives */}
+                            <div className="flex flex-wrap gap-2 mt-4">
+                              {transformation.objectives.map((objective, index) => (
+                                <Badge
+                                  key={index}
+                                  variant="outline"
+                                  className={cn(
+                                    'border-2',
+                                    objective.color === 'green' && 'border-green-500 text-green-700',
+                                    objective.color === 'blue' && 'border-blue-500 text-blue-700',
+                                    objective.color === 'yellow' && 'border-yellow-500 text-yellow-700',
+                                    objective.color === 'purple' && 'border-purple-500 text-purple-700'
+                                  )}
+                                >
+                                  {objective.label}
+                                </Badge>
+                              ))}
                             </div>
                           </div>
                         </div>
