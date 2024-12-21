@@ -34,6 +34,7 @@ import { Equipe } from './pages/Equipe';
 import { BankDashboard } from './pages/BankDashboard';
 import { Agriculteurs } from './pages/Agriculteurs';
 import { AgriculteurProfile } from './pages/AgriculteurProfile';
+import { ESGDashboard } from './pages/ESGDashboard';
 
 function App() {
   const location = useLocation();
@@ -89,6 +90,7 @@ function App() {
           <Route path="tableau-de-bord" element={<TableauDeBord />} />
           <Route path="bank-dashboard" element={<BankDashboard />} />
           <Route path="agriculteurs" element={<Agriculteurs />} />
+          <Route path="esg-dashboard" element={<ESGDashboard />} />
           <Route path="agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
           <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
           <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />

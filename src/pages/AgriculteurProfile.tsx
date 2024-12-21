@@ -106,10 +106,12 @@ export function AgriculteurProfile() {
           <h1 className="text-2xl font-bold">{farmerData.name}</h1>
           <p className="text-gray-600">Profil agriculteur</p>
         </div>
-        <Button className="bg-[#005E5D] hover:bg-[#004948]">
-          <MessageSquare className="w-4 h-4 mr-2" />
-          Démarrer une discussion
-        </Button>
+        <Link to={`/agriculteurs/${agriculteurId}/business-plan`} className="inline-flex items-center gap-2">
+          <Button className="bg-[#005E5D] hover:bg-[#004948]">
+            <ExternalLink className="w-4 h-4 mr-2" />
+            Voir les détails dans le Business Plan
+          </Button>
+        </Link>
       </div>
 
       {/* Company Information Card */}
@@ -370,16 +372,6 @@ export function AgriculteurProfile() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* CTA for Business Plan */}
-          <div className="mt-8 flex justify-center">
-            <Link to={`/agriculteurs/${agriculteurId}/business-plan`} className="inline-flex items-center gap-2">
-              <Button className="bg-[#005E5D] text-white hover:bg-[#005E5D]/90">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Voir les détails dans le Business Plan
-              </Button>
-            </Link>
           </div>
         </TabsContent>
 
