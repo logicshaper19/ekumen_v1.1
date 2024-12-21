@@ -90,6 +90,9 @@ function App() {
           <Route path="bank-dashboard" element={<BankDashboard />} />
           <Route path="agriculteurs" element={<Agriculteurs />} />
           <Route path="agriculteurs/:id" element={<AgriculteurProfile />} />
+          <Route path="agriculteurs/:id/risks/:riskId" element={<RiskOpportunityEvolution />} />
+          <Route path="agriculteurs/:id/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
+          <Route path="agriculteurs/:id/business-plan" element={<BusinessPlan />} />
           <Route path="reglementations" element={<Reglementations />} />
           <Route path="messagerie" element={<Messagerie />} />
           <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />

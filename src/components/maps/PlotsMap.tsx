@@ -87,16 +87,16 @@ export function PlotsMap({ title }: PlotsMapProps) {
   const mapTitle = title || (isBankUser ? 'Mes Agriculteurs' : 'Mes Parcelles');
 
   return (
-    <Card className="h-full">
+    <div className="relative h-full">
       <div className="flex items-center gap-2 p-4 bg-white border-b">
         <MapPin className="h-5 w-5 text-gray-500" />
         <span className="font-medium">{mapTitle}</span>
       </div>
-      <CardContent className="p-0 h-[calc(100%-4rem)]">
+      <div className="h-[calc(100%-4rem)]">
         <MapContainer
-          center={[44.2, 0.6]}
-          zoom={9}
-          className="h-full w-full"
+          center={[44.4959, 0.1595]}
+          zoom={10}
+          className="h-full"
           zoomControl={false}
         >
           <TileLayer
@@ -176,7 +176,7 @@ export function PlotsMap({ title }: PlotsMapProps) {
           ))}
           <Legend />
         </MapContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

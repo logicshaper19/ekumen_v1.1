@@ -12,6 +12,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { Leaf, Droplets, CloudRain, Sprout, LineChart as LineChartIcon } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 // Mock data - replace with actual data
 const environmentalData = [
@@ -92,13 +93,19 @@ const metrics = [
 ];
 
 export function EnvironmentalTab() {
+  const location = useLocation();
+  const isBankView = location.pathname.includes('/agriculteurs/');
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
         <h2 className="text-2xl font-bold">Impact Environnemental</h2>
         <p className="text-muted-foreground">
-          Suivi des indicateurs environnementaux clés de votre exploitation
+          {isBankView 
+            ? "Suivi des indicateurs environnementaux clés de l'exploitation"
+            : "Suivi des indicateurs environnementaux clés de votre exploitation"
+          }
         </p>
       </div>
 

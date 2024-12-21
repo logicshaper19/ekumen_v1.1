@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, MapPin, Phone, Mail, FileText, AlertTriangle, Lightbulb, MessageSquare } from 'lucide-react';
+import { Building2, MapPin, Phone, Mail, FileText, AlertTriangle, Lightbulb, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
 import { ESGMetrics } from '@/components/dashboard/ESGMetrics';
 import { RecentChats } from '@/components/dashboard/RecentChats';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Link } from 'react-router-dom';
 
 // Mock data for the farmer profile
 const farmerData = {
@@ -62,6 +63,7 @@ const farmerData = {
   esgMetrics: {
     computed: [
       { name: "Émissions GES", value: "45 tCO2e/an", source: "Données exploitation" },
+      { name: "Contribution Scope 3", value: "3%", source: "Part du portefeuille", badge: "Moyen" },
       { name: "Biodiversité", value: "72/100", source: "Données exploitation" },
       { name: "Consommation d'eau", value: "2500m³/an", source: "Données exploitation" }
     ],
@@ -77,12 +79,12 @@ const farmerData = {
   ],
   risksOpportunities: {
     risks: [
-      { title: "Dépendance aux intrants", severity: "high", description: "Fort impact des coûts des intrants sur la rentabilité" },
-      { title: "Stress hydrique", severity: "medium", description: "Risque croissant lié au changement climatique" }
+      { id: 'maelab-risk-soil', title: "Dépendance aux intrants", severity: "high", description: "Fort impact des coûts des intrants sur la rentabilité" },
+      { id: 'insurance-risk-coverage', title: "Stress hydrique", severity: "medium", description: "Risque croissant lié au changement climatique" }
     ],
     opportunities: [
-      { title: "Transition bio", potential: "high", description: "Marché local porteur pour les produits bio" },
-      { title: "Diversification cultures", potential: "medium", description: "Potentiel pour cultures à haute valeur ajoutée" }
+      { id: 'maelab-opp-innovation', title: "Transition bio", potential: "high", description: "Marché local porteur pour les produits bio" },
+      { id: 'chamber-opp-tech', title: "Diversification cultures", potential: "medium", description: "Potentiel pour cultures à haute valeur ajoutée" }
     ]
   }
 };
@@ -223,19 +225,42 @@ export function AgriculteurProfile() {
         {/* ESG Tab */}
         <TabsContent value="esg">
           <div className="grid gap-6">
-            <Card>
+            <Card className="relative">
+              {/* Floating Scope 3 Card */}
+              <div className="absolute -top-4 right-6 bg-white shadow-lg rounded-lg border border-[#005E5D]/20 p-4 min-w-[200px]">
+                <div className="text-center space-y-2">
+                  <p className="text-sm font-medium text-[#005E5D]">Contribution Scope 3</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-3xl font-bold text-[#005E5D]">3%</span>
+                    <span className="text-xs px-2 py-1 bg-[#005E5D]/10 text-[#005E5D] rounded-full">
+                      Moyen
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500">Part du portefeuille</p>
+                </div>
+              </div>
+
               <CardHeader>
                 <CardTitle>Métriques calculées</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {farmerData.esgMetrics.computed.map((metric, index) => (
+                  {farmerData.esgMetrics.computed
+                    .filter(metric => metric.name !== "Contribution Scope 3")
+                    .map((metric, index) => (
                     <div key={index} className="flex justify-between items-center">
                       <div>
                         <p className="font-medium">{metric.name}</p>
                         <p className="text-sm text-gray-500">{metric.source}</p>
                       </div>
-                      <span className="font-medium">{metric.value}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{metric.value}</span>
+                        {metric.badge && (
+                          <span className="text-xs px-2 py-1 bg-[#005E5D]/10 text-[#005E5D] rounded-full">
+                            {metric.badge}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -287,6 +312,7 @@ export function AgriculteurProfile() {
         {/* Risks & Opportunities Tab */}
         <TabsContent value="risks">
           <div className="grid gap-6 md:grid-cols-2">
+            {/* Risks Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -297,53 +323,58 @@ export function AgriculteurProfile() {
               <CardContent>
                 <div className="space-y-4">
                   {farmerData.risksOpportunities.risks.map((risk, index) => (
-                    <div key={index} className="p-4 bg-red-50 rounded-lg">
+                    <div key={index} className="p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium">{risk.title}</h4>
-                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          risk.severity === 'high' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                        }`}>
+                        <div>
+                          <h4 className="font-medium">{risk.title}</h4>
+                          <p className="text-sm text-gray-600 mt-1">{risk.description}</p>
+                        </div>
+                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-200 text-gray-700`}>
                           {risk.severity === 'high' ? 'Élevé' : 'Moyen'}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600">{risk.description}</p>
-                      <Button variant="outline" size="sm" className="mt-2">
-                        Discuter
-                      </Button>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
 
+            {/* Opportunities Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Lightbulb className="w-5 h-5 text-green-500" />
-                  Opportunités
+                  <Lightbulb className="w-5 h-5 text-[#005E5D]" />
+                  Opportunités identifiées
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {farmerData.risksOpportunities.opportunities.map((opportunity, index) => (
-                    <div key={index} className="p-4 bg-green-50 rounded-lg">
+                    <div key={index} className="p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium">{opportunity.title}</h4>
-                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          opportunity.potential === 'high' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
-                        }`}>
-                          {opportunity.potential === 'high' ? 'Fort potentiel' : 'Potentiel moyen'}
+                        <div>
+                          <h4 className="font-medium">{opportunity.title}</h4>
+                          <p className="text-sm text-gray-600 mt-1">{opportunity.description}</p>
+                        </div>
+                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-200 text-gray-700`}>
+                          {opportunity.potential === 'high' ? 'Fort' : 'Moyen'}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600">{opportunity.description}</p>
-                      <Button variant="outline" size="sm" className="mt-2">
-                        Explorer
-                      </Button>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* CTA for Business Plan */}
+          <div className="mt-8 flex justify-center">
+            <Link to={`/agriculteurs/${id}/business-plan`} className="inline-flex items-center gap-2">
+              <Button className="bg-[#005E5D] text-white hover:bg-[#005E5D]/90">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Voir les détails dans le Business Plan
+              </Button>
+            </Link>
           </div>
         </TabsContent>
 

@@ -2,13 +2,25 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator.tsx';
 import { Building2, Wheat, Euro, Scale, Coins, Tractor, Droplet } from 'lucide-react';
 import { AnalyticsCard } from '@/components/ui/analytics-card';
+import { useLocation } from 'react-router-dom';
 
 export function OverviewTab() {
+  const location = useLocation();
+  const isBankView = location.pathname.includes('/agriculteurs/');
+
   return (
-    <div className="space-y-6">
-      <p className="text-muted-foreground">
-        Visualisez les indicateurs clés de performance de votre exploitation agricole, y compris les revenus, les rendements et les coûts opérationnels.
-      </p>
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-2xl font-bold mb-2">
+          {isBankView ? "Vue d'ensemble de l'exploitation" : "Vue d'ensemble"}
+        </h2>
+        <p className="text-muted-foreground">
+          {isBankView 
+            ? "Consultez les objectifs et la progression de l'exploitation"
+            : "Définissez vos objectifs et suivez votre progression"
+          }
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
           title="Revenu Annuel"
