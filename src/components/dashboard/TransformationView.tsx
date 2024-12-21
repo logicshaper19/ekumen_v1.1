@@ -34,11 +34,11 @@ import {
 
 // Mock data from TransformationExploration
 const simulationData = [
-  { year: 2024, impact: 0, costs: 0, revenue: 0 },
-  { year: 2025, impact: 20, costs: -15000, revenue: 5000 },
-  { year: 2026, impact: 45, costs: -8000, revenue: 10000 },
-  { year: 2027, impact: 75, costs: 5000, revenue: 20000 },
-  { year: 2028, impact: 100, costs: 25000, revenue: 30000 },
+  { year: 2024, impact: 0, costs: 0, revenue: 0, revenueWithTransformation: 0, revenueWithoutTransformation: 0, costsWithTransformation: 0, costsWithoutTransformation: 0, marginWithTransformation: 0, marginWithoutTransformation: 0 },
+  { year: 2025, impact: 20, costs: -15000, revenue: 5000, revenueWithTransformation: 5500, revenueWithoutTransformation: 4500, costsWithTransformation: -12000, costsWithoutTransformation: -18000, marginWithTransformation: 3500, marginWithoutTransformation: 2700 },
+  { year: 2026, impact: 45, costs: -8000, revenue: 10000, revenueWithTransformation: 11000, revenueWithoutTransformation: 9000, costsWithTransformation: -6000, costsWithoutTransformation: -10000, marginWithTransformation: 5000, marginWithoutTransformation: 4000 },
+  { year: 2027, impact: 75, costs: 5000, revenue: 20000, revenueWithTransformation: 22000, revenueWithoutTransformation: 18000, costsWithTransformation: 7000, costsWithoutTransformation: 3000, marginWithTransformation: 15000, marginWithoutTransformation: 15000 },
+  { year: 2028, impact: 100, costs: 25000, revenue: 30000, revenueWithTransformation: 33000, revenueWithoutTransformation: 27000, costsWithTransformation: 28000, costsWithoutTransformation: 22000, marginWithTransformation: 5000, marginWithoutTransformation: 5000 },
 ];
 
 const partners = [
@@ -161,6 +161,19 @@ export function TransformationView() {
         </div>
       </div>
 
+      {/* Description */}
+      <Card className="mb-8">
+        <CardContent className="pt-6">
+          <div className="prose prose-slate max-w-none">
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Cette transformation vise à {transformation.description.toLowerCase()} en adoptant des pratiques agricoles innovantes et durables. 
+              Elle permet d'optimiser vos rendements tout en réduisant votre impact environnemental grâce à {transformation.mainBenefit}. 
+              La mise en œuvre s'étale sur {transformation.implementationTime} avec un retour sur investissement prévu dès la {transformation.roiTime}.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Tabs */}
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
         <TabsList>
@@ -182,87 +195,137 @@ export function TransformationView() {
                   </div>
                   Indicateurs clés
                 </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Comparaison entre l'adoption de la transformation et le statu quo sur 5 ans
+                </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   {/* Economic Performance */}
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     <h3 className="font-semibold flex items-center gap-2">
                       <div className="p-1.5 bg-primary/10 rounded-lg">
                         <TrendingUp className="h-4 w-4 text-primary" />
                       </div>
                       Performance économique
                     </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Rendement</span>
-                        <span className="font-medium">+{transformation.kpis.yield}%</span>
+                    <div className="grid gap-4">
+                      <div className="relative p-4 rounded-lg border">
+                        <div className="absolute -top-3 left-4 bg-white px-2 text-sm font-medium text-muted-foreground">
+                          Rendement
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-2xl font-bold text-primary">+{transformation.kpis.yield}%</div>
+                            <p className="text-sm text-muted-foreground">Avec transformation</p>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-muted-foreground">0%</div>
+                            <p className="text-sm text-muted-foreground">Sans changement</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          Gain potentiel: <span className="font-medium text-primary">+{transformation.kpis.yield}%</span>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Marge semi-nette</span>
-                        <span className="font-medium">{transformation.kpis.margin} €/ha</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Working Time */}
-                  <div className="space-y-2">
-                    <h3 className="font-semibold flex items-center gap-2">
-                      <div className="p-1.5 bg-primary/10 rounded-lg">
-                        <Clock className="h-4 w-4 text-primary" />
+                      <div className="relative p-4 rounded-lg border">
+                        <div className="absolute -top-3 left-4 bg-white px-2 text-sm font-medium text-muted-foreground">
+                          Marge semi-nette
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-2xl font-bold text-primary">
+                              {transformation.kpis.margin > 0 ? '+' : ''}{transformation.kpis.margin}%
+                            </div>
+                            <p className="text-sm text-muted-foreground">Avec transformation</p>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-muted-foreground">0%</div>
+                            <p className="text-sm text-muted-foreground">Sans changement</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          Gain potentiel: <span className="font-medium text-primary">{transformation.kpis.margin > 0 ? '+' : ''}{transformation.kpis.margin}%</span>
+                        </div>
                       </div>
-                      Temps de travail
-                    </h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Heures/ha</span>
-                      <span className="font-medium">{transformation.kpis.workingTime} h/ha</span>
+
+                      <div className="relative p-4 rounded-lg border">
+                        <div className="absolute -top-3 left-4 bg-white px-2 text-sm font-medium text-muted-foreground">
+                          Coûts de production
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-2xl font-bold text-primary">
+                              {transformation.kpis.costs < 0 ? '' : '+'}{transformation.kpis.costs}%
+                            </div>
+                            <p className="text-sm text-muted-foreground">Avec transformation</p>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-muted-foreground">0%</div>
+                            <p className="text-sm text-muted-foreground">Sans changement</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          Impact: <span className={`font-medium ${transformation.kpis.costs < 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {transformation.kpis.costs < 0 ? '' : '+'}{transformation.kpis.costs}%
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   {/* Environmental Impact */}
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     <h3 className="font-semibold flex items-center gap-2">
                       <div className="p-1.5 bg-primary/10 rounded-lg">
                         <Leaf className="h-4 w-4 text-primary" />
                       </div>
                       Impact environnemental
                     </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Émissions GES</span>
-                        <span className="font-medium">{transformation.kpis.gesEmissions} CO²e/ha</span>
+                    <div className="grid gap-4">
+                      <div className="relative p-4 rounded-lg border">
+                        <div className="absolute -top-3 left-4 bg-white px-2 text-sm font-medium text-muted-foreground">
+                          Émissions de GES
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-2xl font-bold text-green-600">
+                              {transformation.kpis.emissions < 0 ? '' : '+'}{transformation.kpis.emissions}%
+                            </div>
+                            <p className="text-sm text-muted-foreground">Avec transformation</p>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-muted-foreground">0%</div>
+                            <p className="text-sm text-muted-foreground">Sans changement</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          Réduction: <span className="font-medium text-green-600">
+                            {Math.abs(transformation.kpis.emissions)}%
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Lixiviation</span>
-                        <span className="font-medium">{transformation.kpis.lixiviation} kg N/ha</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Émissions N₂O</span>
-                        <span className="font-medium">{transformation.kpis.n2oEmissions} kg N₂O/ha</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Soil Quality */}
-                  <div className="space-y-2">
-                    <h3 className="font-semibold flex items-center gap-2">
-                      <div className="p-1.5 bg-primary/10 rounded-lg">
-                        <Sprout className="h-4 w-4 text-primary" />
-                      </div>
-                      Qualité du sol
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Indice de qualité</span>
-                        <span className="font-medium">{transformation.kpis.soilQuality}/10</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Matière organique</span>
-                        <span className="font-medium">{transformation.kpis.organicMatter}%</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Biodiversité</span>
-                        <span className="font-medium">{transformation.kpis.biodiversity}/100</span>
+                      <div className="relative p-4 rounded-lg border">
+                        <div className="absolute -top-3 left-4 bg-white px-2 text-sm font-medium text-muted-foreground">
+                          Biodiversité
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-2xl font-bold text-primary">
+                              +{transformation.kpis.biodiversity}%
+                            </div>
+                            <p className="text-sm text-muted-foreground">Avec transformation</p>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-muted-foreground">0%</div>
+                            <p className="text-sm text-muted-foreground">Sans changement</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          Amélioration: <span className="font-medium text-primary">+{transformation.kpis.biodiversity}%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -312,43 +375,164 @@ export function TransformationView() {
           <Card>
             <CardHeader>
               <CardTitle>Simulation sur 5 ans</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Comparaison de l'évolution financière avec et sans la transformation
+              </p>
             </CardHeader>
             <CardContent>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RechartsLineChart
-                    data={simulationData}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="year" />
-                    <YAxis yAxisId="left" />
-                    <YAxis yAxisId="right" orientation="right" />
-                    <Tooltip />
-                    <Legend />
-                    <Line
-                      yAxisId="left"
-                      type="monotone"
-                      dataKey="impact"
-                      name="Impact (%)"
-                      stroke="#4f46e5"
-                      activeDot={{ r: 8 }}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="revenue"
-                      name="Revenu (€/ha)"
-                      stroke="#10b981"
-                      activeDot={{ r: 8 }}
-                    />
-                  </RechartsLineChart>
-                </ResponsiveContainer>
+              <div className="space-y-8">
+                {/* Revenue Chart */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Revenus (€/ha)</h4>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RechartsLineChart data={simulationData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" />
+                        <YAxis />
+                        <Tooltip
+                          content={({ active, payload, label }) => {
+                            if (active && payload && payload.length) {
+                              return (
+                                <div className="bg-white p-3 border rounded-lg shadow-sm">
+                                  <p className="font-medium">Année {label}</p>
+                                  <p className="text-primary">
+                                    Avec transformation: {payload[0].value}€/ha
+                                  </p>
+                                  <p className="text-muted-foreground">
+                                    Sans changement: {payload[1].value}€/ha
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="revenueWithTransformation"
+                          name="Avec transformation"
+                          stroke="hsl(var(--primary))"
+                          strokeWidth={2}
+                          dot={{ r: 4 }}
+                          activeDot={{ r: 6 }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="revenueWithoutTransformation"
+                          name="Sans changement"
+                          stroke="hsl(var(--muted-foreground))"
+                          strokeWidth={2}
+                          strokeDasharray="4 4"
+                          dot={{ r: 4 }}
+                        />
+                      </RechartsLineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Costs Chart */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Coûts de production (€/ha)</h4>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RechartsLineChart data={simulationData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" />
+                        <YAxis />
+                        <Tooltip
+                          content={({ active, payload, label }) => {
+                            if (active && payload && payload.length) {
+                              return (
+                                <div className="bg-white p-3 border rounded-lg shadow-sm">
+                                  <p className="font-medium">Année {label}</p>
+                                  <p className="text-primary">
+                                    Avec transformation: {payload[0].value}€/ha
+                                  </p>
+                                  <p className="text-muted-foreground">
+                                    Sans changement: {payload[1].value}€/ha
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="costsWithTransformation"
+                          name="Avec transformation"
+                          stroke="hsl(var(--primary))"
+                          strokeWidth={2}
+                          dot={{ r: 4 }}
+                          activeDot={{ r: 6 }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="costsWithoutTransformation"
+                          name="Sans changement"
+                          stroke="hsl(var(--muted-foreground))"
+                          strokeWidth={2}
+                          strokeDasharray="4 4"
+                          dot={{ r: 4 }}
+                        />
+                      </RechartsLineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Net Margin Chart */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Marge nette (€/ha)</h4>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RechartsLineChart data={simulationData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" />
+                        <YAxis />
+                        <Tooltip
+                          content={({ active, payload, label }) => {
+                            if (active && payload && payload.length) {
+                              return (
+                                <div className="bg-white p-3 border rounded-lg shadow-sm">
+                                  <p className="font-medium">Année {label}</p>
+                                  <p className="text-primary">
+                                    Avec transformation: {payload[0].value}€/ha
+                                  </p>
+                                  <p className="text-muted-foreground">
+                                    Sans changement: {payload[1].value}€/ha
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="marginWithTransformation"
+                          name="Avec transformation"
+                          stroke="hsl(var(--primary))"
+                          strokeWidth={2}
+                          dot={{ r: 4 }}
+                          activeDot={{ r: 6 }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="marginWithoutTransformation"
+                          name="Sans changement"
+                          stroke="hsl(var(--muted-foreground))"
+                          strokeWidth={2}
+                          strokeDasharray="4 4"
+                          dot={{ r: 4 }}
+                        />
+                      </RechartsLineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
