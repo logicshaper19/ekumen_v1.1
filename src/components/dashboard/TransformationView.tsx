@@ -166,6 +166,7 @@ export function TransformationView() {
         <TabsList>
           <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
           <TabsTrigger value="details">Analyse détaillée</TabsTrigger>
+          <TabsTrigger value="action">Plan d'action</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -305,33 +306,8 @@ export function TransformationView() {
           </div>
         </TabsContent>
 
-        {/* Analysis Tab */}
+        {/* Detailed Analysis Tab */}
         <TabsContent value="details" className="space-y-8">
-          {/* Implementation Steps */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Étapes de mise en œuvre</CardTitle>
-              <p className="text-muted-foreground">
-                La transition vers {transformation.title.toLowerCase()} nécessite une approche structurée. 
-                Voici les étapes clés pour assurer une mise en œuvre réussie de cette transformation.
-              </p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                {transformation.steps.map((step, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <p className="font-medium">{step}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
           {/* 5-Year Simulation */}
           <Card>
             <CardHeader>
@@ -423,6 +399,33 @@ export function TransformationView() {
                       <div className="text-sm text-muted-foreground">{resource.type}</div>
                     </div>
                   </a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Action Plan Tab */}
+        <TabsContent value="action" className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Étapes de mise en œuvre</CardTitle>
+              <p className="text-muted-foreground">
+                La transition vers {transformation.title.toLowerCase()} nécessite une approche structurée. 
+                Voici les étapes clés pour assurer une mise en œuvre réussie de cette transformation.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {transformation.steps.map((step: string, index: number) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <p className="font-medium">{step}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </CardContent>
