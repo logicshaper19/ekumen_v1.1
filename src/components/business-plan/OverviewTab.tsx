@@ -11,7 +11,7 @@ export function OverviewTab() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <AnalyticsCard
-          title="Revenu Mensuel"
+          title="Revenu Annuel"
           value="12 500 €"
           description="par rapport au mois dernier"
           change="+8.2%"
@@ -20,7 +20,7 @@ export function OverviewTab() {
         />
 
         <AnalyticsCard
-          title="Rendement Moyen"
+          title="Marge Semi Net"
           value="7.2 t/ha"
           description="toutes cultures confondues"
           change="+2.1%"
@@ -29,7 +29,7 @@ export function OverviewTab() {
         />
 
         <AnalyticsCard
-          title="Coûts Opérationnels"
+          title="Revenu Annuel"
           value="4 200 €"
           description="réduction des dépenses"
           change="-3.1%"
@@ -57,7 +57,7 @@ export function OverviewTab() {
                 <Wheat className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <p className="text-sm font-medium leading-none">Cultures Principales</p>
+                <p className="text-sm font-medium leading-none">Têtes de Rotation</p>
                 <p className="text-sm text-gray-600">Blé, Maïs, Colza</p>
               </div>
             </div>
