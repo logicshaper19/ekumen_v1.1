@@ -186,6 +186,47 @@ export const strategicTransformations: TransformationData[] = [
       'Mettre en place la structure',
       'Développer les services communs'
     ]
+  },
+  {
+    id: 'bio-certification',
+    title: 'Certification Bio',
+    shortDesc: 'Transition vers l\'agriculture biologique',
+    description: 'Conversion de l\'exploitation en agriculture biologique certifiée.',
+    icon: Leaf,
+    source: 'INRAE',
+    type: 'Stratégique',
+    impact: 'Fort',
+    status: 'under-consideration',
+    objectives: [
+      { label: 'Environnement', color: 'green' },
+      { label: 'Qualité', color: 'purple' },
+      { label: 'Rentabilité', color: 'blue' }
+    ],
+    benefits: [
+      'Prix de vente plus élevés',
+      'Impact environnemental réduit',
+      'Meilleure image de marque',
+      'Accès à de nouveaux marchés',
+      'Subventions spécifiques'
+    ],
+    kpis: {
+      margin: 300,
+      yield: -10,
+      workingTime: 12,
+      gesEmissions: -40,
+      lixiviation: -60,
+      n2oEmissions: -45,
+      soilQuality: 9,
+      organicMatter: 4.5,
+      biodiversity: 85
+    },
+    steps: [
+      'Audit initial de l\'exploitation',
+      'Plan de conversion sur 3 ans',
+      'Mise en conformité des pratiques',
+      'Certification et contrôles',
+      'Développement des débouchés bio'
+    ]
   }
 ];
 
@@ -199,7 +240,7 @@ export const nonStrategicTransformations: TransformationData[] = [
     source: 'ADEME',
     type: 'Opérationnel',
     impact: 'Moyen',
-    status: 'under-review',
+    status: 'new',
     reviewer: {
       name: 'Thomas Dubois',
       organization: 'Chambre d\'Agriculture',

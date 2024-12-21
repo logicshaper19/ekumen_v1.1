@@ -6,13 +6,15 @@ import { OverviewTab } from '../business-plan/OverviewTab';
 import { StrategyTab } from '../business-plan/StrategyTab';
 import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
 import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
+import { EnvironmentalTab } from '../business-plan/EnvironmentalTab';
 
-type Tab = 'overview' | 'strategy' | 'financial' | 'risks';
+type Tab = 'overview' | 'strategy' | 'financial' | 'environmental' | 'risks';
 
 const tabs: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Aperçu' },
   { id: 'strategy', label: 'Stratégie' },
   { id: 'financial', label: 'Plan Financier' },
+  { id: 'environmental', label: 'Impact Environnemental' },
   { id: 'risks', label: 'Risques et Opportunités' },
 ];
 
@@ -52,6 +54,7 @@ export function BusinessPlan() {
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'strategy' && <StrategyTab />}
         {activeTab === 'financial' && <FinancialPlanTab />}
+        {activeTab === 'environmental' && <EnvironmentalTab />}
         {activeTab === 'risks' && <RisksAndOpportunities />}
       </div>
     </div>

@@ -18,10 +18,28 @@ export function TransformationsList() {
   const allTransformations = [...strategicTransformations, ...nonStrategicTransformations];
 
   const transformationsByStatus = {
-    new: [strategicTransformations[1], nonStrategicTransformations[1]], // Diversification & Transition
-    ongoing: [strategicTransformations[0], nonStrategicTransformations[2]], // Agriculture régénérative & Smart Farming
-    'under-review': [nonStrategicTransformations[0]], // Agriculture de précision
-    'under-consideration': [strategicTransformations[2]], // Coopérative agricole
+    new: strategicTransformations.filter(t => t.status === 'new'),
+    ongoing: strategicTransformations.filter(t => t.status === 'ongoing'),
+    'under-review': strategicTransformations.filter(t => t.status === 'under-review'),
+    'under-consideration': strategicTransformations.filter(t => t.status === 'under-consideration'),
+    'other': nonStrategicTransformations.map(t => ({ ...t, status: 'new' })), // Reset status for non-strategic transformations
+  };
+
+  // Function to get the status badge color
+  const getStatusColor = (status: string, isStrategic: boolean) => {
+    if (!isStrategic) return 'bg-gray-100 text-gray-700'; // Non-strategic transformations
+    switch (status) {
+      case 'new':
+        return 'bg-green-100 text-green-700';
+      case 'ongoing':
+        return 'bg-blue-100 text-blue-700';
+      case 'under-review':
+        return 'bg-yellow-100 text-yellow-700';
+      case 'under-consideration':
+        return 'bg-purple-100 text-purple-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
   };
 
   return (
@@ -82,6 +100,7 @@ export function TransformationsList() {
             <TabsTrigger value="ongoing">En cours</TabsTrigger>
             <TabsTrigger value="under-review">En cours de validation</TabsTrigger>
             <TabsTrigger value="under-consideration">À l'étude</TabsTrigger>
+            <TabsTrigger value="other">Autres transformations</TabsTrigger>
           </TabsList>
 
           {Object.entries(transformationsByStatus).map(([status, transformations]) => (
@@ -92,7 +111,14 @@ export function TransformationsList() {
                   {status === 'ongoing' && 'Transformations en cours'}
                   {status === 'under-review' && 'Transformations en cours de validation'}
                   {status === 'under-consideration' && 'Transformations à l\'étude'}
+                  {status === 'other' && 'Transformations hors objectifs stratégiques'}
                 </h2>
+                {status === 'other' && (
+                  <p className="text-sm text-muted-foreground -mt-2">
+                    Ces transformations ne sont pas directement alignées avec vos objectifs stratégiques actuels, 
+                    mais pourraient présenter des opportunités intéressantes pour votre exploitation.
+                  </p>
+                )}
                 <div className="grid gap-4">
                   {transformations.map((transformation) => (
                     <Card
@@ -110,9 +136,19 @@ export function TransformationsList() {
                             </div>
                             <div className="space-y-1 flex-1">
                               <div className="flex items-center justify-between">
-                                <CardTitle className="text-base font-medium">
-                                  {transformation.title}
-                                </CardTitle>
+                                <div className="flex items-center gap-3">
+                                  <CardTitle className="text-base font-medium">
+                                    {transformation.title}
+                                  </CardTitle>
+                                  {status !== 'other' && (
+                                    <Badge className={getStatusColor(transformation.status, true)}>
+                                      {transformation.status === 'new' && 'Nouvelle'}
+                                      {transformation.status === 'ongoing' && 'En cours'}
+                                      {transformation.status === 'under-review' && 'En validation'}
+                                      {transformation.status === 'under-consideration' && 'À l\'étude'}
+                                    </Badge>
+                                  )}
+                                </div>
                                 <div className="text-right">
                                   <div className="text-lg font-bold text-primary">
                                     {transformation.kpis.margin} €/ha
