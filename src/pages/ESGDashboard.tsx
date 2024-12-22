@@ -39,6 +39,7 @@ const mockData = {
   ],
   highEmitters: [
     { 
+      id: 'ferme-durand',
       name: 'Ferme Durand',
       emissions: 800,
       type: 'Élevage',
@@ -57,6 +58,7 @@ const mockData = {
       ]
     },
     { 
+      id: 'exploitation-martin',
       name: 'Exploitation Martin',
       emissions: 750,
       type: 'Grandes cultures',
@@ -75,6 +77,7 @@ const mockData = {
       ]
     },
     { 
+      id: 'gaec-des-plaines',
       name: 'GAEC des Plaines',
       emissions: 700,
       type: 'Élevage',
@@ -93,6 +96,7 @@ const mockData = {
       ]
     },
     { 
+      id: 'earl-du-soleil',
       name: 'EARL du Soleil',
       emissions: 650,
       type: 'Grandes cultures',
@@ -108,6 +112,120 @@ const mockData = {
         { year: '2021', emissions: 690 },
         { year: '2022', emissions: 670 },
         { year: '2023', emissions: 650 }
+      ]
+    },
+    { 
+      id: 'scea-des-vignes',
+      name: 'SCEA des Vignes',
+      emissions: 600,
+      type: 'Viticulture',
+      region: 'Bourgogne-Franche-Comté',
+      location: 'Dijon',
+      size: 120,
+      loans: {
+        total: 400000,
+        count: 2,
+        types: ['Équipement', 'Foncier']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 620 },
+        { year: '2022', emissions: 610 },
+        { year: '2023', emissions: 600 }
+      ]
+    },
+    { 
+      id: 'ferme-bio-vallee',
+      name: 'Ferme Bio Vallée',
+      emissions: 550,
+      type: 'Maraîchage',
+      region: 'Auvergne-Rhône-Alpes',
+      location: 'Lyon',
+      size: 100,
+      loans: {
+        total: 350000,
+        count: 2,
+        types: ['Équipement', 'Développement']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 570 },
+        { year: '2022', emissions: 560 },
+        { year: '2023', emissions: 550 }
+      ]
+    },
+    { 
+      id: 'earl-des-cereales',
+      name: 'EARL des Céréales',
+      emissions: 520,
+      type: 'Grandes cultures',
+      region: 'Centre-Val de Loire',
+      location: 'Orléans',
+      size: 140,
+      loans: {
+        total: 420000,
+        count: 2,
+        types: ['Foncier', 'Modernisation']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 540 },
+        { year: '2022', emissions: 530 },
+        { year: '2023', emissions: 520 }
+      ]
+    },
+    { 
+      id: 'ferme-laitiere-nord',
+      name: 'Ferme Laitière du Nord',
+      emissions: 500,
+      type: 'Élevage laitier',
+      region: 'Hauts-de-France',
+      location: 'Lille',
+      size: 160,
+      loans: {
+        total: 450000,
+        count: 2,
+        types: ['Équipement', 'Foncier']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 520 },
+        { year: '2022', emissions: 510 },
+        { year: '2023', emissions: 500 }
+      ]
+    },
+    { 
+      id: 'scea-avicole',
+      name: 'SCEA Avicole',
+      emissions: 480,
+      type: 'Élevage avicole',
+      region: 'Pays de la Loire',
+      location: 'Nantes',
+      size: 120,
+      loans: {
+        total: 380000,
+        count: 2,
+        types: ['Équipement', 'Développement']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 500 },
+        { year: '2022', emissions: 490 },
+        { year: '2023', emissions: 480 }
+      ]
+    },
+    { 
+      id: 'gaec-montagne',
+      name: 'GAEC de la Montagne',
+      emissions: 450,
+      type: 'Élevage ovin',
+      region: 'Provence-Alpes-Côte d\'Azur',
+      location: 'Marseille',
+      size: 100,
+      loans: {
+        total: 320000,
+        count: 2,
+        types: ['Foncier', 'Modernisation']
+      },
+      emissionTrend: [
+        { year: '2021', emissions: 470 },
+        { year: '2022', emissions: 460 },
+        { year: '2023', emissions: 450 }
       ]
     }
   ]
@@ -254,11 +372,11 @@ export function ESGDashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockData.highEmitters.map((emitter, index) => (
+            {filteredEmitters.map((emitter, index) => (
               <div 
-                key={index} 
+                key={emitter.id} 
                 className="flex items-start gap-6 p-4 border rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-                onClick={() => navigate(`/esg-dashboard/emitter/${emitter.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                onClick={() => navigate(`/esg-dashboard/emitter/${emitter.id}`)}
               >
                 <div className="flex-grow space-y-3">
                   <div className="flex justify-between items-start">

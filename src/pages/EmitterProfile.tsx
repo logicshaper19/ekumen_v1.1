@@ -101,6 +101,429 @@ const mockEmitterData: EmitterDataMap = {
         'Expansion des pratiques de séquestration du carbone'
       ]
     }
+  },
+  'exploitation-martin': {
+    name: 'Exploitation Martin',
+    id: 'EM-2023-002',
+    type: 'Grandes cultures',
+    location: {
+      region: 'Grand Est',
+      department: 'Marne',
+      coordinates: { lat: 49.258329, lng: 4.031696 }
+    },
+    loans: {
+      outstanding: 600000,
+      types: ['Équipement', 'Foncier', 'Trésorerie'],
+      originationDate: '2020-09-01'
+    },
+    emissions: {
+      total: 750,
+      rank: 2,
+      portfolioContribution: 2.8,
+      trend: [
+        { year: '2021', emissions: 850 },
+        { year: '2022', emissions: 800 },
+        { year: '2023', emissions: 750 }
+      ],
+      breakdown: [
+        { source: 'Utilisation d\'engrais', value: 400, percentage: 53.33 },
+        { source: 'Machinerie agricole', value: 200, percentage: 26.67 },
+        { source: 'Consommation d\'énergie', value: 100, percentage: 13.33 },
+        { source: 'Autres sources', value: 50, percentage: 6.67 }
+      ]
+    },
+    practices: {
+      current: [
+        'Agriculture de précision',
+        'Utilisation d\'engrais à libération contrôlée',
+        'Système d\'irrigation optimisé'
+      ],
+      past: [
+        'Modernisation du parc de machines (2021)',
+        'Installation de capteurs IoT (2020)'
+      ],
+      improvement: [
+        'Adoption de pratiques d\'agriculture régénératrice',
+        'Optimisation des cycles de fertilisation',
+        'Installation de haies pour la biodiversité'
+      ]
+    }
+  },
+  'gaec-des-plaines': {
+    name: 'GAEC des Plaines',
+    id: 'GP-2023-003',
+    type: 'Élevage',
+    location: {
+      region: 'Nouvelle-Aquitaine',
+      department: 'Gironde',
+      coordinates: { lat: 44.837789, lng: -0.579180 }
+    },
+    loans: {
+      outstanding: 520000,
+      types: ['Équipement', 'Développement'],
+      originationDate: '2021-06-15'
+    },
+    emissions: {
+      total: 700,
+      rank: 3,
+      portfolioContribution: 2.5,
+      trend: [
+        { year: '2021', emissions: 700 },
+        { year: '2022', emissions: 700 },
+        { year: '2023', emissions: 700 }
+      ],
+      breakdown: [
+        { source: 'Fermentation entérique', value: 350, percentage: 50 },
+        { source: 'Gestion du fumier', value: 175, percentage: 25 },
+        { source: 'Production fourragère', value: 125, percentage: 17.86 },
+        { source: 'Consommation d\'énergie', value: 50, percentage: 7.14 }
+      ]
+    },
+    practices: {
+      current: [
+        'Pâturage rotatif',
+        'Production de biogaz',
+        'Cultures fourragères optimisées'
+      ],
+      past: [
+        'Installation d\'un système de méthanisation (2021)',
+        'Amélioration génétique du troupeau (2020)'
+      ],
+      improvement: [
+        'Optimisation de la ration alimentaire',
+        'Extension du système de méthanisation',
+        'Développement de l\'agroforesterie'
+      ]
+    }
+  },
+  'earl-du-soleil': {
+    name: 'EARL du Soleil',
+    id: 'ES-2023-004',
+    type: 'Grandes cultures',
+    location: {
+      region: 'Occitanie',
+      department: 'Haute-Garonne',
+      coordinates: { lat: 43.604652, lng: 1.444209 }
+    },
+    loans: {
+      outstanding: 480000,
+      types: ['Foncier', 'Modernisation'],
+      originationDate: '2022-01-15'
+    },
+    emissions: {
+      total: 650,
+      rank: 4,
+      portfolioContribution: 2.2,
+      trend: [
+        { year: '2021', emissions: 690 },
+        { year: '2022', emissions: 670 },
+        { year: '2023', emissions: 650 }
+      ],
+      breakdown: [
+        { source: 'Utilisation d\'engrais', value: 300, percentage: 46.15 },
+        { source: 'Machinerie agricole', value: 200, percentage: 30.77 },
+        { source: 'Irrigation', value: 100, percentage: 15.38 },
+        { source: 'Autres sources', value: 50, percentage: 7.7 }
+      ]
+    },
+    practices: {
+      current: [
+        'Agriculture de conservation',
+        'Irrigation goutte à goutte',
+        'Utilisation d\'énergies renouvelables'
+      ],
+      past: [
+        'Installation de panneaux solaires (2022)',
+        'Conversion en agriculture de conservation (2021)'
+      ],
+      improvement: [
+        'Développement de la couverture végétale permanente',
+        'Optimisation du système d\'irrigation',
+        'Installation de bandes enherbées'
+      ]
+    }
+  },
+  'scea-des-vignes': {
+    name: 'SCEA des Vignes',
+    id: 'SV-2023-005',
+    type: 'Viticulture',
+    location: {
+      region: 'Bourgogne-Franche-Comté',
+      department: 'Côte-d\'Or',
+      coordinates: { lat: 47.322047, lng: 5.041480 }
+    },
+    loans: {
+      outstanding: 550000,
+      types: ['Foncier', 'Équipement'],
+      originationDate: '2021-08-20'
+    },
+    emissions: {
+      total: 600,
+      rank: 5,
+      portfolioContribution: 2.0,
+      trend: [
+        { year: '2021', emissions: 650 },
+        { year: '2022', emissions: 620 },
+        { year: '2023', emissions: 600 }
+      ],
+      breakdown: [
+        { source: 'Machinerie viticole', value: 250, percentage: 41.67 },
+        { source: 'Traitements phytosanitaires', value: 200, percentage: 33.33 },
+        { source: 'Vinification', value: 100, percentage: 16.67 },
+        { source: 'Autres sources', value: 50, percentage: 8.33 }
+      ]
+    },
+    practices: {
+      current: [
+        'Viticulture raisonnée',
+        'Enherbement inter-rangs',
+        'Récupération des eaux de pluie'
+      ],
+      past: [
+        'Conversion en lutte raisonnée (2021)',
+        'Installation de stations météo connectées (2022)'
+      ],
+      improvement: [
+        'Transition vers la viticulture biologique',
+        'Installation de panneaux solaires',
+        'Optimisation de l\'irrigation'
+      ]
+    }
+  },
+  'ferme-bio-vallee': {
+    name: 'Ferme Bio Vallée',
+    id: 'FBV-2023-006',
+    type: 'Maraîchage',
+    location: {
+      region: 'Auvergne-Rhône-Alpes',
+      department: 'Drôme',
+      coordinates: { lat: 44.756111, lng: 5.369780 }
+    },
+    loans: {
+      outstanding: 420000,
+      types: ['Équipement', 'Développement'],
+      originationDate: '2022-03-10'
+    },
+    emissions: {
+      total: 550,
+      rank: 6,
+      portfolioContribution: 1.8,
+      trend: [
+        { year: '2021', emissions: 580 },
+        { year: '2022', emissions: 560 },
+        { year: '2023', emissions: 550 }
+      ],
+      breakdown: [
+        { source: 'Serres chauffées', value: 250, percentage: 45.45 },
+        { source: 'Transport', value: 150, percentage: 27.27 },
+        { source: 'Irrigation', value: 100, percentage: 18.18 },
+        { source: 'Autres sources', value: 50, percentage: 9.1 }
+      ]
+    },
+    practices: {
+      current: [
+        'Agriculture biologique certifiée',
+        'Système d\'irrigation goutte à goutte',
+        'Vente en circuit court'
+      ],
+      past: [
+        'Installation de serres bioclimatiques (2022)',
+        'Mise en place du compostage (2021)'
+      ],
+      improvement: [
+        'Installation de panneaux photovoltaïques',
+        'Optimisation du stockage',
+        'Développement de l\'agroforesterie'
+      ]
+    }
+  },
+  'earl-des-cereales': {
+    name: 'EARL des Céréales',
+    id: 'EC-2023-007',
+    type: 'Grandes cultures',
+    location: {
+      region: 'Centre-Val de Loire',
+      department: 'Eure-et-Loir',
+      coordinates: { lat: 48.443854, lng: 1.489012 }
+    },
+    loans: {
+      outstanding: 580000,
+      types: ['Foncier', 'Équipement'],
+      originationDate: '2021-11-15'
+    },
+    emissions: {
+      total: 520,
+      rank: 7,
+      portfolioContribution: 1.7,
+      trend: [
+        { year: '2021', emissions: 540 },
+        { year: '2022', emissions: 530 },
+        { year: '2023', emissions: 520 }
+      ],
+      breakdown: [
+        { source: 'Fertilisation', value: 250, percentage: 48.08 },
+        { source: 'Machinerie agricole', value: 150, percentage: 28.85 },
+        { source: 'Stockage', value: 70, percentage: 13.46 },
+        { source: 'Autres sources', value: 50, percentage: 9.61 }
+      ]
+    },
+    practices: {
+      current: [
+        'Agriculture de précision',
+        'Rotation des cultures',
+        'Techniques culturales simplifiées'
+      ],
+      past: [
+        'Acquisition de GPS RTK (2022)',
+        'Installation de stockage ventilé (2021)'
+      ],
+      improvement: [
+        'Développement des cultures intermédiaires',
+        'Optimisation de la fertilisation',
+        'Installation de haies'
+      ]
+    }
+  },
+  'ferme-laitiere-nord': {
+    name: 'Ferme Laitière du Nord',
+    id: 'FLN-2023-008',
+    type: 'Élevage laitier',
+    location: {
+      region: 'Hauts-de-France',
+      department: 'Nord',
+      coordinates: { lat: 50.629250, lng: 3.057256 }
+    },
+    loans: {
+      outstanding: 490000,
+      types: ['Équipement', 'Modernisation'],
+      originationDate: '2022-02-01'
+    },
+    emissions: {
+      total: 500,
+      rank: 8,
+      portfolioContribution: 1.6,
+      trend: [
+        { year: '2021', emissions: 520 },
+        { year: '2022', emissions: 510 },
+        { year: '2023', emissions: 500 }
+      ],
+      breakdown: [
+        { source: 'Fermentation entérique', value: 250, percentage: 50 },
+        { source: 'Gestion des effluents', value: 150, percentage: 30 },
+        { source: 'Production fourragère', value: 60, percentage: 12 },
+        { source: 'Autres sources', value: 40, percentage: 8 }
+      ]
+    },
+    practices: {
+      current: [
+        'Robot de traite',
+        'Méthanisation des effluents',
+        'Production fourragère optimisée'
+      ],
+      past: [
+        'Installation robot de traite (2022)',
+        'Rénovation bâtiment d\'élevage (2021)'
+      ],
+      improvement: [
+        'Optimisation de l\'alimentation',
+        'Extension de la méthanisation',
+        'Production d\'énergie solaire'
+      ]
+    }
+  },
+  'scea-avicole': {
+    name: 'SCEA Avicole',
+    id: 'SA-2023-009',
+    type: 'Élevage avicole',
+    location: {
+      region: 'Pays de la Loire',
+      department: 'Vendée',
+      coordinates: { lat: 46.670511, lng: -1.426442 }
+    },
+    loans: {
+      outstanding: 460000,
+      types: ['Équipement', 'Développement'],
+      originationDate: '2021-09-15'
+    },
+    emissions: {
+      total: 480,
+      rank: 9,
+      portfolioContribution: 1.5,
+      trend: [
+        { year: '2021', emissions: 500 },
+        { year: '2022', emissions: 490 },
+        { year: '2023', emissions: 480 }
+      ],
+      breakdown: [
+        { source: 'Chauffage bâtiments', value: 200, percentage: 41.67 },
+        { source: 'Gestion des effluents', value: 150, percentage: 31.25 },
+        { source: 'Alimentation', value: 80, percentage: 16.67 },
+        { source: 'Autres sources', value: 50, percentage: 10.41 }
+      ]
+    },
+    practices: {
+      current: [
+        'Ventilation optimisée',
+        'Isolation performante',
+        'Gestion technique centralisée'
+      ],
+      past: [
+        'Installation de chaudières biomasse (2022)',
+        'Rénovation isolation (2021)'
+      ],
+      improvement: [
+        'Production d\'énergie photovoltaïque',
+        'Optimisation de l\'alimentation',
+        'Valorisation des effluents'
+      ]
+    }
+  },
+  'gaec-montagne': {
+    name: 'GAEC de la Montagne',
+    id: 'GM-2023-010',
+    type: 'Élevage ovin',
+    location: {
+      region: 'Provence-Alpes-Côte d\'Azur',
+      department: 'Hautes-Alpes',
+      coordinates: { lat: 44.558910, lng: 6.079803 }
+    },
+    loans: {
+      outstanding: 400000,
+      types: ['Foncier', 'Équipement'],
+      originationDate: '2022-04-01'
+    },
+    emissions: {
+      total: 450,
+      rank: 10,
+      portfolioContribution: 1.4,
+      trend: [
+        { year: '2021', emissions: 470 },
+        { year: '2022', emissions: 460 },
+        { year: '2023', emissions: 450 }
+      ],
+      breakdown: [
+        { source: 'Fermentation entérique', value: 200, percentage: 44.44 },
+        { source: 'Gestion des pâturages', value: 150, percentage: 33.33 },
+        { source: 'Transport', value: 60, percentage: 13.33 },
+        { source: 'Autres sources', value: 40, percentage: 8.9 }
+      ]
+    },
+    practices: {
+      current: [
+        'Pastoralisme',
+        'Production fourragère locale',
+        'Certification HVE'
+      ],
+      past: [
+        'Acquisition de clôtures mobiles (2022)',
+        'Amélioration génétique (2021)'
+      ],
+      improvement: [
+        'Développement de l\'agroforesterie',
+        'Optimisation des parcours',
+        'Production d\'énergie renouvelable'
+      ]
+    }
   }
 };
 
