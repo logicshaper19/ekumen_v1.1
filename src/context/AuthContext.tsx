@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
     });
     // Redirect based on user role
-    navigate(user.role === 'bank' ? '/bank-dashboard' : '/tableau-de-bord');
+    navigate(user.role === 'bank' ? '/bank-dashboard' : '/ai-chat');
   };
 
   const logout = () => {

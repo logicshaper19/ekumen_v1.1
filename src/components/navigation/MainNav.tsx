@@ -12,7 +12,8 @@ import {
   Sprout,
   Building2,
   Wheat,
-  LineChart
+  LineChart,
+  MessageSquare
 } from 'lucide-react';
 
 const navigation = [
@@ -32,8 +33,8 @@ export function MainNav() {
   const { logout, user } = useAuth();
 
   const isLinkActive = (href: string) => {
-    // Special case for dashboard
-    if (href === '/tableau-de-bord' && (location.pathname === '/' || location.pathname === '/tableau-de-bord')) {
+    // Special case for AI chat and dashboard
+    if (href === '/tableau-de-bord' && location.pathname === '/tableau-de-bord') {
       return true;
     }
     if (href === '/bank-dashboard' && location.pathname === '/bank-dashboard') {

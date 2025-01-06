@@ -36,6 +36,7 @@ import { Agriculteurs } from './pages/Agriculteurs';
 import { AgriculteurProfile } from './pages/AgriculteurProfile';
 import { ESGDashboard } from './pages/ESGDashboard';
 import { EmitterProfile } from './pages/EmitterProfile';
+import { AIChatInterface } from './pages/AIChatInterface';
 
 function App() {
   const location = useLocation();
@@ -70,66 +71,62 @@ function App() {
   if (['/login', '/signup', '/auth/signup-flow'].includes(location.pathname)) {
     return (
       <Routes>
-        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/tableau-de-bord" />} />
-        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/tableau-de-bord" />} />
-        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/tableau-de-bord" />} />
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/ai-chat" />} />
+        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/ai-chat" />} />
+        <Route path="/auth/signup-flow" element={!isAuthenticated ? <SignupFlow /> : <Navigate to="/ai-chat" />} />
       </Routes>
     );
   }
 
   // Show authenticated app layout with all routes
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Routes>
-        {/* Protected Routes */}
-        <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
-          <Route index element={<Navigate to="/tableau-de-bord" replace />} />
-          <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
-          <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
-          <Route path="categories/:categoryId/declarations/:declarationId/overview" element={<DeclarationOverview />} />
-          <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
-          <Route path="tableau-de-bord" element={<TableauDeBord />} />
-          <Route path="bank-dashboard" element={<BankDashboard />} />
-          <Route path="agriculteurs" element={<Agriculteurs />} />
-          <Route path="esg-dashboard" element={<ESGDashboard />} />
-          <Route path="esg-dashboard/emitter/:id" element={<EmitterProfile />} />
-          <Route path="agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
-          <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
-          <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
-          <Route path="agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
-          <Route path="agriculteurs/:agriculteurId/transformations/:transformationId" element={<TransformationView />} />
-          <Route path="reglementations" element={<Reglementations />} />
-          <Route path="messagerie" element={<Messagerie />} />
-          <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
-          <Route path="business-plan" element={<BusinessPlan />} />
-          <Route path="business-plan/add-objective" element={<AddObjective />} />
-          <Route path="business-plan/financial-details" element={<FinancialDetailsPage />} />
-          <Route path="business-plan/financial-details/crop/:cropName" element={<CropDetailsPage />} />
-          <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
-          <Route path="business-plan/risks-opportunities" element={<RisksAndOpportunities />} />
-          <Route path="equipe" element={<Equipe />} />
-          <Route path="transformations" element={<TransformationsList />} />
-          <Route path="transformations/:id" element={<TransformationView />} />
-          <Route path="my-data" element={<MyData />} />
-          <Route path="declarations/:id/details" element={<DeclarationDetails />} />
-        </Route>
+    <Routes>
+      {/* AI Chat Interface - Intermediate dashboard after login */}
+      <Route
+        path="/ai-chat"
+        element={isAuthenticated ? <AIChatInterface /> : <Navigate to="/login" />}
+      />
 
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signup-flow" element={<SignupFlow />} />
-        <Route path="/" element={<LandingNav />}>
-          <Route index element={<Hero />} />
-          <Route path="benefits" element={<Benefits />} />
-          <Route path="how-it-works" element={<HowItWorks />} />
-          <Route path="use-cases" element={<UseCases />} />
-          <Route path="results" element={<Results />} />
-        </Route>
+      {/* Protected Dashboard Routes */}
+      <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
+        <Route path="tableau-de-bord" element={<TableauDeBord />} />
+        <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
+        <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
+        <Route path="categories/:categoryId/declarations/:declarationId/overview" element={<DeclarationOverview />} />
+        <Route path="categories/:categoryId/declarations/:declarationId/details" element={<DeclarationDetailsPage />} />
+        <Route path="bank-dashboard" element={<BankDashboard />} />
+        <Route path="agriculteurs" element={<Agriculteurs />} />
+        <Route path="esg-dashboard" element={<ESGDashboard />} />
+        <Route path="esg-dashboard/emitter/:id" element={<EmitterProfile />} />
+        <Route path="agriculteurs/:agriculteurId" element={<AgriculteurProfile />} />
+        <Route path="agriculteurs/:agriculteurId/risks/:riskId" element={<RiskOpportunityEvolution />} />
+        <Route path="agriculteurs/:agriculteurId/opportunities/:opportunityId" element={<RiskOpportunityEvolution />} />
+        <Route path="agriculteurs/:agriculteurId/business-plan" element={<BusinessPlan />} />
+        <Route path="agriculteurs/:agriculteurId/transformations/:transformationId" element={<TransformationView />} />
+        <Route path="reglementations" element={<Reglementations />} />
+        <Route path="messagerie" element={<Messagerie />} />
+        <Route path="messagerie/discussion/:id" element={<DiscussionDetails />} />
+        <Route path="business-plan" element={<BusinessPlan />} />
+        <Route path="business-plan/add-objective" element={<AddObjective />} />
+        <Route path="business-plan/financial-details" element={<FinancialDetailsPage />} />
+        <Route path="business-plan/financial-details/crop/:cropName" element={<CropDetailsPage />} />
+        <Route path="business-plan/financial-plan-details" element={<FinancialPlanDetailsPage />} />
+        <Route path="business-plan/risks-opportunities" element={<RisksAndOpportunities />} />
+        <Route path="equipe" element={<Equipe />} />
+        <Route path="transformations" element={<TransformationsList />} />
+        <Route path="transformations/:id" element={<TransformationView />} />
+        <Route path="my-data" element={<MyData />} />
+        <Route path="declarations/:id/details" element={<DeclarationDetails />} />
+      </Route>
 
-        {/* Catch all route */}
-        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
-      </Routes>
-    </div>
+      {/* Public Routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/signup-flow" element={<SignupFlow />} />
+
+      {/* Catch all route */}
+      <Route path="*" element={<Navigate to={isAuthenticated ? "/ai-chat" : "/login"} />} />
+    </Routes>
   );
 }
 
