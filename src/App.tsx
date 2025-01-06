@@ -15,6 +15,7 @@ import { MyData } from './components/data/MyData';
 import { Login } from './components/Login';
 import { LandingNav } from './components/navigation/LandingNav';
 import { SignupFlow } from './components/auth/SignupFlow';
+import AIChatInterface from './pages/AIChatInterface';
 import { useAuth } from './context/AuthContext';
 import { DeclarationDetails } from './components/dashboard/declarations/DeclarationDetails';
 import { DeclarationDetailsPage } from './pages/DeclarationDetailsPage';
@@ -36,7 +37,6 @@ import { Agriculteurs } from './pages/Agriculteurs';
 import { AgriculteurProfile } from './pages/AgriculteurProfile';
 import { ESGDashboard } from './pages/ESGDashboard';
 import { EmitterProfile } from './pages/EmitterProfile';
-import { AIChatInterface } from './pages/AIChatInterface';
 
 function App() {
   const location = useLocation();
@@ -81,15 +81,18 @@ function App() {
   // Show authenticated app layout with all routes
   return (
     <Routes>
-      {/* AI Chat Interface - Intermediate dashboard after login */}
+      {/* AI Chat Interface - Initial landing after login */}
       <Route
         path="/ai-chat"
         element={isAuthenticated ? <AIChatInterface /> : <Navigate to="/login" />}
       />
 
-      {/* Protected Dashboard Routes */}
+      {/* Protected Dashboard Routes - Accessible from AI Chat */}
       <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
+        {/* Dashboard is now the main route after login */}
         <Route path="tableau-de-bord" element={<TableauDeBord />} />
+        
+        {/* Dashboard sub-routes */}
         <Route path="declarations/:id" element={<DeclarationDetailsPage />} />
         <Route path="declarations/categories/:categoryId" element={<CategoryDeclarationsPage />} />
         <Route path="categories/:categoryId/declarations/:declarationId/overview" element={<DeclarationOverview />} />

@@ -8,109 +8,188 @@ import {
   MessageSquare, 
   AlertTriangle,
   TrendingUp,
-  Users
+  Users,
+  ArrowRight
 } from 'lucide-react'
 import { QuickView } from '@/components/dashboard/QuickView'
+import { ChatResponse } from '@/components/responses/ChatResponse'
 
 // Structured suggestions based on different contexts
 const contextualSuggestions = {
   risks: [
     {
-      question: "What are the main risks for soil degradation?",
-      context: "Environmental",
+      question: "Quels sont les principaux risques de dégradation des sols ?",
+      context: "Environnemental",
       path: "/business-plan/risks-opportunities",
-      description: "Learn about soil fertility risks and mitigation strategies"
+      description: "Découvrez les risques liés à la fertilité des sols et les stratégies d'atténuation"
     },
     {
-      question: "How can I protect against climate change impacts?",
-      context: "Climate",
+      question: "Comment puis-je me protéger contre les impacts du changement climatique ?",
+      context: "Climat",
       path: "/business-plan/risks-opportunities",
-      description: "Understand climate risks and insurance options"
+      description: "Comprendre les risques climatiques et les options d'assurance"
     },
     {
-      question: "What are the market price volatility risks?",
-      context: "Financial",
+      question: "Quels sont les risques de volatilité des prix du marché ?",
+      context: "Financier",
       path: "/business-plan/risks-opportunities",
-      description: "Analyze market risks and price stabilization strategies"
+      description: "Analyser les risques du marché et les stratégies de stabilisation des prix"
     }
   ],
   opportunities: [
     {
-      question: "How can I benefit from the organic market growth?",
-      context: "Market",
+      question: "Comment puis-je bénéficier de la croissance du marché bio ?",
+      context: "Marché",
       path: "/business-plan/risks-opportunities",
-      description: "Explore organic market opportunities and certification"
+      description: "Explorez les opportunités du marché bio et la certification"
     },
     {
-      question: "What precision farming technologies should I adopt?",
+      question: "Quelles technologies d'agriculture de précision devrais-je adopter ?",
       context: "Innovation",
       path: "/business-plan/risks-opportunities",
-      description: "Discover new agricultural technologies and their benefits"
+      description: "Découvrez les nouvelles technologies agricoles et leurs avantages"
     },
     {
-      question: "How to develop local distribution channels?",
+      question: "Comment développer des circuits de distribution locaux ?",
       context: "Distribution",
       path: "/business-plan/risks-opportunities",
-      description: "Learn about local market opportunities and strategies"
+      description: "Découvrez les opportunités du marché local et les stratégies"
     }
   ],
   partners: [
     {
-      question: "How can the Chamber of Agriculture help my farm?",
+      question: "Comment la Chambre d'Agriculture peut-elle aider mon exploitation ?",
       context: "Support",
       path: "/messagerie",
-      description: "Connect with agricultural advisors and experts"
+      description: "Connectez-vous avec des conseillers et experts agricoles"
     },
     {
-      question: "What insurance options are available?",
+      question: "Quelles options d'assurance sont disponibles ?",
       context: "Protection",
       path: "/business-plan/risks-opportunities",
-      description: "Explore insurance and risk management solutions"
+      description: "Explorez les solutions d'assurance et de gestion des risques"
     },
     {
-      question: "How can I access agricultural financing?",
-      context: "Financial",
+      question: "Comment accéder au financement agricole ?",
+      context: "Financier",
       path: "/business-plan/financial-plan-details",
-      description: "Learn about financing options and credit solutions"
+      description: "Découvrez les options de financement et les solutions de crédit"
     }
   ]
 }
 
-export function AIChatInterface() {
+export default function AIChatInterface() {
   const [query, setQuery] = useState("")
+  const [showResponse, setShowResponse] = useState(false)
   const [activeContext, setActiveContext] = useState<'risks' | 'opportunities' | 'partners'>('risks')
   const navigate = useNavigate()
 
+  // Mock LLM response - in reality, this would come from your backend
+  const mockResponse = {
+    title: "Prix de l'Orge - Analyse de Marché",
+    content: {
+      sections: [
+        {
+          title: "Prix Actuels du Marché",
+          type: "text",
+          content: `D'après les dernières données de marché que j'ai recueillies (à la date d'aujourd'hui), voici les prix actuels pour l'orge:
+
+Orge fourragère:
+• États-Unis : 220 à 240 euros par tonne métrique
+• Canada : 210 à 230 euros par tonne métrique
+• Union européenne : 250 à 270 euros par tonne métrique
+
+Orge de brasserie:
+• États-Unis : 330 à 350 euros par tonne métrique
+• Canada : 320 à 340 euros par tonne métrique
+• Union européenne : 360 à 380 euros par tonne métrique`
+        },
+        {
+          title: "Prix Prévisionnels",
+          type: "text",
+          content: `Compte tenu des tendances actuelles du marché et de votre date de récolte prévue, voici ce à quoi vous pouvez vous attendre:
+
+Orge fourragère : Les prix devraient augmenter de 3 à 5% en raison d'une demande accrue des éleveurs et d'une offre mondiale plus restreinte.
+• Fourchette prévisionnelle : 257 à 283 euros par tonne métrique (Union européenne)
+
+Orge de brasserie : Les prix devraient rester stables ou augmenter légèrement (1 à 2%), soutenus par une demande constante de l'industrie brassicole.
+• Fourchette prévisionnelle : 363 à 387 euros par tonne métrique (Union européenne)`
+        },
+        {
+          title: "Facteurs Clés Influençant les Prix",
+          type: "list",
+          content: [
+            {
+              label: "Offre Mondiale",
+              value: "Les conditions météorologiques dans les principales régions productrices laissent entrevoir des réductions potentielles de rendement."
+            },
+            {
+              label: "Tendances de la Demande",
+              value: "La demande croissante pour les protéines végétales et les biocarburants entraîne une consommation accrue."
+            },
+            {
+              label: "Coûts de l'Énergie",
+              value: "Les fluctuations des prix du carburant pourraient affecter les coûts de transport."
+            }
+          ]
+        }
+      ]
+    },
+    actions: [
+      {
+        label: "Non",
+        onClick: () => setShowResponse(false)
+      },
+      {
+        label: "Oui",
+        onClick: () => console.log("Surveillance activée")
+      }
+    ]
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (query.trim()) {
+      setShowResponse(true)
+    }
+    setQuery('')
+  }
+
   const handleSuggestionClick = (path: string, question: string) => {
     setQuery(question)
-    // Navigate to the dashboard page
     navigate(path)
   }
 
+  if (showResponse) {
+    return <ChatResponse 
+      response={mockResponse} 
+      onBack={() => setShowResponse(false)} 
+    />
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Simple Top Bar */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation */}
       <div className="border-b">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <MessageSquare className="h-8 w-8 text-primary" />
-              <span className="ml-2 text-xl font-semibold">Ekumen AI Assistant</span>
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <MessageSquare className="h-6 w-6 text-teal-600" />
+              <span className="text-xl font-semibold">Assistant Ekumen</span>
             </div>
             <Button
               onClick={() => navigate('/tableau-de-bord')}
-              variant="outline"
               className="flex items-center gap-2"
             >
               <LayoutDashboard className="h-4 w-4" />
-              Go to Main Dashboard
+              Accéder au Tableau de Bord
             </Button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex gap-8">
         {/* Chat Section (2/3) */}
         <div className="flex-1 min-w-0">
           {/* Header */}
@@ -119,10 +198,10 @@ export function AIChatInterface() {
               <div className="w-16 h-16 bg-gradient-to-br from-orange-400 via-pink-500 to-blue-500 rounded-full" />
             </div>
             <h1 className="text-4xl font-bold tracking-tight">
-              Welcome to Ekumen
+              Bienvenue sur Ekumen
             </h1>
             <p className="text-xl text-muted-foreground">
-              How can I help you get started today?
+              Comment puis-je vous aider aujourd'hui ?
             </p>
           </div>
 
@@ -134,7 +213,7 @@ export function AIChatInterface() {
               className="flex items-center gap-2"
             >
               <AlertTriangle className="h-4 w-4" />
-              Risks
+              Risques
             </Button>
             <Button
               variant={activeContext === 'opportunities' ? 'default' : 'outline'}
@@ -142,7 +221,7 @@ export function AIChatInterface() {
               className="flex items-center gap-2"
             >
               <TrendingUp className="h-4 w-4" />
-              Opportunities
+              Opportunités
             </Button>
             <Button
               variant={activeContext === 'partners' ? 'default' : 'outline'}
@@ -150,25 +229,24 @@ export function AIChatInterface() {
               className="flex items-center gap-2"
             >
               <Users className="h-4 w-4" />
-              Partners
+              Partenaires
             </Button>
           </div>
 
           {/* Search Input */}
-          <div className="relative mb-8">
-            <Input
-              className="w-full h-14 pl-4 pr-12 text-lg"
-              placeholder="Ask me anything about your farm..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <Button 
-              className="absolute right-2 top-2"
-              size="icon"
-            >
-              <MessageSquare className="h-5 w-5" />
-            </Button>
-          </div>
+          <form onSubmit={handleSubmit} className="max-w-3xl mx-auto mt-8 px-4">
+            <div className="flex gap-2">
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Posez votre question..."
+                className="flex-1"
+              />
+              <Button type="submit">
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </form>
 
           {/* Contextual Suggestions */}
           <div className="grid grid-cols-1 gap-4">

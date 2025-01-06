@@ -21,8 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: true,
       user,
     });
-    // Redirect based on user role
-    navigate(user.role === 'bank' ? '/bank-dashboard' : '/ai-chat');
+    // Always redirect to AI chat interface first
+    navigate('/ai-chat');
   };
 
   const logout = () => {
