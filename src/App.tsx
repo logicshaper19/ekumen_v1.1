@@ -37,22 +37,26 @@ import { Agriculteurs } from './pages/Agriculteurs';
 import { AgriculteurProfile } from './pages/AgriculteurProfile';
 import { ESGDashboard } from './pages/ESGDashboard';
 import { EmitterProfile } from './pages/EmitterProfile';
+import { PublicAIChat } from './pages/PublicAIChat';
+import { MarketAnalysis } from './pages/MarketAnalysis';
+import { OrgePrice } from './pages/OrgePrice';
+import { QueryResultPage } from '@/pages/QueryResultPage';
 
 function App() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   
-  // Public routes that don't require authentication
-  const publicPaths = ['/', '/use-cases', '/results', '/equipe'];
-  const isPublicRoute = publicPaths.includes(location.pathname);
+  // Check if we're on traditional landing pages
+  const landingPaths = ['/landing', '/use-cases', '/results', '/equipe'];
+  const isLandingRoute = landingPaths.includes(location.pathname);
 
-  // If on public route, show landing layout
-  if (isPublicRoute) {
+  // Show traditional landing layout if on landing routes
+  if (isLandingRoute) {
     return (
       <div className="min-h-screen bg-white">
         <LandingNav />
         <Routes>
-          <Route path="/" element={
+          <Route path="/landing" element={
             <>
               <Hero />
               <Benefits />
@@ -78,16 +82,23 @@ function App() {
     );
   }
 
-  // Show authenticated app layout with all routes
+  // Main app routes
   return (
     <Routes>
-      {/* AI Chat Interface - Initial landing after login */}
-      <Route
-        path="/ai-chat"
-        element={isAuthenticated ? <AIChatInterface /> : <Navigate to="/login" />}
-      />
+      {/* AI Chat as primary landing */}
+      <Route path="/" element={<PublicAIChat />} />
+      <Route path="/market-analysis" element={<MarketAnalysis />} />
+      <Route path="/landing" element={
+        <>
+          <Hero />
+          <Benefits />
+          <HowItWorks />
+        </>
+      } />
+      <Route path="/orge-price" element={<OrgePrice />} />
 
-      {/* Protected Dashboard Routes - Accessible from AI Chat */}
+      {/* Protected Routes */}
+      <Route path="/ai-chat" element={isAuthenticated ? <AIChatInterface /> : <Navigate to="/login" />} />
       <Route path="/*" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
         {/* Dashboard is now the main route after login */}
         <Route path="tableau-de-bord" element={<TableauDeBord />} />
@@ -123,12 +134,14 @@ function App() {
       </Route>
 
       {/* Public Routes */}
+      <Route path="/public-chat" element={<PublicAIChat />} />
+      <Route path="/query-result" element={<QueryResultPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/signup-flow" element={<SignupFlow />} />
 
       {/* Catch all route */}
-      <Route path="*" element={<Navigate to={isAuthenticated ? "/ai-chat" : "/login"} />} />
+      <Route path="*" element={<Navigate to={isAuthenticated ? "/ai-chat" : "/"} />} />
     </Routes>
   );
 }

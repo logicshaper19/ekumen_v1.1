@@ -91,58 +91,37 @@ export default function AIChatInterface() {
       sections: [
         {
           title: "Prix Actuels du Marché",
-          type: "text",
+          type: 'text' as const,
           content: `D'après les dernières données de marché que j'ai recueillies (à la date d'aujourd'hui), voici les prix actuels pour l'orge:
 
 Orge fourragère:
 • États-Unis : 220 à 240 euros par tonne métrique
 • Canada : 210 à 230 euros par tonne métrique
-• Union européenne : 250 à 270 euros par tonne métrique
-
-Orge de brasserie:
-• États-Unis : 330 à 350 euros par tonne métrique
-• Canada : 320 à 340 euros par tonne métrique
-• Union européenne : 360 à 380 euros par tonne métrique`
+• Union européenne : 250 à 270 euros par tonne métrique`
         },
         {
-          title: "Prix Prévisionnels",
-          type: "text",
-          content: `Compte tenu des tendances actuelles du marché et de votre date de récolte prévue, voici ce à quoi vous pouvez vous attendre:
+          title: "Prix prévisionnels",
+          type: 'text' as const,
+          content: `Compte tenu des tendances actuelles du marché, voici les prévisions:
 
-Orge fourragère : Les prix devraient augmenter de 3 à 5% en raison d'une demande accrue des éleveurs et d'une offre mondiale plus restreinte.
-• Fourchette prévisionnelle : 257 à 283 euros par tonne métrique (Union européenne)
-
-Orge de brasserie : Les prix devraient rester stables ou augmenter légèrement (1 à 2%), soutenus par une demande constante de l'industrie brassicole.
-• Fourchette prévisionnelle : 363 à 387 euros par tonne métrique (Union européenne)`
+• Orge fourragère : Augmentation prévue de 3-5%
+• Orge de brasserie : Stabilité ou légère hausse de 1-2%`
         },
         {
-          title: "Facteurs Clés Influençant les Prix",
-          type: "list",
+          title: "Facteurs d'influence",
+          type: 'list' as const,
           content: [
-            {
-              label: "Offre Mondiale",
-              value: "Les conditions météorologiques dans les principales régions productrices laissent entrevoir des réductions potentielles de rendement."
-            },
-            {
-              label: "Tendances de la Demande",
-              value: "La demande croissante pour les protéines végétales et les biocarburants entraîne une consommation accrue."
-            },
-            {
-              label: "Coûts de l'Énergie",
-              value: "Les fluctuations des prix du carburant pourraient affecter les coûts de transport."
-            }
+            { label: "Offre mondiale", value: "Conditions météorologiques défavorables dans certaines régions" },
+            { label: "Demande", value: "Forte demande du secteur de l'élevage" },
+            { label: "Transport", value: "Coûts logistiques en hausse" }
           ]
         }
       ]
     },
     actions: [
       {
-        label: "Non",
-        onClick: () => setShowResponse(false)
-      },
-      {
-        label: "Oui",
-        onClick: () => console.log("Surveillance activée")
+        label: "Voir l'analyse complète",
+        onClick: () => navigate('/market-analysis')
       }
     ]
   }

@@ -1,88 +1,57 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { scrollToSection } from '../../utils/scroll';
+import { Link } from 'react-router-dom'
+import { Button } from "@/components/ui/button"
+import { LogIn } from 'lucide-react'
 
 export function LandingNav() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, to: string) => {
-    e.preventDefault();
-    if (to.startsWith('#')) {
-      if (location.pathname !== '/') {
-        navigate('/');
-        setTimeout(() => scrollToSection(to.substring(1)), 100);
-      } else {
-        scrollToSection(to.substring(1));
-      }
-    } else {
-      navigate(to);
-    }
-  };
-
   return (
-    <header className="fixed w-full bg-white z-50 border-b border-gray-100">
-      <div className="max-w-[1440px] mx-auto">
-        <nav className="flex items-center justify-between px-8 py-4">
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <span className="text-[22px] font-semibold text-[#004D40]">
-              Ekumen
-            </span>
-          </Link>
+    <nav className="bg-[#FAF7F0] border-b border-[#004D40]/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center">
+              <Link to="/" className="text-xl font-bold text-[#004D40]">
+                Ekumen
+              </Link>
+            </div>
 
-          {/* Main Navigation */}
-          <div className="flex items-center gap-x-12">
-            <Link
-              to="/equipe"
-              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
-            >
-              Équipe
-            </Link>
-            <a
-              href="#how-it-works"
-              onClick={(e) => handleNavigation(e, '#how-it-works')}
-              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
-            >
-              Comment ça marche
-            </a>
-            <Link
-              to="/use-cases"
-              className="text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors"
-            >
-              Cas d'Usage
-            </Link>
-          </div>
-
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-x-4">
-            <Link
-              to="/login"
-              className="inline-flex items-center text-[15px] font-medium text-[#004D40] hover:text-[#003D33] transition-colors px-4 py-2 rounded-full border border-[#004D40] hover:bg-[#004D40] hover:text-white"
-            >
-              Connexion
-              <svg
-                className="ml-2 w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Navigation Links */}
+            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <Link
+                to="/use-cases"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#004D40] hover:text-[#004D40]/80"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
-            <Link
-              to="/signup"
-              className="inline-flex items-center text-[15px] font-medium text-white bg-[#004D40] hover:bg-[#003D33] transition-colors px-6 py-2 rounded-full"
-            >
-              S'inscrire
-            </Link>
+                Cas d'Usage
+              </Link>
+              <Link
+                to="/results"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#004D40] hover:text-[#004D40]/80"
+              >
+                Résultats
+              </Link>
+              <Link
+                to="/equipe"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#004D40] hover:text-[#004D40]/80"
+              >
+                Équipe
+              </Link>
+            </div>
           </div>
-        </nav>
+
+          {/* Right side */}
+          <div className="flex items-center">
+            <Button
+              asChild
+              className="bg-[#004D40] text-[#FAF7F0] hover:bg-[#004D40]/90"
+            >
+              <Link to="/login" className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Se connecter
+              </Link>
+            </Button>
+          </div>
+        </div>
       </div>
-    </header>
-  );
+    </nav>
+  )
 }
