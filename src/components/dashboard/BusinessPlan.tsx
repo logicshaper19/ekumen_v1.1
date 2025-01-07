@@ -7,10 +7,12 @@ import { StrategyTab } from '../business-plan/StrategyTab';
 import { FinancialPlanTab } from '../business-plan/FinancialPlanTab';
 import { RisksAndOpportunities } from '../business-plan/RisksAndOpportunities';
 import { EnvironmentalTab } from '../business-plan/EnvironmentalTab';
+import { RegulationsSection } from '../business-plan/regulations/RegulationsSection';
+import { TransformationsSection } from '../business-plan/transformations/TransformationsSection';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
-type Tab = 'overview' | 'strategy' | 'financial' | 'environmental' | 'risks';
+type Tab = 'overview' | 'strategy' | 'financial' | 'environmental' | 'risks' | 'regulations' | 'transformations';
 
 const tabs: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Aperçu' },
@@ -18,6 +20,8 @@ const tabs: { id: Tab; label: string }[] = [
   { id: 'financial', label: 'Plan Financier' },
   { id: 'environmental', label: 'Impact Environnemental' },
   { id: 'risks', label: 'Risques et Opportunités' },
+  { id: 'regulations', label: 'Réglementations' },
+  { id: 'transformations', label: 'Transformations' },
 ];
 
 export function BusinessPlan() {
@@ -102,6 +106,7 @@ export function BusinessPlan() {
         </Card>
       )}
 
+      {/* Tabs */}
       <div className="flex justify-end space-x-4 border-b mb-6">
         {tabs.map((tab) => (
           <button
@@ -119,12 +124,15 @@ export function BusinessPlan() {
         ))}
       </div>
 
+      {/* Tab Content */}
       <div className="mt-6">
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'strategy' && <StrategyTab />}
         {activeTab === 'financial' && <FinancialPlanTab />}
         {activeTab === 'environmental' && <EnvironmentalTab />}
         {activeTab === 'risks' && <RisksAndOpportunities />}
+        {activeTab === 'regulations' && <RegulationsSection />}
+        {activeTab === 'transformations' && <TransformationsSection />}
       </div>
     </div>
   );
